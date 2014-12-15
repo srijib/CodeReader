@@ -22,6 +22,10 @@
         <item name="colorAccent">#B39DDB</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+    </style>
+
     <style name="HeaderBar">
         <item name="android:background">?colorPrimary</item>
         <item name="android:elevation" tools:ignore="NewApi">@dimen/headerbar_elevation</item>

@@ -15,6 +15,7 @@ import android.preference.PreferenceFragment;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
 
 import com.wkswind.codereader.utils.DirectorySelectorPreference;
 import com.wkswind.minilibrary.utils.PrefsUtils;
@@ -49,6 +50,7 @@ public class SettingsActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
         Toolbar toolbar = getActionBarToolbar();
         toolbar.setTitle(R.string.title_activity_settings);
         toolbar.setNavigationIcon(R.drawable.ic_up);
