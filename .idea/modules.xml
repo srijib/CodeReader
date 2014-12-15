@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CodeReader.iml" filepath="$PROJECT_DIR$/CodeReader.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/filedirectorychooser/filedirectorychooser.iml" filepath="$PROJECT_DIR$/filedirectorychooser/filedirectorychooser.iml" />
       <module fileurl="file://$PROJECT_DIR$/minilibrary/minilibrary.iml" filepath="$PROJECT_DIR$/minilibrary/minilibrary.iml" />
     </modules>
   </component>
