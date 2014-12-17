@@ -4,11 +4,16 @@ import java.io.File;
 
 import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.os.Environment;
 import android.preference.DialogPreference;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -24,8 +29,9 @@ public class DirectorySelectorPreference extends DialogPreference {
 	private static final File INITIAL_DIR = Environment.getExternalStorageDirectory();
 	private File currentDir = INITIAL_DIR;
 	private ListView lst;
-	
-	public DirectorySelectorPreference(Context context, AttributeSet attrs,
+    private Toolbar toolbar;
+
+    public DirectorySelectorPreference(Context context, AttributeSet attrs,
 			int defStyle) {
 		super(context, attrs, defStyle);
 		// TODO Auto-generated constructor stub
@@ -34,12 +40,29 @@ public class DirectorySelectorPreference extends DialogPreference {
 	public DirectorySelectorPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
-	}	
-	
+	}
+
 	@Override
 	protected View onCreateDialogView() {
 		// TODO Auto-generated method stub
 		View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_main, null);
+        toolbar = (Toolbar)view.findViewById(R.id.toolbar_actionbar);
+        toolbar.inflateMenu(R.menu.directory_selector_preference);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.action_back:
+                        File file = currentDir.getParentFile();
+                        toolbar.setTitle(file.getAbsolutePath());
+                        DirectoryAdapter curAdapter = new DirectoryAdapter(getContext(),file);
+                        lst.setAdapter(curAdapter);
+                        break;
+                }
+                return true;
+            }
+        });
+//        toolbar.setLogo(R.drawable.ic_action_back);
 		lst = (ListView) view.findViewById(R.id.history);
 		final DirectoryAdapter adapter = new DirectoryAdapter(getContext(), currentDir);
 		lst.setAdapter(adapter);
@@ -50,7 +73,8 @@ public class DirectorySelectorPreference extends DialogPreference {
 					int position, long id) {
 				// TODO Auto-generated method stub
 				currentDir = ((DirectoryAdapter)parent.getAdapter()).getItem(position);
-				getDialog().setTitle(currentDir.getAbsolutePath());
+//				getDialog().setTitle(currentDir.getAbsolutePath());
+                toolbar.setTitle(currentDir.getAbsolutePath());
 				DirectoryAdapter curAdapter = new DirectoryAdapter(getContext(), ((DirectoryAdapter)parent.getAdapter()).getItem(position)); 
 				lst.setAdapter(curAdapter);
 				
@@ -66,7 +90,7 @@ public class DirectorySelectorPreference extends DialogPreference {
 	protected void onPrepareDialogBuilder(Builder builder) {
 		// TODO Auto-generated method stub
 		super.onPrepareDialogBuilder(builder);
-		builder.setTitle(currentDir.getAbsolutePath());
+//		builder.setTitle(currentDir.getAbsolutePath());
 	}
 	
 	@Override
