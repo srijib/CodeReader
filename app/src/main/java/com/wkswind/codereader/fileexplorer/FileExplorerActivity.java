@@ -20,6 +20,9 @@ import com.wkswind.codereader.fileexplorer.FileExplorerFragment.IFileSelected;
 
 public class FileExplorerActivity extends ActionBarActivity implements
 		IFileSelected, OnBackStackChangedListener {
+    public static final String KEY_EXPLORER_TYPE = "com.wkswind.codereader.KEY_EXPLORER_TYPE";
+    public static final int TYPE_FILE = 0;
+    public static final int TYPE_DIRECTORY = 1;
 
 	private FragmentManager fm;
 
@@ -33,8 +36,9 @@ public class FileExplorerActivity extends ActionBarActivity implements
 			Bundle extras = new Bundle();
 			extras.putSerializable(FileExplorerFragment.FILE_DIRECTORY,
 					Environment.getExternalStorageDirectory());
+            int type = getIntent().getIntExtra(KEY_EXPLORER_TYPE, TYPE_FILE);
 //			Fragment fragment = FileListFragment.newInstance(extras);
-			Fragment fragment = FileExplorerFragment.newInstance(extras);
+			Fragment fragment = (type == TYPE_FILE) ? FileExplorerFragment.newInstance(extras) : DirectoryExplorerFragment.newInstance(extras);
 			fm.addOnBackStackChangedListener(this);
 			fm.beginTransaction()
 					.add(android.R.id.content, fragment, fragment.getTag())
