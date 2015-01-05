@@ -40,7 +40,7 @@ public class RootInfo {
 	
 	public static ArrayList<RootInfo> init(Resources res, Context context){
 		ArrayList<RootInfo> infos = new ArrayList<RootInfo>();
-		String[] titles = res.getStringArray(R.array.doc_type);
+		String[] titles = res.getStringArray(R.array.doc_types);
 		String[] intent = res.getStringArray(R.array.doc_intent);
 		Set<String> defaultValues = new HashSet<String>();
 		String[] types = res.getStringArray(R.array.default_doc_type);

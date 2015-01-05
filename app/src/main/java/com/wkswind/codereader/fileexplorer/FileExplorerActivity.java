@@ -64,7 +64,6 @@ public class FileExplorerActivity extends ActionBarActivity implements
 
 	@Override
 	public void onFileSelected(File file) {
-		// TODO Auto-generated method stub
 		if (file.isDirectory()) {
 			Bundle args = new Bundle();
 			args.putSerializable(FileExplorerFragment.FILE_DIRECTORY, file);

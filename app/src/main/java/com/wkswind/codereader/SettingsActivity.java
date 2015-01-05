@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 
+import com.wkswind.codereader.fileexplorer.DirectoryExplorerDialog;
 import com.wkswind.codereader.utils.DirectorySelectorPreference;
 import com.wkswind.minilibrary.utils.PrefsUtils;
 
@@ -81,9 +82,9 @@ public class SettingsActivity extends BaseActivity {
 			// to their values. When their values change, their summaries are
 			// updated to reflect the new value, per the Android Design
 			// guidelines.
-			bindPreferenceSummaryToValue(findPreference("doc_types"),
+			bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_key_doc_types)),
 					getActivity());
-			bindPreferenceSummaryToValue(findPreference("doc_directory"),
+			bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_key_directory)),
 					getActivity());
 		}
 
@@ -94,7 +95,7 @@ public class SettingsActivity extends BaseActivity {
                 PackageManager packageManager = getActivity().getPackageManager();
                 PackageInfo  packInfo = packageManager.getPackageInfo(getActivity().getPackageName(),0);
                 String version = packInfo.versionName;
-                findPreference("version_code").setSummary(version);
+                findPreference(getString(R.string.pref_key_version_code)).setSummary(version);
             } catch (NameNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -103,20 +104,30 @@ public class SettingsActivity extends BaseActivity {
     }
 
 	public static void bindPreferenceSummaryToValue(Preference preference,
-			Context context) {
+			final Context context) {
 		BindPreference sBindPreference = new BindPreference(context);
 		preference
 				.setOnPreferenceChangeListener(sBindPreference);
-		if(preference.getKey().equals("doc_types")){
+		if(preference.getKey().equals(context.getString(R.string.pref_key_doc_types))){
 			String[] defaults = context.getResources().getStringArray(R.array.default_doc_type);
 			HashSet<String> sets = new HashSet<String>();
 			for(String d : defaults){
 				sets.add(d);
 			}
 			sBindPreference.onPreferenceChange(preference, PrefsUtils.get(context, preference.getKey(), sets));
-		}else if(preference.getKey().equals("doc_directory")){
-			sBindPreference.onPreferenceChange(preference, PrefsUtils.get(context, preference.getKey(), Environment.getExternalStorageDirectory().getAbsolutePath()));
-		}
+		}else if(preference.getKey().equals(context.getString(R.string.pref_key_directory))){
+            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    if(context instanceof BaseActivity){
+                        DirectoryExplorerDialog dialog = DirectoryExplorerDialog.newInstance(null);
+                        dialog.show(((BaseActivity) context).getSupportFragmentManager(),dialog.getClass().getSimpleName());
+                    }
+                    return true;
+                }
+            });
+            sBindPreference.onPreferenceChange(preference, PrefsUtils.get(context, preference.getKey(), Environment.getExternalStorageDirectory().getAbsolutePath()));
+        }
 		
 		
 	}
@@ -142,10 +153,11 @@ public class SettingsActivity extends BaseActivity {
 				preference.setDefaultValue(Environment.getExternalStorageDirectory().getAbsolutePath());
 				summary.append(PrefsUtils.get(context, preference.getKey(),
                         Environment.getExternalStorageDirectory().getAbsolutePath()));
-			}
+			} else if(preference.getKey().equals(context.getString(R.string.pref_key_directory))){
+                summary.append(PrefsUtils.get(context,context.getString(R.string.pref_key_directory), Environment.getExternalStorageDirectory().getAbsolutePath()));
+            }
 
 			preference.setSummary(summary);
-
 			return true;
 		}
 		

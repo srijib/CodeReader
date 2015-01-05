@@ -16,10 +16,10 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <!-- statusBar颜色 -->
-        <item name="colorPrimaryDark">#004D40</item>
+        <item name="colorPrimaryDark">#1A237E</item>
         <!-- actionbar颜色 -->
-        <item name="colorPrimary">#009688</item>
-        <item name="colorAccent">#B39DDB</item>
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorAccent">#9FA8DA</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

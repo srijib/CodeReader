@@ -53,5 +53,10 @@
     <string name="pref_title_vote">点赞</string>
     <string name="pref_title_mail">给我发邮件</string>
     <string name="pref_title_directory">选择默认扫描路径</string>
+    <string name="pref_title_directory_summary">扫描整个SD卡路径会很慢，请尽量选择代码所在路径</string>
     <string name="pref_title_version">当前版本号</string>
+
+    <string name="pref_key_directory">doc_directory</string>
+    <string name="pref_key_doc_types">doc_types</string>
+    <string name="pref_key_version_code">version_code</string>
 </resources>

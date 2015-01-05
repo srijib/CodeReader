@@ -6,7 +6,7 @@
         <item>@string/doc_java</item>
         <item>@string/doc_xml</item>
     </string-array>
-    <string-array name="doc_type">
+    <string-array name="doc_types">
         <item>@string/doc_c</item>
         <item>@string/doc_cpp</item>
         <item>@string/doc_css</item>
