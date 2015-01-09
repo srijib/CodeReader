@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.wkswind.codereader.R;
 import com.wkswind.codereader.adapter.DirectoryAdapter;
 import com.wkswind.codereader.utils.BaseDialogFragment;
@@ -36,7 +37,7 @@ public class DirectoryExplorerDialog extends BaseDialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        currentDir = new File(PrefsUtils.get(activity,"doc_directory_ex",Environment.getExternalStorageDirectory().getAbsolutePath()));
+        currentDir = new File(PrefsUtils.get(activity,getString(R.string.pref_key_directory),Environment.getExternalStorageDirectory().getAbsolutePath()));
     }
 
     @Override
@@ -65,6 +66,7 @@ public class DirectoryExplorerDialog extends BaseDialogFragment {
             }
         });
         FileExplorerFragment.setEmptyView(lst);
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity()).title(currentDir.getAbsolutePath()).customView(view,true).
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(currentDir.getAbsolutePath()).setView(view).setNegativeButton(android.R.string.cancel,null).setNeutralButton(R.string.action_back,null).setPositiveButton(android.R.string.ok,null);
         return builder.create();
     }
@@ -79,7 +81,7 @@ public class DirectoryExplorerDialog extends BaseDialogFragment {
             positiveButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    PrefsUtils.put(getActivity(), "doc_directory_ex", currentDir.getAbsolutePath());
+                    PrefsUtils.put(getActivity(), getString(R.string.pref_key_directory), currentDir.getAbsolutePath());
                     d.dismiss();
                 }
             });

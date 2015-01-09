@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -58,12 +59,13 @@ public class SettingsActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateUpToFromChild(SettingsActivity.this,
-                        IntentCompat.makeMainActivity(new ComponentName(SettingsActivity.this,
-                                MainActivity.class)));
+                finish();
+//                NavUtils.navigateUpFromSameTask(SettingsActivity.this);
+//                navigateUpToFromChild(SettingsActivity.this,
+//                        IntentCompat.makeMainActivity(new ComponentName(SettingsActivity.this,
+//                                MainActivity.class)));
             }
         });
-
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new GeneralPreferenceFragment())
@@ -96,6 +98,8 @@ public class SettingsActivity extends BaseActivity {
                 PackageInfo  packInfo = packageManager.getPackageInfo(getActivity().getPackageName(),0);
                 String version = packInfo.versionName;
                 findPreference(getString(R.string.pref_key_version_code)).setSummary(version);
+
+                findPreference(getString(R.string.pref_key_directory)).setSummary(PrefsUtils.get(getActivity(),getString(R.string.pref_key_directory),Environment.getExternalStorageDirectory().getAbsolutePath()));
             } catch (NameNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
