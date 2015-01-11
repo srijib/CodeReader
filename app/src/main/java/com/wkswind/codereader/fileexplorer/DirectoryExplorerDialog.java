@@ -3,11 +3,8 @@ package com.wkswind.codereader.fileexplorer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.wkswind.codereader.R;
 import com.wkswind.codereader.adapter.DirectoryAdapter;
 import com.wkswind.codereader.utils.BaseDialogFragment;
@@ -66,7 +62,22 @@ public class DirectoryExplorerDialog extends BaseDialogFragment {
             }
         });
         FileExplorerFragment.setEmptyView(lst);
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity()).title(currentDir.getAbsolutePath()).customView(view,true).
+//        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity()).title(currentDir.getAbsolutePath()).customView(view,true).negativeText(android.R.string.cancel).positiveText(android.R.string.ok).neutralText(R.string.action_back).callback(new MaterialDialog.ButtonCallback() {
+//            @Override
+//            public void onPositive(MaterialDialog dialog) {
+//                super.onPositive(dialog);
+//            }
+//
+//            @Override
+//            public void onNegative(MaterialDialog dialog) {
+//                super.onNegative(dialog);
+//            }
+//
+//            @Override
+//            public void onNeutral(MaterialDialog dialog) {
+//                super.onNeutral(dialog);
+//            }
+//        });
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(currentDir.getAbsolutePath()).setView(view).setNegativeButton(android.R.string.cancel,null).setNeutralButton(R.string.action_back,null).setPositiveButton(android.R.string.ok,null);
         return builder.create();
     }

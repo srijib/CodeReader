@@ -246,6 +246,9 @@ public class ReaderActivity extends BaseActivity {
 		contentString.append("<html><head><title></title>");
 		contentString
 				.append("<link href=\"file:///android_asset/prettify.css\" rel=\"stylesheet\" type=\"text/css\"/> ");
+        contentString.append("<style>\n" +
+                "        .prettyprint ol.linenums > li { list-style-type: decimal; }\n" +
+                "    </style>");
 		contentString
 				.append("<script src=\"file:///android_asset/prettify.js\" type=\"text/javascript\"></script> ");
 		contentString.append(handler.getFileScriptFiles());
