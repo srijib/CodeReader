@@ -62,22 +62,6 @@ public class DirectoryExplorerDialog extends BaseDialogFragment {
             }
         });
         FileExplorerFragment.setEmptyView(lst);
-//        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity()).title(currentDir.getAbsolutePath()).customView(view,true).negativeText(android.R.string.cancel).positiveText(android.R.string.ok).neutralText(R.string.action_back).callback(new MaterialDialog.ButtonCallback() {
-//            @Override
-//            public void onPositive(MaterialDialog dialog) {
-//                super.onPositive(dialog);
-//            }
-//
-//            @Override
-//            public void onNegative(MaterialDialog dialog) {
-//                super.onNegative(dialog);
-//            }
-//
-//            @Override
-//            public void onNeutral(MaterialDialog dialog) {
-//                super.onNeutral(dialog);
-//            }
-//        });
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(currentDir.getAbsolutePath()).setView(view).setNegativeButton(android.R.string.cancel,null).setNeutralButton(R.string.action_back,null).setPositiveButton(android.R.string.ok,null);
         return builder.create();
     }
@@ -101,6 +85,9 @@ public class DirectoryExplorerDialog extends BaseDialogFragment {
                 @Override
                 public void onClick(View v) {
                     currentDir = currentDir.getParentFile();
+                    if(currentDir == null || !currentDir.exists()){
+                        return;
+                    }
                     d.setTitle(currentDir.getAbsolutePath());
                     DirectoryAdapter curAdapter = new DirectoryAdapter(getActivity(),currentDir);
                     lst.setAdapter(curAdapter);

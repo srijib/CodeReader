@@ -3,6 +3,7 @@ package com.wkswind.codereader;
 import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -15,6 +16,7 @@ import android.preference.PreferenceFragment;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
@@ -74,8 +76,10 @@ public class SettingsActivity extends BaseActivity {
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	public static class GeneralPreferenceFragment extends PreferenceFragment {
-		@Override
+	public static class GeneralPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
+        private static final String TAG = GeneralPreferenceFragment.class.getSimpleName();
+
+        @Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			addPreferencesFromResource(R.xml.pref_general);
@@ -98,11 +102,26 @@ public class SettingsActivity extends BaseActivity {
                 PackageInfo  packInfo = packageManager.getPackageInfo(getActivity().getPackageName(),0);
                 String version = packInfo.versionName;
                 findPreference(getString(R.string.pref_key_version_code)).setSummary(version);
-
+                Log.i(TAG,PrefsUtils.get(getActivity(),getString(R.string.pref_key_directory),Environment.getExternalStorageDirectory().getAbsolutePath()));
                 findPreference(getString(R.string.pref_key_directory)).setSummary(PrefsUtils.get(getActivity(),getString(R.string.pref_key_directory),Environment.getExternalStorageDirectory().getAbsolutePath()));
+                getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
             } catch (NameNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+//            getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+            getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if(key.equals(getString(R.string.pref_key_directory))){
+                findPreference(key).setSummary(PrefsUtils.get(getActivity(),key,Environment.getExternalStorageDirectory().getAbsolutePath()));
             }
         }
     }
@@ -130,7 +149,7 @@ public class SettingsActivity extends BaseActivity {
                     return true;
                 }
             });
-            sBindPreference.onPreferenceChange(preference, PrefsUtils.get(context, preference.getKey(), Environment.getExternalStorageDirectory().getAbsolutePath()));
+//            sBindPreference.onPreferenceChange(preference, PrefsUtils.get(context, preference.getKey(), Environment.getExternalStorageDirectory().getAbsolutePath()));
         }
 		
 		
