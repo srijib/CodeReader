@@ -73,7 +73,7 @@ public class ReaderActivity extends BaseActivity {
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE, SystemUiHelper.FLAG_IMMERSIVE_STICKY);
-        uiHelper.hide();
+//        uiHelper.hide();
 		codeReader = (WebView) findViewById(R.id.code_reader);
 		codeReader.setWebViewClient(new WebChrome2());
 		WebSettings s = codeReader.getSettings();

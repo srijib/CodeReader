@@ -7,6 +7,7 @@
     <string name="file_explorer">文件浏览器</string>
     <string name="action_share">分享</string>
     <string name="action_new_folder">新建文件夹</string>
+    <string name="action_fullscreen">全屏</string>
     <string name="action_back">返回</string>
     <string name="action_open">打开文件</string>
     <string name="file_not_exists">文件不存在</string>
