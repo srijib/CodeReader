@@ -22,7 +22,7 @@ public class JavaDocumentHandler implements DocumentHandler {
 	@Override
 	public String getFilePrettifyClass() {
 		
-		return "prettyprint";
+		return "prettyprint linenums";
 	}
 
 	@Override

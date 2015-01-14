@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -50,6 +51,7 @@ import com.wkswind.codereader.synatax.SqlDocumentHandler;
 import com.wkswind.codereader.synatax.TextDocumentHandler;
 import com.wkswind.codereader.synatax.VbDocumentHandler;
 import com.wkswind.codereader.synatax.XmlDocumentHandler;
+import com.wkswind.minilibrary.uihelper.SystemUiHelper;
 import com.wkswind.minilibrary.utils.PrefsUtils;
 
 public class ReaderActivity extends BaseActivity {
@@ -60,8 +62,9 @@ public class ReaderActivity extends BaseActivity {
 	public static final int MAXFILESIZE = 1024 * 128;
 	private static final String LAST_READ = "last_read";
 	private boolean isStarred = false;
+    private SystemUiHelper uiHelper;
 
-	@SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint("SetJavaScriptEnabled")
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,8 @@ public class ReaderActivity extends BaseActivity {
 		setContentView(R.layout.activity_main);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE, SystemUiHelper.FLAG_IMMERSIVE_STICKY);
+        uiHelper.hide();
 		codeReader = (WebView) findViewById(R.id.code_reader);
 		codeReader.setWebViewClient(new WebChrome2());
 		WebSettings s = codeReader.getSettings();
@@ -246,9 +251,6 @@ public class ReaderActivity extends BaseActivity {
 		contentString.append("<html><head><title></title>");
 		contentString
 				.append("<link href=\"file:///android_asset/prettify.css\" rel=\"stylesheet\" type=\"text/css\"/> ");
-        contentString.append("<style>\n" +
-                "        .prettyprint ol.linenums > li { list-style-type: decimal; }\n" +
-                "    </style>");
 		contentString
 				.append("<script src=\"file:///android_asset/prettify.js\" type=\"text/javascript\"></script> ");
 		contentString.append(handler.getFileScriptFiles());
@@ -322,5 +324,20 @@ public class ReaderActivity extends BaseActivity {
 		return null;
 
 	}
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_UP:
+//                if (uiHelper.isShowing()){
+//                    uiHelper.hide();
+//                }else{
+//                    uiHelper.show();
+//                }
+//                uiHelper.toggle();
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
 
 }
