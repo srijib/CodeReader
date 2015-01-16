@@ -54,7 +54,7 @@ import com.wkswind.codereader.synatax.XmlDocumentHandler;
 import com.wkswind.minilibrary.uihelper.SystemUiHelper;
 import com.wkswind.minilibrary.utils.PrefsUtils;
 
-public class ReaderActivity extends BaseActivity {
+public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVisibilityChangeListener {
 	private Uri selectedFile;
 	public static final int REQUEST_FILE_CHOOSE = 0;
 	private WebView codeReader;
@@ -72,7 +72,7 @@ public class ReaderActivity extends BaseActivity {
 		setContentView(R.layout.activity_main);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE, SystemUiHelper.FLAG_IMMERSIVE_STICKY);
+        uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE, SystemUiHelper.FLAG_IMMERSIVE_STICKY, this);
 //        uiHelper.hide();
 		codeReader = (WebView) findViewById(R.id.code_reader);
 		codeReader.setWebViewClient(new WebChrome2());
@@ -185,6 +185,11 @@ public class ReaderActivity extends BaseActivity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			finish();
+            break;
+        case R.id.action_fullscreen:
+//            uiHelper.hide();
+            uiHelper.delayHide(0);
+            break;
 		default:
 			break;
 		}
@@ -340,4 +345,10 @@ public class ReaderActivity extends BaseActivity {
         return super.onTouchEvent(event);
     }
 
+    @Override
+    public void onVisibilityChange(boolean visible) {
+//        if(visible){
+//            uiHelper.delayHide(2 * 1000);
+//        }
+    }
 }
