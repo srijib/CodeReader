@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -72,7 +73,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		setContentView(R.layout.activity_main);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE, SystemUiHelper.FLAG_IMMERSIVE_STICKY, this);
+        uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_HIDE_STATUS_BAR, 0, this);
 //        uiHelper.hide();
 		codeReader = (WebView) findViewById(R.id.code_reader);
 		codeReader.setWebViewClient(new WebChrome2());
@@ -347,8 +348,16 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 
     @Override
     public void onVisibilityChange(boolean visible) {
-//        if(visible){
-//            uiHelper.delayHide(2 * 1000);
-//        }
+        if(visible){
+            uiHelper.delayHide(2 * 1000);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(KeyEvent.KEYCODE_MENU == keyCode){
+            uiHelper.show();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
