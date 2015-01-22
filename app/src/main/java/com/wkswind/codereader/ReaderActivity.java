@@ -257,17 +257,24 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		StringBuilder contentString = new StringBuilder("");
 		contentString.append("<html><head><title></title>");
 		contentString
-				.append("<link href=\"file:///android_asset/prettify.css\" rel=\"stylesheet\" type=\"text/css\"/> ");
+				.append("<link href=\"file:///android_asset/sons-of.css\" rel=\"stylesheet\" type=\"text/css\"/> ");
 		contentString
 				.append("<script src=\"file:///android_asset/prettify.js\" type=\"text/javascript\"></script> ");
 		contentString.append(handler.getFileScriptFiles());
-		contentString
-				.append("</head><body onload=\"prettyPrint()\"><code class=\""
-						+ handler.getFilePrettifyClass() + "\">");
-		String sourceString = new String(array);
+        contentString.append("</head>");
+        contentString.append("<body onload=\"prettyPrint()\">");
+        contentString.append("<code class=\""+ handler.getFilePrettifyClass()+" linenums: 2 \">");
+        String sourceString = new String(array);
 		contentString.append(handler.getFileFormattedString(sourceString));
-		contentString.append("</code> </html> ");
+        contentString.append("</code>");
+        contentString.append("</body>");
+        contentString.append("</html>");
 
+//		contentString
+//				.append("</head><body onload=\"prettyPrint()\"><code class=\""
+//						+ handler.getFilePrettifyClass() + " linenums \">");
+//		String sourceString = new String(array);
+//		contentString.append(handler.getFileFormattedString(sourceString));
 		codeReader.loadDataWithBaseURL("file:///android_asset/",
 				contentString.toString(), "text/html", "", "");
 		
