@@ -13,6 +13,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
@@ -73,7 +74,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		setContentView(R.layout.activity_main);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_HIDE_STATUS_BAR, 0, this);
+        uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE, 0, this);
 //        uiHelper.hide();
 		codeReader = (WebView) findViewById(R.id.code_reader);
 		codeReader.setWebViewClient(new WebChrome2());
@@ -355,7 +356,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(KeyEvent.KEYCODE_MENU == keyCode){
+        if(KeyEvent.KEYCODE_MENU == keyCode && (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)){
             uiHelper.show();
         }
         return super.onKeyDown(keyCode, event);
