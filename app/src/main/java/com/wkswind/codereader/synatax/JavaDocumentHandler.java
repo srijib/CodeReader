@@ -11,7 +11,8 @@ public class JavaDocumentHandler implements DocumentHandler {
 
 	@Override
 	public String getFileFormattedString(String fileString) {
-		return TextUtils.htmlEncode(fileString).replace("\n", "<br>");
+        return fileString;
+//		return TextUtils.htmlEncode(fileString).replace("\n", "<br>");
 	}
 
 	@Override
