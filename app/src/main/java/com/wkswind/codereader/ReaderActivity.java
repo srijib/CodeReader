@@ -189,7 +189,6 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 			finish();
             break;
         case R.id.action_fullscreen:
-//            uiHelper.hide();
             uiHelper.delayHide(0);
             break;
 		default:
@@ -270,11 +269,6 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
         contentString.append("</body>");
         contentString.append("</html>");
 
-//		contentString
-//				.append("</head><body onload=\"prettyPrint()\"><code class=\""
-//						+ handler.getFilePrettifyClass() + " linenums \">");
-//		String sourceString = new String(array);
-//		contentString.append(handler.getFileFormattedString(sourceString));
 		codeReader.loadDataWithBaseURL("file:///android_asset/",
 				contentString.toString(), "text/html", "", "");
 		
@@ -343,12 +337,6 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_UP:
-//                if (uiHelper.isShowing()){
-//                    uiHelper.hide();
-//                }else{
-//                    uiHelper.show();
-//                }
-//                uiHelper.toggle();
                 break;
         }
         return super.onTouchEvent(event);

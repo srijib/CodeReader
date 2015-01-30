@@ -37,7 +37,6 @@ public class FileExplorerActivity extends ActionBarActivity implements
 			extras.putSerializable(FileExplorerFragment.FILE_DIRECTORY,
 					Environment.getExternalStorageDirectory());
             int type = getIntent().getIntExtra(KEY_EXPLORER_TYPE, TYPE_FILE);
-//			Fragment fragment = FileListFragment.newInstance(extras);
 			Fragment fragment = (type == TYPE_FILE) ? FileExplorerFragment.newInstance(extras) : DirectoryExplorerFragment.newInstance(extras);
 			fm.addOnBackStackChangedListener(this);
 			fm.beginTransaction()
@@ -54,8 +53,6 @@ public class FileExplorerActivity extends ActionBarActivity implements
 		int count = fm.getBackStackEntryCount();
 
 		if (count > 1) {
-			// getSupportActionBar().setSubtitle(
-			// fm.getBackStackEntryAt(count - 2).getName());
 			fm.popBackStack();
 		} else {
 			finish();

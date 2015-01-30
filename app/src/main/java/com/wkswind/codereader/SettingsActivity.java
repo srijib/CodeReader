@@ -61,8 +61,8 @@ public class SettingsActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-//                NavUtils.navigateUpFromSameTask(SettingsActivity.this);
+//                finish();
+                NavUtils.navigateUpFromSameTask(SettingsActivity.this);
 //                navigateUpToFromChild(SettingsActivity.this,
 //                        IntentCompat.makeMainActivity(new ComponentName(SettingsActivity.this,
 //                                MainActivity.class)));

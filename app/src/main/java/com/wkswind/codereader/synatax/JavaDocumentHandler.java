@@ -11,8 +11,7 @@ public class JavaDocumentHandler implements DocumentHandler {
 
 	@Override
 	public String getFileFormattedString(String fileString) {
-        return fileString;
-//		return TextUtils.htmlEncode(fileString).replace("\n", "<br>");
+		return TextUtils.htmlEncode(fileString).replace(System.getProperty("line.separator"),"<br/>");
 	}
 
 	@Override
@@ -22,7 +21,6 @@ public class JavaDocumentHandler implements DocumentHandler {
 
 	@Override
 	public String getFilePrettifyClass() {
-		
 		return "prettyprint";
 	}
 
