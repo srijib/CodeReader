@@ -3,6 +3,7 @@ package com.wkswind.codereader;
 import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -61,11 +63,12 @@ public class SettingsActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                finish();
-                NavUtils.navigateUpFromSameTask(SettingsActivity.this);
-//                navigateUpToFromChild(SettingsActivity.this,
-//                        IntentCompat.makeMainActivity(new ComponentName(SettingsActivity.this,
-//                                MainActivity.class)));
+                /**
+                 * Since Settings can be reached from multiple entry points, the up button should
+                 * choose to the referring screen, behaving identically to Back.
+                 * So we just call {@link Activity.onBackPressed()} or simply call {@link Activity.finish()}
+                 */
+                onBackPressed();
             }
         });
         if (savedInstanceState == null) {

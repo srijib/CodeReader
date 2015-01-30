@@ -74,7 +74,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		setContentView(R.layout.activity_main);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE, 0, this);
+        uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE, SystemUiHelper.FLAG_IMMERSIVE_STICKY, this);
 //        uiHelper.hide();
 		codeReader = (WebView) findViewById(R.id.code_reader);
 		codeReader.setWebViewClient(new WebChrome2());
@@ -186,10 +186,13 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 	public boolean onOptionsItemSelected(MenuItem item) {		
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			finish();
+            /**
+             * handle like {@link com.wkswind.codereader.SettingsActivity}'s up button click
+             */
+            onBackPressed();
             break;
         case R.id.action_fullscreen:
-            uiHelper.delayHide(0);
+            uiHelper.delayHide(100);
             break;
 		default:
 			break;
