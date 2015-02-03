@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 
 import android.annotation.SuppressLint;
@@ -54,6 +55,7 @@ import com.wkswind.codereader.synatax.TextDocumentHandler;
 import com.wkswind.codereader.synatax.VbDocumentHandler;
 import com.wkswind.codereader.synatax.XmlDocumentHandler;
 import com.wkswind.minilibrary.uihelper.SystemUiHelper;
+import com.wkswind.minilibrary.utils.CharsetDetector;
 import com.wkswind.minilibrary.utils.PrefsUtils;
 
 public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVisibilityChangeListener {
@@ -92,8 +94,12 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 			selectedFile = getIntent().getData();
 			if (selectedFile != null
 					&& selectedFile.toString().startsWith("file")) {
-				loadFile(selectedFile);
-			}
+                try {
+                    loadFile(selectedFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 		} else {
 			Uri lastUri = null;
 			String lastRead = PrefsUtils.get(this, LAST_READ, "");
@@ -110,8 +116,12 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 			}
 
 			if (lastUri != null) {
-				loadFile(lastUri);
-			}
+                try {
+                    loadFile(lastUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 		}
 
 	}
@@ -207,12 +217,16 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		if (resultCode == Activity.RESULT_OK) {
 			if (requestCode == REQUEST_FILE_CHOOSE) {
 				selectedFile = data.getData();
-				loadFile(selectedFile);
-			}
+                try {
+                    loadFile(selectedFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 		}
 	}
 
-	private void loadFile(Uri uri) {
+	private void loadFile(Uri uri) throws IOException {
 		// TODO Auto-generated method stub
 		File file = new File(uri.getPath());
 		if (!file.exists()) {
@@ -225,6 +239,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 					.show();
 			return;
 		}
+        Charset charset = CharsetDetector.decodeCharset(file);
 		DocumentHandler handler = getHandlerByFileExtension(uri);
 		final long length = file.length();
 
@@ -266,7 +281,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
         contentString.append("</head>");
         contentString.append("<body onload=\"prettyPrint()\">");
         contentString.append("<code class=\""+ handler.getFilePrettifyClass()+" linenums \">");
-        String sourceString = new String(array);
+        String sourceString = new String(array,charset.name());
 		contentString.append(handler.getFileFormattedString(sourceString));
         contentString.append("</code>");
         contentString.append("</body>");
