@@ -60,6 +60,4 @@
     <string name="pref_key_directory">doc_directory</string>
     <string name="pref_key_doc_types">doc_types</string>
     <string name="pref_key_version_code">version_code</string>
-
-    <string name="toast_exit_fullscreen">双击退出全屏</string>
 </resources>
