@@ -114,7 +114,7 @@ public class FileExplorerFragment extends ListFragment implements
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.drawer, menu);
+//		inflater.inflate(R.menu.drawer, menu);
 	}
 	
 	@Override

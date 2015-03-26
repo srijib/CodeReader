@@ -16,6 +16,8 @@
 	    android:minHeight="?android:attr/listPreferredItemHeight"
 	    android:orientation="horizontal"
 	    android:paddingBottom="8dp"
+		android:paddingLeft="?android:attr/listPreferredItemPaddingEnd"
+		android:paddingRight="?android:attr/listPreferredItemPaddingEnd"
 	    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
 	    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
 	    android:paddingTop="8dp"
@@ -42,7 +44,8 @@
 	        android:ellipsize="middle"
 	        android:singleLine="true"
 	        android:textAlignment="viewStart"
-	        android:text="@string/doc_recent" />
+	        android:text="@string/doc_recent"
+			tools:ignore="RtlCompat" />
     </LinearLayout>
     <View android:layout_height="1dp"
         android:layout_width="match_parent"
@@ -58,11 +61,14 @@
 	    android:minHeight="?android:attr/listPreferredItemHeight"
 	    android:orientation="horizontal"
 	    android:paddingBottom="8dp"
+		android:paddingLeft="?android:attr/listPreferredItemPaddingEnd"
+		android:paddingRight="?android:attr/listPreferredItemPaddingEnd"
 	    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
 	    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
 	    android:paddingTop="8dp"
 	    android:clickable="true"
-	    tools:targetApi="jelly_bean_mr1">
+	    tools:targetApi="jelly_bean_mr1"
+		tools:ignore="RtlCompat">
 	    <ImageView
 	        android:clickable="false"
 	        android:layout_width="@dimen/icon_size"
@@ -84,7 +90,8 @@
 	        android:ellipsize="middle"
 	        android:singleLine="true"
 	        android:textAlignment="viewStart"
-	        android:text="@string/doc_star" />
+	        android:text="@string/doc_star"
+			tools:ignore="RtlCompat" />
     </LinearLayout>
     <View android:layout_height="1dp"
         android:layout_width="match_parent"
@@ -93,7 +100,8 @@
 	    android:id="@+id/code_type"    
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    android:choiceMode="singleChoice"/>    
+	    android:choiceMode="singleChoice"
+		android:divider="@null"/>
 </LinearLayout>
 
 

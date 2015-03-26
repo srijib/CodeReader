@@ -12,6 +12,10 @@ import com.wkswind.codereader.R;
 import com.wkswind.minilibrary.utils.PrefsUtils;
 
 public class RootInfo {
+	public static final int NAVDRAWER_ITEM = -1;
+	public static final int NAVDRAWER_ITEM_SEPARATOR = -2;
+
+	private int type = NAVDRAWER_ITEM;
 	private String title;
 	private int icon;
 	private String intent;
@@ -37,6 +41,17 @@ public class RootInfo {
 	public void setIntent(String intent) {
 		this.intent = intent;
 	}
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public boolean isSeparator(){
+		return type == NAVDRAWER_ITEM_SEPARATOR;
+	}
 	
 	public static ArrayList<RootInfo> init(Resources res, Context context){
 		ArrayList<RootInfo> infos = new ArrayList<RootInfo>();
@@ -50,6 +65,16 @@ public class RootInfo {
 		
 		Set<String> selectedTypes = PrefsUtils.get(context, "doc_types", defaultValues);
 		TypedArray icons = res.obtainTypedArray(R.array.doc_icon);
+		RootInfo star = new RootInfo();
+		star.setTitle(res.getString(R.string.action_starred));
+		star.setIcon(R.drawable.ic_action_starred);
+		star.setIntent(star.getTitle());
+
+		RootInfo divider = new RootInfo();
+		divider.setType(NAVDRAWER_ITEM_SEPARATOR);
+
+		infos.add(star);
+		infos.add(divider);
 		for(int i=0,j=titles.length;i<j;i++){
 			RootInfo info = new RootInfo();
 			info.setIcon(icons.getResourceId(i, -1));
@@ -59,7 +84,15 @@ public class RootInfo {
 				infos.add(info);
 			}
 		}
+		infos.add(divider);
+		RootInfo setting = new RootInfo();
+		setting.setTitle(res.getString(R.string.title_activity_settings));
+		setting.setIcon(R.drawable.ic_action_settings);
+		setting.setIntent(setting.getTitle());
+		infos.add(setting);
 		icons.recycle();
 		return infos;
 	}
-}	
+
+
+}

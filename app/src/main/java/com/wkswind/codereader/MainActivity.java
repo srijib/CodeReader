@@ -58,14 +58,18 @@ public class MainActivity extends BaseActivity implements
 	@Override
 	public void onNavigationDrawerItemSelected(RootInfo info) {
 		// TODO Auto-generated method stub
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		Bundle args = new Bundle();
-		args.putString(FileExplorerFragment.CODE_TYPE, info.getIntent());
-		args.putSerializable(FileExplorerFragment.FILE_DIRECTORY, new File(PrefsUtils.get(this, "doc_directory", Environment.getExternalStorageDirectory().getAbsolutePath())));
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.container,
-						FileExplorerFragment.newInstance(args)).commit();
+		if(info.getIntent().equals(getString(R.string.title_activity_settings))){
+			startActivity(new Intent(this,SettingsActivity.class));
+		}else{
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			Bundle args = new Bundle();
+			args.putString(FileExplorerFragment.CODE_TYPE, info.getIntent());
+			args.putSerializable(FileExplorerFragment.FILE_DIRECTORY, new File(PrefsUtils.get(this, "doc_directory", Environment.getExternalStorageDirectory().getAbsolutePath())));
+			fragmentManager
+					.beginTransaction()
+					.replace(R.id.container,
+							FileExplorerFragment.newInstance(args)).commit();
+		}
 	}
 
 	@Override

@@ -175,6 +175,8 @@ public class SettingsActivity extends BaseActivity {
 				for(String s : orderSet){
 					summary.append(s).append(" ,");
 				}
+
+                summary.deleteCharAt(summary.lastIndexOf(","));
 			} else if (preference instanceof DirectorySelectorPreference) {
 				preference.setDefaultValue(Environment.getExternalStorageDirectory().getAbsolutePath());
 				summary.append(PrefsUtils.get(context, preference.getKey(),
