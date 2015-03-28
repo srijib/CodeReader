@@ -16,18 +16,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -60,7 +57,6 @@ import com.wkswind.codereader.synatax.XmlDocumentHandler;
 import com.wkswind.minilibrary.uihelper.SystemUiHelper;
 import com.wkswind.minilibrary.utils.CharsetDetector;
 import com.wkswind.minilibrary.utils.PrefsUtils;
-import com.wkswind.minilibrary.utils.ToastUtils;
 
 public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVisibilityChangeListener {
 	private Uri selectedFile;
@@ -71,7 +67,6 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 	private static final String LAST_READ = "last_read";
 	private boolean isStarred = false;
     private SystemUiHelper uiHelper;
-	private GestureDetectorCompat detector = null;
 
     @SuppressLint("SetJavaScriptEnabled")
 	@SuppressWarnings("deprecation")
@@ -81,28 +76,10 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		setContentView(R.layout.activity_main);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE, SystemUiHelper.FLAG_LAYOUT_IN_SCREEN_OLDER_DEVICES, this);
+        uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE, SystemUiHelper.FLAG_IMMERSIVE_STICKY, this);
 //        uiHelper.hide();
 		codeReader = (WebView) findViewById(R.id.code_reader);
 		codeReader.setWebViewClient(new WebChrome2());
-		detector = new GestureDetectorCompat(this,new GestureDetector.SimpleOnGestureListener(){
-			@Override
-			public boolean onDown(MotionEvent e) {
-				return false;
-			}
-
-			@Override
-			public boolean onDoubleTap(MotionEvent e) {
-				uiHelper.show();
-				return false;
-			}
-		});
-		codeReader.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				return detector.onTouchEvent(event);
-			}
-		});
 		WebSettings s = codeReader.getSettings();
 		s.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
 		s.setUseWideViewPort(false);
@@ -184,7 +161,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		// say when the user has selected an image.
 		actionProvider.setShareIntent(createShareIntent());
 		
-		final MenuItem starredItem = menu.findItem(R.id.action_starred);
+		/*final MenuItem starredItem = menu.findItem(R.id.action_starred);
 		final CheckBox chkStarred = (CheckBox) MenuItemCompat.getActionView(starredItem);
 		chkStarred.setClickable(true);		
 		chkStarred.setOnCheckedChangeListener(new OnCheckedChangeListener() {			
@@ -194,7 +171,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 //				Toast.makeText(ReaderActivity.this, "starred", Toast.LENGTH_SHORT).show();
 				isStarred = isChecked;
 			}
-		});
+		});*/
 //		chkStarred.setChecked(getContentResolver().query(ReadingHistoryContent.Wish.CONTENT_URI, new String[]{BaseColumns._ID}, Columns.URL, selectionArgs, sortOrder));
 		return true;
 	}
@@ -202,8 +179,8 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		menu.findItem(R.id.action_share).setEnabled(selectedFile != null);
-//		menu.findItem(R.id.action_starred).setVisible(false);
+		menu.findItem(R.id.action_share).setEnabled( selectedFile != null);
+		menu.findItem(R.id.action_starred).setVisible(false);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -226,7 +203,6 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
             break;
         case R.id.action_fullscreen:
             uiHelper.delayHide(100);
-			ToastUtils.showToast(this,R.string.toast_exit_fullscreen);
             break;
 		default:
 			break;
@@ -304,8 +280,8 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		contentString.append(handler.getFileScriptFiles());
         contentString.append("</head>");
         contentString.append("<body onload=\"prettyPrint()\">");
-		contentString.append("<code class=\""+ handler.getFilePrettifyClass()+" \">");
-		String sourceString = new String(array,charset.name());
+        contentString.append("<code class=\""+ handler.getFilePrettifyClass()+" linenums \">");
+        String sourceString = new String(array,charset.name());
 		contentString.append(handler.getFileFormattedString(sourceString));
         contentString.append("</code>");
         contentString.append("</body>");
@@ -386,9 +362,9 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 
     @Override
     public void onVisibilityChange(boolean visible) {
-//        if(visible){
-//            uiHelper.delayHide(2 * 1000);
-//        }
+        if(visible){
+            uiHelper.delayHide(2 * 1000);
+        }
     }
 
     @Override
