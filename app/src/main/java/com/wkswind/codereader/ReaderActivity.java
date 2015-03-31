@@ -18,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -89,9 +90,15 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 
 			@Override
 			public boolean onDoubleTap(MotionEvent e) {
-				uiHelper.toggle();
+				uiHelper.show();
 				return super.onDoubleTap(e);
 			}
+		});
+		codeReader.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return gestureDetectorCompat.onTouchEvent(event);
+			};
 		});
 		codeReader.setWebViewClient(new WebChrome2());
 		WebSettings s = codeReader.getSettings();
@@ -381,7 +388,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
     @Override
     public void onVisibilityChange(boolean visible) {
         if(visible){
-            uiHelper.delayHide(2 * 1000);
+//            uiHelper.delayHide(2 * 1000);
         }
     }
 
