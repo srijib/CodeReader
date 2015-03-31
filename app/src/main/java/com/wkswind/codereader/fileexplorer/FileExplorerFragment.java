@@ -206,8 +206,10 @@ public class FileExplorerFragment extends ListFragment implements
 		@Override
 		protected List<File> loadDataInBackground(Bundle extras) {
 			// TODO Auto-generated method stub
+
 			File file = null;
 			String codeType = extras == null ? null : extras.getString(CODE_TYPE);
+			if(codeType.equals(getContext().getString(R.string.action_starred)) || codeType.equals(getContext().getString(R.string.action_starred)))
 			if(extras==null || extras.getSerializable(FILE_DIRECTORY) == null){
 				file = Environment.getExternalStorageDirectory();
 			}else{

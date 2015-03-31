@@ -70,10 +70,16 @@ public class RootInfo {
 		star.setIcon(R.drawable.ic_action_starred);
 		star.setIntent(star.getTitle());
 
+		RootInfo history = new RootInfo();
+		history.setTitle(res.getString(R.string.action_history));
+		history.setIcon(R.drawable.ic_action_history);
+		history.setIntent(history.getTitle());
+
 		RootInfo divider = new RootInfo();
 		divider.setType(NAVDRAWER_ITEM_SEPARATOR);
 
 		infos.add(star);
+		infos.add(history);
 		infos.add(divider);
 		for(int i=0,j=titles.length;i<j;i++){
 			RootInfo info = new RootInfo();
