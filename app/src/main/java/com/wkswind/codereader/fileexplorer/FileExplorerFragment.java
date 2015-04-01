@@ -1,15 +1,9 @@
 package com.wkswind.codereader.fileexplorer;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ListFragment;
@@ -29,10 +23,20 @@ import android.widget.ListView;
 import com.wkswind.codereader.R;
 import com.wkswind.codereader.ReaderActivity;
 import com.wkswind.codereader.SettingsActivity;
+import com.wkswind.codereader.database.CodeProvider;
+import com.wkswind.codereader.database.HistorysColumn;
+import com.wkswind.codereader.database.StarsColumn;
 import com.wkswind.codereader.fileexplorer.sort.SortFolder;
 import com.wkswind.codereader.fileexplorer.sort.SortType;
 
 import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 
 public class FileExplorerFragment extends ListFragment implements
@@ -209,7 +213,25 @@ public class FileExplorerFragment extends ListFragment implements
 
 			File file = null;
 			String codeType = extras == null ? null : extras.getString(CODE_TYPE);
-			if(codeType.equals(getContext().getString(R.string.action_starred)) || codeType.equals(getContext().getString(R.string.action_starred)))
+			if(codeType.equals(getContext().getString(R.string.action_starred))){
+				ArrayList<File> stars = new ArrayList<>();
+				Cursor cursor = getContext().getContentResolver().query(CodeProvider.Stars.CONTENT_URI,new String[]{"*"},StarsColumn.star+"=1",null,null);
+				if(cursor.moveToFirst()){
+					while(cursor.moveToNext()){
+						stars.add(new File(cursor.getString(cursor.getColumnIndex(StarsColumn.fileName))));
+					}
+				}
+				return stars;
+			}else if(codeType.equals(getContext().getString(R.string.action_starred))){
+				ArrayList<File> historys = new ArrayList<>();
+				Cursor cursor = getContext().getContentResolver().query(CodeProvider.Historys.CONTENT_URI,new String[]{"*"},null,null,null);
+				if(cursor.moveToFirst()){
+					while(cursor.moveToNext()){
+						historys.add(new File(cursor.getString(cursor.getColumnIndex(HistorysColumn.fileName))));
+					}
+				}
+				return historys;
+			}
 			if(extras==null || extras.getSerializable(FILE_DIRECTORY) == null){
 				file = Environment.getExternalStorageDirectory();
 			}else{
