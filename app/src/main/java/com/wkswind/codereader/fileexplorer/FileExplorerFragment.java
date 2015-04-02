@@ -222,7 +222,7 @@ public class FileExplorerFragment extends ListFragment implements
 					}
 				}
 				return stars;
-			}else if(codeType.equals(getContext().getString(R.string.action_starred))){
+			}else if(codeType.equals(getContext().getString(R.string.action_history))){
 				ArrayList<File> historys = new ArrayList<>();
 				Cursor cursor = getContext().getContentResolver().query(CodeProvider.Historys.CONTENT_URI,new String[]{"*"},null,null,null);
 				if(cursor.moveToFirst()){

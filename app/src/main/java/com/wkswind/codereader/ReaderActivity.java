@@ -308,7 +308,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		contentString.append(handler.getFileScriptFiles());
         contentString.append("</head>");
         contentString.append("<body onload=\"prettyPrint()\">");
-        contentString.append("<code class=\""+ handler.getFilePrettifyClass()+" linenums \">");
+        contentString.append("<code class=\""+ handler.getFilePrettifyClass()+" \">");
         String sourceString = new String(array,charset.name());
 		contentString.append(handler.getFileFormattedString(sourceString));
         contentString.append("</code>");
@@ -327,7 +327,8 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		ContentValues cv = new ContentValues();
 		cv.put(HistorysColumn.fileName, url);
 		cv.put(HistorysColumn.lastReadTime, Calendar.getInstance().getTimeInMillis());
-		getApplication().getContentResolver().insert(CodeProvider.Historys.CONTENT_URI,cv);
+		getApplication().getContentResolver().delete(CodeProvider.Historys.CONTENT_URI, HistorysColumn.fileName + "=?", new String[]{url});
+		getApplication().getContentResolver().insert(CodeProvider.Historys.CONTENT_URI, cv);
 	}
 
 	private DocumentHandler getHandlerByFileExtension(Uri uri) {

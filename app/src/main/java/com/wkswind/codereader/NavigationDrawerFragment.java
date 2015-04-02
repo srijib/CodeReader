@@ -1,6 +1,10 @@
 package com.wkswind.codereader;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -37,7 +41,6 @@ import java.util.ArrayList;
  * implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
-
 	/**
 	 * Remember the position of the selected item.
 	 */
@@ -70,13 +73,13 @@ public class NavigationDrawerFragment extends Fragment {
 	private ArrayList<CharSequence> items;
 	private View[] mNavDrawerItemViews;
 
+
 	public NavigationDrawerFragment() {
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		// Read in the flag indicating whether or not the user has demonstrated
 		// awareness of the
 		// drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -109,6 +112,16 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.navdrawer, container, false);
@@ -125,17 +138,21 @@ public class NavigationDrawerFragment extends Fragment {
 //				});
 //		mDrawerListView.setAdapter(new RootAdapter(getActivity()));
 //		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+		makeItemView(group);
+
+		return rootView;
+	}
+
+	private void makeItemView(ViewGroup group) {
+		group.removeAllViews();
 		ArrayList<RootInfo> roots = RootInfo.init(getResources(), getActivity());
 		mNavDrawerItemViews = new View[roots.size()];
 		for(int i=0,j=roots.size();i<j;i++){
 			RootInfo root = roots.get(i);
-//			group.addView(makeNavDrawerItem(root, group, i));
 			View navItemView = makeNavDrawerItem(root, group, i);
 			mNavDrawerItemViews[i] = navItemView;
 			group.addView(navItemView);
 		}
-
-		return rootView;
 	}
 
 	public boolean isDrawerOpen() {

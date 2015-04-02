@@ -64,7 +64,6 @@ public class RootInfo {
 		}
 		
 		Set<String> selectedTypes = PrefsUtils.get(context, "doc_types", defaultValues);
-		TypedArray icons = res.obtainTypedArray(R.array.doc_icon);
 		RootInfo star = new RootInfo();
 		star.setTitle(res.getString(R.string.action_starred));
 		star.setIcon(R.drawable.ic_action_starred);
@@ -83,7 +82,7 @@ public class RootInfo {
 		infos.add(divider);
 		for(int i=0,j=titles.length;i<j;i++){
 			RootInfo info = new RootInfo();
-			info.setIcon(icons.getResourceId(i, -1));
+			info.setIcon(R.drawable.ic_action_source);
 			info.setIntent(intent[i]);
 			info.setTitle(titles[i]);
 			if(selectedTypes.contains(titles[i])){
@@ -96,7 +95,6 @@ public class RootInfo {
 		setting.setIcon(R.drawable.ic_action_settings);
 		setting.setIntent(setting.getTitle());
 		infos.add(setting);
-		icons.recycle();
 		return infos;
 	}
 

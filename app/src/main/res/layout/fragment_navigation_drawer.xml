@@ -31,8 +31,7 @@
 	        android:layout_marginRight="12dp"
 	        android:layout_marginLeft="20dp"
 	        android:contentDescription="@null"
-	        android:scaleType="centerInside"
-	        android:background="@drawable/ic_root_recent" />
+	        android:scaleType="centerInside"/>
 	
 	    <TextView
 	        android:clickable="false"
@@ -77,8 +76,7 @@
 	        android:layout_marginRight="12dp"
 	        android:layout_marginLeft="20dp"
 	        android:contentDescription="@null"
-	        android:scaleType="centerInside"
-	        android:background="@drawable/ic_root_star" />
+	        android:scaleType="centerInside" />
 	
 	    <TextView
 	        android:clickable="false"
