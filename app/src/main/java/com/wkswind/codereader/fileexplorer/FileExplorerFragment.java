@@ -20,6 +20,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.wkswind.codereader.BaseListFragment;
 import com.wkswind.codereader.R;
 import com.wkswind.codereader.ReaderActivity;
 import com.wkswind.codereader.SettingsActivity;
@@ -39,7 +40,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class FileExplorerFragment extends ListFragment implements
+public class FileExplorerFragment extends BaseListFragment implements
 		LoaderManager.LoaderCallbacks<List<File>> {
 	public static final String FILE_DIRECTORY = "file_directory";
 	public static final String CODE_TYPE = "code_type";//只查询指定后缀名的文件
@@ -89,7 +90,6 @@ public class FileExplorerFragment extends ListFragment implements
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		registerForContextMenu(getListView());
-		setEmptyView(getListView());
 		setHasOptionsMenu(true);
 		adapter = new FileAdapter(getActivity(),null);
 		getListView().setFastScrollEnabled(true);
@@ -99,20 +99,6 @@ public class FileExplorerFragment extends ListFragment implements
 		query();
 	}
 	
-	public static void setEmptyView(AbsListView target) {
-		View old = target.getEmptyView();
-		ViewGroup vg = (ViewGroup) target.getParent();
-		Context ctx = target.getContext();
-		View emptyView = LayoutInflater.from(ctx).inflate(R.layout.empty_view,
-				null);
-		if (vg != null) {
-			if(old != null){
-				vg.removeView(old);
-			}
-			vg.addView(emptyView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-			target.setEmptyView(emptyView);
-		}
-	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

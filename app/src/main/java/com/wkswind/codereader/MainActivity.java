@@ -1,19 +1,19 @@
 package com.wkswind.codereader;
 
-import java.io.File;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 
 import com.wkswind.codereader.fileexplorer.FileExplorerFragment;
+import com.wkswind.codereader.fileexplorer.RelatedFragment;
 import com.wkswind.codereader.model.RootInfo;
 import com.wkswind.minilibrary.utils.PrefsUtils;
+
+import java.io.File;
 
 public class MainActivity extends BaseActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks, FileExplorerFragment.IFileSelected {
@@ -24,11 +24,7 @@ public class MainActivity extends BaseActivity implements
 	 */
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
-	/**
-	 * Used to store the last screen title. For use in
-	 * {@link #restoreActionBar()}.
-	 */
-	private CharSequence mTitle;
+//	private CharSequence mTitle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,30 +33,48 @@ public class MainActivity extends BaseActivity implements
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
-		mTitle = getTitle();
+//		mTitle = getTitle();
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 	}
 
-	public void onSectionAttached(RootInfo info) {
-		mTitle = info.getTitle();
-	}
+//	public void onSectionAttached(RootInfo info) {
+//		mTitle = info.getTitle();
+//	}
 
-	public void restoreActionBar() {
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		actionBar.setDisplayShowTitleEnabled(true);
-		actionBar.setTitle(mTitle);
-	}
+//	public void restoreActionBar() {
+//		ActionBar actionBar = getSupportActionBar();
+//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+//		actionBar.setDisplayShowTitleEnabled(true);
+//		actionBar.setTitle(mTitle);
+//	}
 
 	@Override
 	public void onNavigationDrawerItemSelected(RootInfo info) {
-		// TODO Auto-generated method stub
+		getSupportActionBar().setTitle(info.getIntent());
 		if(info.getIntent().equals(getString(R.string.title_activity_settings))){
 			startActivity(new Intent(this,SettingsActivity.class));
-		}else{
+		}else if(info.getIntent().equals(getString(R.string.action_history))){
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			Bundle args = new Bundle();
+			args.putInt(RelatedFragment.class.getSimpleName(), RelatedFragment.HISTORY_LOADER);
+			Fragment history = RelatedFragment.newInstance(args);
+			fragmentManager
+					.beginTransaction()
+					.replace(R.id.container,
+							history).commit();
+		}else if(info.getIntent().equals(getString(R.string.action_starred))){
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			Bundle args = new Bundle();
+			args.putInt(RelatedFragment.class.getSimpleName(), RelatedFragment.STAR_LOADER);
+			Fragment history = RelatedFragment.newInstance(args);
+			fragmentManager
+					.beginTransaction()
+					.replace(R.id.container,
+							history).commit();
+		} else{
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			Bundle args = new Bundle();
 			args.putString(FileExplorerFragment.CODE_TYPE, info.getIntent());
@@ -70,6 +84,9 @@ public class MainActivity extends BaseActivity implements
 					.replace(R.id.container,
 							FileExplorerFragment.newInstance(args)).commit();
 		}
+
+//		mTitle = info.getIntent();
+//		restoreActionBar();
 	}
 
 	@Override

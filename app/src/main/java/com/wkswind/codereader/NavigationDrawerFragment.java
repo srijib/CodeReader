@@ -93,14 +93,6 @@ public class NavigationDrawerFragment extends Fragment {
 			mFromSavedInstanceState = true;
 		}
 
-		// Select either the default item (0) or the last selected item.
-//		RootInfo info = new RootInfo();
-//		info.setTitle(getString(R.string.doc_java));
-//		info.setIcon(R.drawable.ic_root_java);
-//		info.setIntent(getString(R.string.doc_java));
-//		selectItem(info, mCurrentSelectedPosition);
-
-
 	}
 
 	@Override
@@ -126,18 +118,6 @@ public class NavigationDrawerFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.navdrawer, container, false);
 		ViewGroup group = (ViewGroup) rootView.findViewById(R.id.navdrawer_items_list);
-//		mDrawerListView = (ListView) rootView.findViewById(R.id.code_type);
-//		mDrawerListView
-//				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//					@Override
-//					public void onItemClick(AdapterView<?> parent, View view,
-//							int position, long id) {
-//						selectItem(((RootAdapter) parent.getAdapter())
-//								.getItem(position), position);
-//					}
-//				});
-//		mDrawerListView.setAdapter(new RootAdapter(getActivity()));
-//		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		makeItemView(group);
 
 		return rootView;
