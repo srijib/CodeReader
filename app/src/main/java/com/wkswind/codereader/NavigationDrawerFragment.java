@@ -133,6 +133,7 @@ public class NavigationDrawerFragment extends Fragment {
 			mNavDrawerItemViews[i] = navItemView;
 			group.addView(navItemView);
 		}
+//		setSelectedNavDrawerItem(roots.get(0),0);
 	}
 
 	public boolean isDrawerOpen() {
