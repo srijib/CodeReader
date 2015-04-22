@@ -33,7 +33,7 @@ import java.util.ArrayList;
  * > design guidelines</a> for a complete explanation of the behaviors
  * implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends BaseFragment {
 	/**
 	 * Remember the position of the selected item.
 	 */
@@ -65,6 +65,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 	private ArrayList<CharSequence> items;
 	private View[] mNavDrawerItemViews;
+	private ArrayList<RootInfo> roots;
 
 
 	public NavigationDrawerFragment() {
@@ -97,18 +98,9 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-	}
-
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		Log.i(TAG, "onCreateView Called");
 		View rootView = inflater.inflate(R.layout.navdrawer, container, false);
 		ViewGroup group = (ViewGroup) rootView.findViewById(R.id.navdrawer_items_list);
 		makeItemView(group);
@@ -118,13 +110,16 @@ public class NavigationDrawerFragment extends Fragment {
 
 	private void makeItemView(ViewGroup group) {
 		group.removeAllViews();
-		ArrayList<RootInfo> roots = RootInfo.init(getResources(), getActivity());
+		roots = RootInfo.init(getResources(), getActivity());
 		mNavDrawerItemViews = new View[roots.size()];
 		for(int i=0,j=roots.size();i<j;i++){
 			RootInfo root = roots.get(i);
 			View navItemView = makeNavDrawerItem(root, group, i);
 			mNavDrawerItemViews[i] = navItemView;
 			group.addView(navItemView);
+		}
+		if(roots != null && !roots.isEmpty()){
+			selectItem(roots.get(0), 0);
 		}
 //		setSelectedNavDrawerItem(roots.get(0),0);
 	}
@@ -212,7 +207,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 	private void selectItem(RootInfo info, int position) {
 		mCurrentSelectedPosition = position;
-//		setSelectedNavDrawerItem(info, position);
+		setSelectedNavDrawerItem(info, position);
 		if (mDrawerLayout != null) {
 			mDrawerLayout.closeDrawer(mFragmentContainerView);
 		}
@@ -227,6 +222,7 @@ public class NavigationDrawerFragment extends Fragment {
 			for (int i = 0; i < mNavDrawerItemViews.length; i++) {
 //				if (i < mNavDrawerItems.size()) {
 //					int thisItemId = mNavDrawerItems.get(i);
+					info = roots.get(i);
 					formatNavDrawerItem(mNavDrawerItemViews[i], info, position == i);
 //				}
 			}
