@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -207,7 +206,7 @@ public class NavigationDrawerFragment extends BaseFragment {
 
 	private void selectItem(RootInfo info, int position) {
 		mCurrentSelectedPosition = position;
-		setSelectedNavDrawerItem(info, position);
+		setSelectedNavDrawerItem(position);
 		if (mDrawerLayout != null) {
 			mDrawerLayout.closeDrawer(mFragmentContainerView);
 		}
@@ -216,13 +215,13 @@ public class NavigationDrawerFragment extends BaseFragment {
 		}
 	}
 
-	private void setSelectedNavDrawerItem(RootInfo info, int position) {
+	private void setSelectedNavDrawerItem(int position) {
 		Log.i(NavigationDrawerFragment.class.getSimpleName(), "postion # " + position +", navItems # " + mNavDrawerItemViews);
 		if (mNavDrawerItemViews != null) {
 			for (int i = 0; i < mNavDrawerItemViews.length; i++) {
 //				if (i < mNavDrawerItems.size()) {
 //					int thisItemId = mNavDrawerItems.get(i);
-					info = roots.get(i);
+					RootInfo info = roots.get(i);
 					formatNavDrawerItem(mNavDrawerItemViews[i], info, position == i);
 //				}
 			}
