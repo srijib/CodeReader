@@ -299,7 +299,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 				}
 			}
 		}
-
+		getSupportActionBar().setTitle(file.getName());
 		getSupportActionBar().setSubtitle(file.getAbsolutePath());
 		StringBuilder contentString = new StringBuilder("");
 		contentString.append("<html><head><title></title>");
