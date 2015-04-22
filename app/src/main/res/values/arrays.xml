@@ -13,15 +13,15 @@
         <item>@string/doc_html</item>
         <item>@string/doc_java</item>
         <item>@string/doc_js</item>
-        <item>@string/doc_lisp</item>
-        <item>@string/doc_lua</item>
-        <item>@string/doc_perl</item>
-        <item>@string/doc_python</item>
-        <item>@string/doc_ruby</item>
         <item>@string/doc_sql</item>
         <item>@string/doc_vb</item>
         <item>@string/doc_xml</item>
     </string-array>
+    <!-- <item>@string/doc_lisp</item>
+        <item>@string/doc_lua</item>
+        <item>@string/doc_perl</item>
+        <item>@string/doc_python</item>
+        <item>@string/doc_ruby</item>-->
     
     <string-array name="doc_intent">
         <item>c</item>
@@ -30,13 +30,13 @@
         <item>html</item>
         <item>java</item>
         <item>js</item>
-        <item>lisp</item>
-        <item>lua</item>
-        <item>perl</item>
-        <item>python</item>
-        <item>ruby</item>
         <item>sql</item>
         <item>vb</item>        
         <item>xml</item>        
     </string-array>
+    <!-- <item>lisp</item>
+        <item>lua</item>
+        <item>perl</item>
+        <item>python</item>
+        <item>ruby</item>-->
 </resources>
