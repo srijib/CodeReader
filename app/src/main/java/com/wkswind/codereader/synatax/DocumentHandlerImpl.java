@@ -24,7 +24,8 @@ public class DocumentHandlerImpl implements DocumentHandler {
 
     @Override
     public String getFileFormattedString(String fileString) {
-        return TextUtils.htmlEncode(fileString).replace(System.getProperty("line.separator"), "<br>").replace("\t","&emsp;");
+//        return TextUtils.htmlEncode(fileString).replace(System.getProperty("line.separator"), "<br>").replace("\t","&emsp;");
+        return TextUtils.htmlEncode(fileString).replaceAll(System.getProperty("line.separator"), "<br>").replaceAll("\t","<pre>&#9;</pre>");
     }
 
     @Override
