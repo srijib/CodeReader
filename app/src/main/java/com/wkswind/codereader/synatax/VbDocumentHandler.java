@@ -2,21 +2,11 @@ package com.wkswind.codereader.synatax;
 
 import android.text.TextUtils;
 
-public class VbDocumentHandler implements DocumentHandler {
+public class VbDocumentHandler extends DocumentHandlerImpl {
 
 	@Override
 	public String getFileExtension() {
 		return "ml";
-	}
-
-	@Override
-	public String getFileFormattedString(String fileString) {
-		return TextUtils.htmlEncode(fileString).replace("\n", "<br>");
-	}
-
-	@Override
-	public String getFileMimeType() {
-		return "text/html";
 	}
 
 	@Override

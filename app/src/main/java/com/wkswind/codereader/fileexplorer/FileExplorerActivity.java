@@ -1,7 +1,5 @@
 package com.wkswind.codereader.fileexplorer;
 
-import java.io.File;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,16 +7,18 @@ import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.wkswind.codereader.BaseActivity;
 import com.wkswind.codereader.R;
 import com.wkswind.codereader.ReaderActivity;
 import com.wkswind.codereader.fileexplorer.FileExplorerFragment.IFileSelected;
 
-public class FileExplorerActivity extends ActionBarActivity implements
+import java.io.File;
+
+public class FileExplorerActivity extends BaseActivity implements
 		IFileSelected, OnBackStackChangedListener {
     public static final String KEY_EXPLORER_TYPE = "com.wkswind.codereader.KEY_EXPLORER_TYPE";
     public static final int TYPE_FILE = 0;
@@ -37,7 +37,6 @@ public class FileExplorerActivity extends ActionBarActivity implements
 			extras.putSerializable(FileExplorerFragment.FILE_DIRECTORY,
 					Environment.getExternalStorageDirectory());
             int type = getIntent().getIntExtra(KEY_EXPLORER_TYPE, TYPE_FILE);
-//			Fragment fragment = FileListFragment.newInstance(extras);
 			Fragment fragment = (type == TYPE_FILE) ? FileExplorerFragment.newInstance(extras) : DirectoryExplorerFragment.newInstance(extras);
 			fm.addOnBackStackChangedListener(this);
 			fm.beginTransaction()
@@ -54,8 +53,6 @@ public class FileExplorerActivity extends ActionBarActivity implements
 		int count = fm.getBackStackEntryCount();
 
 		if (count > 1) {
-			// getSupportActionBar().setSubtitle(
-			// fm.getBackStackEntryAt(count - 2).getName());
 			fm.popBackStack();
 		} else {
 			finish();

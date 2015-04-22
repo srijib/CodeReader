@@ -2,21 +2,11 @@ package com.wkswind.codereader.synatax;
 
 import android.text.TextUtils;
 
-public class LuaDocumentHandler implements DocumentHandler {
+public class LuaDocumentHandler extends DocumentHandlerImpl {
 
 	@Override
 	public String getFileExtension() {
 		return "lua";
-	}
-
-	@Override
-	public String getFileFormattedString(String fileString) {
-		return TextUtils.htmlEncode(fileString).replace("\n", "<br>");
-	}
-
-	@Override
-	public String getFileMimeType() {
-		return "text/html";
 	}
 
 	@Override

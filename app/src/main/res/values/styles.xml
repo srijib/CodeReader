@@ -12,6 +12,8 @@
         -->
     </style>
 
+    <style name="AppBaseThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar"></style>
+
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
@@ -20,10 +22,16 @@
         <!-- actionbar颜色 -->
         <item name="colorPrimary">#3F51B5</item>
         <item name="colorAccent">#9FA8DA</item>
+        <item name="actionModeShareDrawable">@drawable/ic_action_share</item>
+
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
+    <style name="AppTheme.NoActionBar" parent="AppBaseThemeNoActionBar">
+        <!--<item name="windowActionBar">false</item>-->
+        <item name="colorPrimaryDark">#1A237E</item>
+        <!-- actionbar颜色 -->
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorAccent">#9FA8DA</item>
     </style>
 
     <style name="HeaderBar">

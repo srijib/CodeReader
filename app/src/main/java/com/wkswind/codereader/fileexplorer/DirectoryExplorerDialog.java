@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.wkswind.codereader.BaseListFragment;
 import com.wkswind.codereader.R;
 import com.wkswind.codereader.adapter.DirectoryAdapter;
 import com.wkswind.codereader.utils.BaseDialogFragment;
@@ -61,7 +62,7 @@ public class DirectoryExplorerDialog extends BaseDialogFragment {
                 lst.setAdapter(curAdapter);
             }
         });
-        FileExplorerFragment.setEmptyView(lst);
+        BaseListFragment.setEmptyView(lst);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(currentDir.getAbsolutePath()).setView(view).setNegativeButton(android.R.string.cancel,null).setNeutralButton(R.string.action_back,null).setPositiveButton(android.R.string.ok,null);
         return builder.create();
     }

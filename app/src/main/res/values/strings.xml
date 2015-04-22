@@ -7,6 +7,7 @@
     <string name="file_explorer">文件浏览器</string>
     <string name="action_share">分享</string>
     <string name="action_new_folder">新建文件夹</string>
+    <string name="action_fullscreen">全屏</string>
     <string name="action_back">返回</string>
     <string name="action_open">打开文件</string>
     <string name="file_not_exists">文件不存在</string>
@@ -17,6 +18,11 @@
     <string name="action_sort_by_name">按名称</string>
     <string name="action_sort_by_date">按最后修改日期</string>
     <string name="action_sort_by_size">按文件大小</string>
+
+    <string name="action_history">浏览历史</string>
+
+    <string name="double_tap_exit_fullscreen">双击退出全屏</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     
@@ -38,7 +44,7 @@
 	<string name="doc_xml">XML</string>
 	
 	<string name="empty_root">空空如也</string>
-	<string name="action_starred">星标</string>
+	<string name="action_starred">收藏</string>
 	<string name="pref_header_general">常用</string>
 	
 	<string name="title_activity_settings">设置</string>
@@ -59,4 +65,10 @@
     <string name="pref_key_directory">doc_directory</string>
     <string name="pref_key_doc_types">doc_types</string>
     <string name="pref_key_version_code">version_code</string>
+    <string name="title_activity_main_activity2">MainActivity2Activity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+
 </resources>

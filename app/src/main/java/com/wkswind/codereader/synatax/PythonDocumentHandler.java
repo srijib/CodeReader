@@ -2,26 +2,11 @@ package com.wkswind.codereader.synatax;
 
 import android.text.TextUtils;
 
-public class PythonDocumentHandler implements DocumentHandler {
+public class PythonDocumentHandler extends DocumentHandlerImpl {
 
 	@Override
 	public String getFileExtension() {
 		return "py";
-	}
-
-	@Override
-	public String getFileFormattedString(String fileString) {
-		return TextUtils.htmlEncode(fileString).replace("\n", "<br>");
-	}
-
-	@Override
-	public String getFileMimeType() {
-		return "text/html";
-	}
-
-	@Override
-	public String getFilePrettifyClass() {
-		return "prettyprint";
 	}
 
 	@Override

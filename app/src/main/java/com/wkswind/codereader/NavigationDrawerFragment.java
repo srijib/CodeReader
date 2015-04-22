@@ -5,23 +5,25 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.wkswind.codereader.adapter.RootAdapter;
 import com.wkswind.codereader.model.RootInfo;
+import com.wkswind.codereader.utils.UIUtils;
+
+import java.util.ArrayList;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation
@@ -30,8 +32,7 @@ import com.wkswind.codereader.model.RootInfo;
  * > design guidelines</a> for a complete explanation of the behaviors
  * implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
-
+public class NavigationDrawerFragment extends BaseFragment {
 	/**
 	 * Remember the position of the selected item.
 	 */
@@ -42,6 +43,7 @@ public class NavigationDrawerFragment extends Fragment {
 	 * user manually expands it. This shared preference tracks this.
 	 */
 	private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
+	private static final String TAG = NavigationDrawerFragment.class.getSimpleName();
 
 	/**
 	 * A pointer to the current callbacks instance (the Activity).
@@ -54,12 +56,16 @@ public class NavigationDrawerFragment extends Fragment {
 	private ActionBarDrawerToggle mDrawerToggle;
 
 	private DrawerLayout mDrawerLayout;
-	private ListView mDrawerListView;
     private View mFragmentContainerView;
 
 	private int mCurrentSelectedPosition = 0;
 	private boolean mFromSavedInstanceState;
 	private boolean mUserLearnedDrawer;
+
+	private ArrayList<CharSequence> items;
+	private View[] mNavDrawerItemViews;
+	private ArrayList<RootInfo> roots;
+
 
 	public NavigationDrawerFragment() {
 	}
@@ -67,7 +73,6 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		// Read in the flag indicating whether or not the user has demonstrated
 		// awareness of the
 		// drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -81,12 +86,6 @@ public class NavigationDrawerFragment extends Fragment {
 			mFromSavedInstanceState = true;
 		}
 
-		// Select either the default item (0) or the last selected item.
-		RootInfo info = new RootInfo();
-		info.setTitle(getString(R.string.doc_java));
-		info.setIcon(R.drawable.ic_root_java);
-		info.setIntent(getString(R.string.doc_java));
-		selectItem(info, mCurrentSelectedPosition);
 	}
 
 	@Override
@@ -100,20 +99,28 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-		mDrawerListView = (ListView) rootView.findViewById(R.id.code_type);
-		mDrawerListView
-				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-						selectItem(((RootAdapter) parent.getAdapter())
-								.getItem(position), position);
-					}
-				});
-		mDrawerListView.setAdapter(new RootAdapter(getActivity()));
-		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+		Log.i(TAG, "onCreateView Called");
+		View rootView = inflater.inflate(R.layout.navdrawer, container, false);
+		ViewGroup group = (ViewGroup) rootView.findViewById(R.id.navdrawer_items_list);
+		makeItemView(group);
+
 		return rootView;
+	}
+
+	private void makeItemView(ViewGroup group) {
+		group.removeAllViews();
+		roots = RootInfo.init(getResources(), getActivity());
+		mNavDrawerItemViews = new View[roots.size()];
+		for(int i=0,j=roots.size();i<j;i++){
+			RootInfo root = roots.get(i);
+			View navItemView = makeNavDrawerItem(root, group, i);
+			mNavDrawerItemViews[i] = navItemView;
+			group.addView(navItemView);
+		}
+		if(roots != null && !roots.isEmpty()){
+			selectItem(roots.get(0), 0);
+		}
+//		setSelectedNavDrawerItem(roots.get(0),0);
 	}
 
 	public boolean isDrawerOpen() {
@@ -199,14 +206,25 @@ public class NavigationDrawerFragment extends Fragment {
 
 	private void selectItem(RootInfo info, int position) {
 		mCurrentSelectedPosition = position;
-		if (mDrawerListView != null) {
-			mDrawerListView.setItemChecked(position, true);
-		}
+		setSelectedNavDrawerItem(position);
 		if (mDrawerLayout != null) {
 			mDrawerLayout.closeDrawer(mFragmentContainerView);
 		}
 		if (mCallbacks != null) {
 			mCallbacks.onNavigationDrawerItemSelected(info);
+		}
+	}
+
+	private void setSelectedNavDrawerItem(int position) {
+		Log.i(NavigationDrawerFragment.class.getSimpleName(), "postion # " + position +", navItems # " + mNavDrawerItemViews);
+		if (mNavDrawerItemViews != null) {
+			for (int i = 0; i < mNavDrawerItemViews.length; i++) {
+//				if (i < mNavDrawerItems.size()) {
+//					int thisItemId = mNavDrawerItems.get(i);
+					RootInfo info = roots.get(i);
+					formatNavDrawerItem(mNavDrawerItemViews[i], info, position == i);
+//				}
+			}
 		}
 	}
 
@@ -276,9 +294,8 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	private ActionBar getActionBar() {
-		return ((ActionBarActivity) getActivity()).getSupportActionBar();
+		return ((AppCompatActivity) getActivity()).getSupportActionBar();
 	}
-
 	/**
 	 * Callbacks interface that all activities using this fragment must
 	 * implement.
@@ -289,4 +306,76 @@ public class NavigationDrawerFragment extends Fragment {
 		 */
 		void onNavigationDrawerItemSelected(RootInfo info);
 	}
+
+
+
+	private View makeNavDrawerItem(final RootInfo rootInfo, ViewGroup container, final int position) {
+//		boolean selected = getSelfNavDrawerItem() == rootInfo;
+		boolean selected = false;
+		int layoutToInflate = 0;
+		switch (rootInfo.getType()){
+			case RootInfo.NAVDRAWER_ITEM:
+				layoutToInflate = R.layout.navdrawer_item;
+				break;
+			case RootInfo.NAVDRAWER_ITEM_SEPARATOR:
+				layoutToInflate = R.layout.navdrawer_separator;
+				break;
+		}
+		View view = LayoutInflater.from(getActivity()).inflate(layoutToInflate, container, false);
+
+		if (rootInfo.isSeparator()) {
+			// we are done
+			UIUtils.setAccessibilityIgnore(view);
+			return view;
+		}
+
+		ImageView iconView = (ImageView) view.findViewById(R.id.icon);
+		TextView titleView = (TextView) view.findViewById(R.id.title);
+		int iconId = rootInfo.getIcon();
+
+		// set icon and text
+		iconView.setVisibility(iconId > 0 ? View.VISIBLE : View.GONE);
+		if (iconId > 0) {
+			iconView.setImageResource(iconId);
+		}
+		titleView.setText(rootInfo.getTitle());
+
+		formatNavDrawerItem(view, rootInfo, selected);
+		view.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectItem(rootInfo, position);
+			}
+		});
+
+		return view;
+	}
+
+	private void formatNavDrawerItem(View view, RootInfo info, boolean selected) {
+		if (info.isSeparator()) {
+			// not applicable
+			return;
+		}
+		Log.i(TAG,view.toString());
+		ImageView iconView = (ImageView) view.findViewById(R.id.icon);
+		TextView titleView = (TextView) view.findViewById(R.id.title);
+		Log.i(TAG, "TITLE NULL # " + (titleView == null));
+		Log.i(TAG, "ICON NULL # " + (iconView == null));
+		// configure its appearance according to whether or not it's selected
+		titleView.setTextColor(selected ?
+				getResources().getColor(R.color.navdrawer_text_color_selected) :
+				getResources().getColor(R.color.navdrawer_text_color));
+		iconView.setColorFilter(selected ?
+				getResources().getColor(R.color.navdrawer_icon_tint_selected) :
+				getResources().getColor(R.color.navdrawer_icon_tint));
+	}
+
+
+
+//	protected int getSelfNavDrawerItem() {
+//		return NAVDRAWER_ITEM_INVALID;
+//	}
+
+
+
 }

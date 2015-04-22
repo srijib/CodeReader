@@ -1,15 +1,9 @@
 package com.wkswind.codereader.fileexplorer;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ListFragment;
@@ -26,16 +20,27 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.wkswind.codereader.BaseListFragment;
 import com.wkswind.codereader.R;
 import com.wkswind.codereader.ReaderActivity;
 import com.wkswind.codereader.SettingsActivity;
+import com.wkswind.codereader.database.CodeProvider;
+import com.wkswind.codereader.database.HistorysColumn;
+import com.wkswind.codereader.database.StarsColumn;
 import com.wkswind.codereader.fileexplorer.sort.SortFolder;
 import com.wkswind.codereader.fileexplorer.sort.SortType;
 
 import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-public class FileExplorerFragment extends ListFragment implements
+
+public class FileExplorerFragment extends BaseListFragment implements
 		LoaderManager.LoaderCallbacks<List<File>> {
 	public static final String FILE_DIRECTORY = "file_directory";
 	public static final String CODE_TYPE = "code_type";//只查询指定后缀名的文件
@@ -85,7 +90,6 @@ public class FileExplorerFragment extends ListFragment implements
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		registerForContextMenu(getListView());
-		setEmptyView(getListView());
 		setHasOptionsMenu(true);
 		adapter = new FileAdapter(getActivity(),null);
 		getListView().setFastScrollEnabled(true);
@@ -95,28 +99,13 @@ public class FileExplorerFragment extends ListFragment implements
 		query();
 	}
 	
-	public static void setEmptyView(AbsListView target) {
-		View old = target.getEmptyView();
-		ViewGroup vg = (ViewGroup) target.getParent();
-		Context ctx = target.getContext();
-		View emptyView = LayoutInflater.from(ctx).inflate(R.layout.empty_view,
-				null);
-		if (vg != null) {
-			if(old != null){
-				vg.removeView(old);
-			}
-			vg.addView(emptyView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-			target.setEmptyView(emptyView);
-		}
-	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.drawer, menu);
-//		inflater.inflate(R.menu.explorer, menu);
-	}	
+//		inflater.inflate(R.menu.drawer, menu);
+	}
 	
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
@@ -171,7 +160,6 @@ public class FileExplorerFragment extends ListFragment implements
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-//		startActivity(new iNTENT);
 	}
 	
 	void query(){
@@ -208,8 +196,28 @@ public class FileExplorerFragment extends ListFragment implements
 		@Override
 		protected List<File> loadDataInBackground(Bundle extras) {
 			// TODO Auto-generated method stub
+
 			File file = null;
 			String codeType = extras == null ? null : extras.getString(CODE_TYPE);
+			if(codeType.equals(getContext().getString(R.string.action_starred))){
+				ArrayList<File> stars = new ArrayList<>();
+				Cursor cursor = getContext().getContentResolver().query(CodeProvider.Stars.CONTENT_URI,new String[]{"*"},StarsColumn.star+"=1",null,null);
+				if(cursor.moveToFirst()){
+					while(cursor.moveToNext()){
+						stars.add(new File(cursor.getString(cursor.getColumnIndex(StarsColumn.fileName))));
+					}
+				}
+				return stars;
+			}else if(codeType.equals(getContext().getString(R.string.action_history))){
+				ArrayList<File> historys = new ArrayList<>();
+				Cursor cursor = getContext().getContentResolver().query(CodeProvider.Historys.CONTENT_URI,new String[]{"*"},null,null,null);
+				if(cursor.moveToFirst()){
+					while(cursor.moveToNext()){
+						historys.add(new File(cursor.getString(cursor.getColumnIndex(HistorysColumn.fileName))));
+					}
+				}
+				return historys;
+			}
 			if(extras==null || extras.getSerializable(FILE_DIRECTORY) == null){
 				file = Environment.getExternalStorageDirectory();
 			}else{

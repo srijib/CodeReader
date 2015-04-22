@@ -92,8 +92,6 @@ public class DirectoryExplorerFragment extends ListFragment implements
 		adapter = new FileAdapter(getActivity(),null);
 		getListView().setFastScrollEnabled(true);
 		setListAdapter(adapter);
-//		setListShown(false);
-//		getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
 		query();
 	}
 	
@@ -117,8 +115,7 @@ public class DirectoryExplorerFragment extends ListFragment implements
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.drawer, menu);
-//		inflater.inflate(R.menu.explorer, menu);
-	}	
+	}
 	
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
@@ -173,7 +170,6 @@ public class DirectoryExplorerFragment extends ListFragment implements
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-//		startActivity(new iNTENT);
 	}
 	
 	void query(){

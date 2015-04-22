@@ -1,36 +1,34 @@
 package com.wkswind.codereader;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Calendar;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
 
-import com.wkswind.codereader.database.data.provider.ReadingHistoryContent;
-import com.wkswind.codereader.database.data.provider.ReadingHistoryContent.Wish.Columns;
+import com.wkswind.codereader.database.CodeProvider;
+import com.wkswind.codereader.database.HistorysColumn;
+import com.wkswind.codereader.database.StarsColumn;
 import com.wkswind.codereader.fileexplorer.FileAdapter;
 import com.wkswind.codereader.synatax.CDocumentHandler;
 import com.wkswind.codereader.synatax.CppDocumentHandler;
@@ -50,9 +48,20 @@ import com.wkswind.codereader.synatax.SqlDocumentHandler;
 import com.wkswind.codereader.synatax.TextDocumentHandler;
 import com.wkswind.codereader.synatax.VbDocumentHandler;
 import com.wkswind.codereader.synatax.XmlDocumentHandler;
+import com.wkswind.minilibrary.uihelper.SystemUiHelper;
+import com.wkswind.minilibrary.utils.CharsetDetector;
+import com.wkswind.minilibrary.utils.LLog;
 import com.wkswind.minilibrary.utils.PrefsUtils;
 
-public class ReaderActivity extends BaseActivity {
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.Calendar;
+
+public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVisibilityChangeListener {
 	private Uri selectedFile;
 	public static final int REQUEST_FILE_CHOOSE = 0;
 	private WebView codeReader;
@@ -60,8 +69,10 @@ public class ReaderActivity extends BaseActivity {
 	public static final int MAXFILESIZE = 1024 * 128;
 	private static final String LAST_READ = "last_read";
 	private boolean isStarred = false;
+    private SystemUiHelper uiHelper;
+	private GestureDetectorCompat gestureDetectorCompat;
 
-	@SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint("SetJavaScriptEnabled")
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +80,27 @@ public class ReaderActivity extends BaseActivity {
 		setContentView(R.layout.activity_main);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE, SystemUiHelper.FLAG_IMMERSIVE_STICKY, this);
+//        uiHelper.hide();
 		codeReader = (WebView) findViewById(R.id.code_reader);
+		gestureDetectorCompat = new GestureDetectorCompat(this,new GestureDetector.SimpleOnGestureListener(){
+			@Override
+			public boolean onDown(MotionEvent e) {
+				return super.onDown(e);
+			}
+
+			@Override
+			public boolean onDoubleTap(MotionEvent e) {
+				uiHelper.show();
+				return super.onDoubleTap(e);
+			}
+		});
+		codeReader.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return gestureDetectorCompat.onTouchEvent(event);
+			};
+		});
 		codeReader.setWebViewClient(new WebChrome2());
 		WebSettings s = codeReader.getSettings();
 		s.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
@@ -85,8 +116,12 @@ public class ReaderActivity extends BaseActivity {
 			selectedFile = getIntent().getData();
 			if (selectedFile != null
 					&& selectedFile.toString().startsWith("file")) {
-				loadFile(selectedFile);
-			}
+                try {
+                    loadFile(selectedFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 		} else {
 			Uri lastUri = null;
 			String lastRead = PrefsUtils.get(this, LAST_READ, "");
@@ -103,8 +138,12 @@ public class ReaderActivity extends BaseActivity {
 			}
 
 			if (lastUri != null) {
-				loadFile(lastUri);
-			}
+                try {
+                    loadFile(lastUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 		}
 
 	}
@@ -144,26 +183,32 @@ public class ReaderActivity extends BaseActivity {
 		// say when the user has selected an image.
 		actionProvider.setShareIntent(createShareIntent());
 		
-		/*final MenuItem starredItem = menu.findItem(R.id.action_starred);
+		final MenuItem starredItem = menu.findItem(R.id.action_starred);
 		final CheckBox chkStarred = (CheckBox) MenuItemCompat.getActionView(starredItem);
-		chkStarred.setClickable(true);		
-		chkStarred.setOnCheckedChangeListener(new OnCheckedChangeListener() {			
+		chkStarred.setClickable(true);
+//		if(getApplication().getContentResolver().)
+		Cursor cursor = getApplication().getContentResolver().query(CodeProvider.Stars.CONTENT_URI,new String[]{"*"}, StarsColumn.fileName+"=? and "+StarsColumn.star+"=?", new String[]{selectedFile.getPath(),"1"},null);
+		chkStarred.setChecked(cursor != null && cursor.moveToLast() &&cursor.getCount()>0);
+		chkStarred.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				// TODO Auto-generated method stub
-//				Toast.makeText(ReaderActivity.this, "starred", Toast.LENGTH_SHORT).show();
-				isStarred = isChecked;
+				getApplication().getContentResolver().delete(CodeProvider.Stars.CONTENT_URI, StarsColumn.fileName + "= ? ", new String[]{selectedFile.getPath()});
+				ContentValues cv = new ContentValues();
+				cv.put(StarsColumn.lastReadTime, Calendar.getInstance().getTimeInMillis());
+				cv.put(StarsColumn.fileName, selectedFile.getPath());
+				cv.put(StarsColumn.star, isChecked);
+				getApplication().getContentResolver().insert(CodeProvider.Stars.CONTENT_URI,cv);
 			}
-		});*/
-//		chkStarred.setChecked(getContentResolver().query(ReadingHistoryContent.Wish.CONTENT_URI, new String[]{BaseColumns._ID}, Columns.URL, selectionArgs, sortOrder));
+		});
 		return true;
 	}
 	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		menu.findItem(R.id.action_share).setEnabled( selectedFile != null);
-		menu.findItem(R.id.action_starred).setVisible(false);
+		menu.findItem(R.id.action_share).setEnabled(selectedFile != null);
+//		menu.findItem(R.id.action_starred).setVisible(false);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -179,7 +224,15 @@ public class ReaderActivity extends BaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {		
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			finish();
+            /**
+             * handle like {@link com.wkswind.codereader.SettingsActivity}'s up button click
+             */
+            onBackPressed();
+            break;
+        case R.id.action_fullscreen:
+            uiHelper.delayHide(100);
+			Toast.makeText(getApplication(), R.string.double_tap_exit_fullscreen, Toast.LENGTH_SHORT).show();
+            break;
 		default:
 			break;
 		}
@@ -193,12 +246,16 @@ public class ReaderActivity extends BaseActivity {
 		if (resultCode == Activity.RESULT_OK) {
 			if (requestCode == REQUEST_FILE_CHOOSE) {
 				selectedFile = data.getData();
-				loadFile(selectedFile);
-			}
+                try {
+                    loadFile(selectedFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 		}
 	}
 
-	private void loadFile(Uri uri) {
+	private void loadFile(Uri uri) throws IOException {
 		// TODO Auto-generated method stub
 		File file = new File(uri.getPath());
 		if (!file.exists()) {
@@ -211,6 +268,8 @@ public class ReaderActivity extends BaseActivity {
 					.show();
 			return;
 		}
+        Charset charset = CharsetDetector.decodeCharset(file);
+		LLog.i(charset.displayName());
 		DocumentHandler handler = getHandlerByFileExtension(uri);
 		final long length = file.length();
 
@@ -246,18 +305,17 @@ public class ReaderActivity extends BaseActivity {
 		contentString.append("<html><head><title></title>");
 		contentString
 				.append("<link href=\"file:///android_asset/prettify.css\" rel=\"stylesheet\" type=\"text/css\"/> ");
-        contentString.append("<style>\n" +
-                "        .prettyprint ol.linenums > li { list-style-type: decimal; }\n" +
-                "    </style>");
 		contentString
 				.append("<script src=\"file:///android_asset/prettify.js\" type=\"text/javascript\"></script> ");
 		contentString.append(handler.getFileScriptFiles());
-		contentString
-				.append("</head><body onload=\"prettyPrint()\"><code class=\""
-						+ handler.getFilePrettifyClass() + "\">");
-		String sourceString = new String(array);
+        contentString.append("</head>");
+        contentString.append("<body onload=\"prettyPrint()\">");
+        contentString.append("<code class=\""+ handler.getFilePrettifyClass()+" \">");
+        String sourceString = new String(array,charset.name());
 		contentString.append(handler.getFileFormattedString(sourceString));
-		contentString.append("</code> </html> ");
+        contentString.append("</code>");
+        contentString.append("</body>");
+        contentString.append("</html>");
 
 		codeReader.loadDataWithBaseURL("file:///android_asset/",
 				contentString.toString(), "text/html", "", "");
@@ -268,13 +326,11 @@ public class ReaderActivity extends BaseActivity {
 	}
 	
 	private void updateRecentReading(String url){
-		ContentResolver cr = getContentResolver();
-		ContentValues values = new ContentValues();
-		values.put(Columns.DATE_TIMESTAMP.getName(), Calendar.getInstance().getTimeInMillis());
-		values.put(Columns.URL.getName(), url);
-		values.put(Columns.STARRED.getName(), isStarred);
-		cr.delete(ReadingHistoryContent.Wish.CONTENT_URI, Columns.URL.getName()+"=?", new String[]{url});
-		cr.insert(ReadingHistoryContent.Wish.CONTENT_URI, values);
+		ContentValues cv = new ContentValues();
+		cv.put(HistorysColumn.fileName, url);
+		cv.put(HistorysColumn.lastReadTime, Calendar.getInstance().getTimeInMillis());
+		getApplication().getContentResolver().delete(CodeProvider.Historys.CONTENT_URI, HistorysColumn.fileName + "=?", new String[]{url});
+		getApplication().getContentResolver().insert(CodeProvider.Historys.CONTENT_URI, cv);
 	}
 
 	private DocumentHandler getHandlerByFileExtension(Uri uri) {
@@ -323,4 +379,27 @@ public class ReaderActivity extends BaseActivity {
 
 	}
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_UP:
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public void onVisibilityChange(boolean visible) {
+        if(visible){
+//            uiHelper.delayHide(2 * 1000);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(KeyEvent.KEYCODE_MENU == keyCode && (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)){
+            uiHelper.show();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

@@ -1,7 +1,5 @@
 package com.wkswind.codereader.adapter;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +10,8 @@ import android.widget.TextView;
 
 import com.wkswind.codereader.R;
 import com.wkswind.codereader.model.RootInfo;
+
+import java.util.ArrayList;
 
 public class RootAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
@@ -40,10 +40,10 @@ public class RootAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		RootHolder holder = null;
 		if(convertView == null){
-			convertView = inflater.inflate(R.layout.item_root_list, null);
+			convertView = inflater.inflate(R.layout.item_root_list, parent ,false);
 			holder = new RootHolder();
-			holder.icon = (ImageView) convertView.findViewById(R.id.icon_mime);
-			holder.title = (TextView) convertView.findViewById(android.R.id.title);
+			holder.icon = (ImageView) convertView.findViewById(R.id.icon);
+			holder.title = (TextView) convertView.findViewById(R.id.title);
 			convertView.setTag(holder);
 		}else{
 			holder = (RootHolder) convertView.getTag();

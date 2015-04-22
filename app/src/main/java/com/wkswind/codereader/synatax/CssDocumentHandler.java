@@ -2,21 +2,11 @@ package com.wkswind.codereader.synatax;
 
 import android.text.TextUtils;
 
-public class CssDocumentHandler implements DocumentHandler {
+public class CssDocumentHandler extends DocumentHandlerImpl {
 
 	@Override
 	public String getFileExtension() {
 		return "css";
-	}
-
-	@Override
-	public String getFileFormattedString(String fileString) {
-		return TextUtils.htmlEncode(fileString).replace("\n", "<br>");
-	}
-
-	@Override
-	public String getFileMimeType() {
-		return "text/html";
 	}
 
 	@Override
