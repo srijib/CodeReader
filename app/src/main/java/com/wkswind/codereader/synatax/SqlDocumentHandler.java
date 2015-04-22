@@ -2,21 +2,11 @@ package com.wkswind.codereader.synatax;
 
 import android.text.TextUtils;
 
-public class SqlDocumentHandler implements DocumentHandler {
+public class SqlDocumentHandler extends DocumentHandlerImpl {
 
 	@Override
 	public String getFileExtension() {
 		return "sql";
-	}
-
-	@Override
-	public String getFileFormattedString(String fileString) {
-		return TextUtils.htmlEncode(fileString).replace("\n", "<br>");
-	}
-
-	@Override
-	public String getFileMimeType() {
-		return "text/html";
 	}
 
 	@Override

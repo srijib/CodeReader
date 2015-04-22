@@ -50,6 +50,7 @@ import com.wkswind.codereader.synatax.VbDocumentHandler;
 import com.wkswind.codereader.synatax.XmlDocumentHandler;
 import com.wkswind.minilibrary.uihelper.SystemUiHelper;
 import com.wkswind.minilibrary.utils.CharsetDetector;
+import com.wkswind.minilibrary.utils.LLog;
 import com.wkswind.minilibrary.utils.PrefsUtils;
 
 import java.io.File;
@@ -268,6 +269,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 			return;
 		}
         Charset charset = CharsetDetector.decodeCharset(file);
+		LLog.i(charset.displayName());
 		DocumentHandler handler = getHandlerByFileExtension(uri);
 		final long length = file.length();
 
