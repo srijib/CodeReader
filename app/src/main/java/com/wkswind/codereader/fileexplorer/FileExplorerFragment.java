@@ -199,7 +199,7 @@ public class FileExplorerFragment extends BaseListFragment implements
 
 			File file = null;
 			String codeType = extras == null ? null : extras.getString(CODE_TYPE);
-			if(codeType.equals(getContext().getString(R.string.action_starred))){
+			if(getContext().getString(R.string.action_starred).equals(codeType)){
 				ArrayList<File> stars = new ArrayList<>();
 				Cursor cursor = getContext().getContentResolver().query(CodeProvider.Stars.CONTENT_URI,new String[]{"*"},StarsColumn.star+"=1",null,null);
 				if(cursor.moveToFirst()){
@@ -208,7 +208,7 @@ public class FileExplorerFragment extends BaseListFragment implements
 					}
 				}
 				return stars;
-			}else if(codeType.equals(getContext().getString(R.string.action_history))){
+			}else if((getContext().getString(R.string.action_history)).equals(codeType)){
 				ArrayList<File> historys = new ArrayList<>();
 				Cursor cursor = getContext().getContentResolver().query(CodeProvider.Historys.CONTENT_URI,new String[]{"*"},null,null,null);
 				if(cursor.moveToFirst()){
