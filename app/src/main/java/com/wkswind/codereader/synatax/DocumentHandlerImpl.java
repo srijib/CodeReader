@@ -7,9 +7,25 @@ import android.text.TextUtils;
  * Created by Administrator on 2015/4/22.
  */
 public class DocumentHandlerImpl implements DocumentHandler {
+
+    private String fileExtension ;
+    private String fileScriptClass;
+
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
+    }
+
+    public String getFileScriptClass() {
+        return fileScriptClass;
+    }
+
+    public void setFileScriptClass(String fileScriptClass) {
+        this.fileScriptClass = fileScriptClass;
+    }
+
     @Override
     public String getFileExtension() {
-        return null;
+        return fileExtension;
     }
 
     @Override

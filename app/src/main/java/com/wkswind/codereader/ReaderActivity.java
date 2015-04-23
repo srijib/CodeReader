@@ -30,24 +30,8 @@ import com.wkswind.codereader.database.CodeProvider;
 import com.wkswind.codereader.database.HistorysColumn;
 import com.wkswind.codereader.database.StarsColumn;
 import com.wkswind.codereader.fileexplorer.FileAdapter;
-import com.wkswind.codereader.synatax.CDocumentHandler;
-import com.wkswind.codereader.synatax.CppDocumentHandler;
-import com.wkswind.codereader.synatax.CssDocumentHandler;
 import com.wkswind.codereader.synatax.DocumentHandler;
-import com.wkswind.codereader.synatax.HtmlDocumentHandler;
-import com.wkswind.codereader.synatax.JavaDocumentHandler;
-import com.wkswind.codereader.synatax.JavascriptDocumentHandler;
-import com.wkswind.codereader.synatax.LispDocumentHandler;
-import com.wkswind.codereader.synatax.LuaDocumentHandler;
-import com.wkswind.codereader.synatax.MlDocumentHandler;
-import com.wkswind.codereader.synatax.MxmlDocumentHandler;
-import com.wkswind.codereader.synatax.PerlDocumentHandler;
-import com.wkswind.codereader.synatax.PythonDocumentHandler;
-import com.wkswind.codereader.synatax.RubyDocumentHandler;
-import com.wkswind.codereader.synatax.SqlDocumentHandler;
-import com.wkswind.codereader.synatax.TextDocumentHandler;
-import com.wkswind.codereader.synatax.VbDocumentHandler;
-import com.wkswind.codereader.synatax.XmlDocumentHandler;
+import com.wkswind.codereader.synatax.DocumentHandlerImpl;
 import com.wkswind.minilibrary.uihelper.SystemUiHelper;
 import com.wkswind.minilibrary.utils.CharsetDetector;
 import com.wkswind.minilibrary.utils.LLog;
@@ -282,7 +266,6 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		try {
 			is = new FileInputStream(file);
 			is.read(array);
-			is.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -304,21 +287,24 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		StringBuilder contentString = new StringBuilder("");
 		contentString.append("<html><head><title></title>");
 		contentString
-				.append("<link href=\"file:///android_asset/prettify.css\" rel=\"stylesheet\" type=\"text/css\"/> ");
+				.append("<link href=\"file:///android_asset/idea.css\" rel=\"stylesheet\" type=\"text/css\">");
 		contentString
-				.append("<script src=\"file:///android_asset/prettify.js\" type=\"text/javascript\"></script> ");
-		contentString.append(handler.getFileScriptFiles());
+				.append("<script src=\"file:///android_asset/highlight.pack.js\"></script> ");
+		contentString.append("<script>hljs.initHighlightingOnLoad();</script>");
         contentString.append("</head>");
-        contentString.append("<body onload=\"prettyPrint()\">");
-        contentString.append("<code class=\""+ handler.getFilePrettifyClass()+" \">");
+//        contentString.append("<body>");
+		contentString.append("<pre>");
+		contentString.append("<code class="+handler.getFileScriptFiles()+">");
+//        contentString.append("<code class=\""+ handler.getFilePrettifyClass()+" \">");
         String sourceString = new String(array,charset.name());
 		contentString.append(handler.getFileFormattedString(sourceString));
         contentString.append("</code>");
-        contentString.append("</body>");
+		contentString.append("</pre>");
+//        contentString.append("</body>");
         contentString.append("</html>");
 
 		codeReader.loadDataWithBaseURL("file:///android_asset/",
-				contentString.toString(), "text/html", "", "");
+				contentString.toString(), "text/html", charset.displayName(), null);
 		
 		selectedFile = uri;
 		supportInvalidateOptionsMenu();
@@ -334,46 +320,16 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 	}
 
 	private DocumentHandler getHandlerByFileExtension(Uri uri) {
+		DocumentHandlerImpl impl = new DocumentHandlerImpl();
 		File file = new File(uri.getPath());
 		if (file.exists() && file.isFile()) {
 			String extension = MimeTypeMap.getFileExtensionFromUrl(file
 					.getAbsolutePath());
-			if (extension.equals(".java")) {
-				return new JavaDocumentHandler();
-			} else if (extension.equals(".cpp")) {
-				return new CppDocumentHandler();
-			} else if (extension.equals("c")) {
-				return new CDocumentHandler();
-			} else if (extension.equals("html") || extension.equals("hml")
-					|| extension.equals("xhtml")) {
-				return new HtmlDocumentHandler();
-			} else if (extension.equals("js")) {
-				return new JavascriptDocumentHandler();
-			} else if (extension.equals(".mxml")) {
-				return new MxmlDocumentHandler();
-			} else if (extension.equals(".pl")) {
-				return new PerlDocumentHandler();
-			} else if (extension.equals(".py")) {
-				return new PythonDocumentHandler();
-			} else if (extension.equals(".rb")) {
-				return new RubyDocumentHandler();
-			} else if (extension.equals(".xml")) {
-				return new XmlDocumentHandler();
-			} else if (extension.equals(".css")) {
-				return new CssDocumentHandler();
-			} else if (extension.equals(".el") || extension.equals(".lisp")
-					|| extension.equals(".scm")) {
-				return new LispDocumentHandler();
-			} else if (extension.equals(".lua")) {
-				return new LuaDocumentHandler();
-			} else if (extension.equals(".ml")) {
-				return new MlDocumentHandler();
-			} else if (extension.equals(".vb")) {
-				return new VbDocumentHandler();
-			} else if (extension.equals(".sql")) {
-				return new SqlDocumentHandler();
+			impl.setFileExtension(extension);
+			if(!TextUtils.isEmpty(extension)){
+				impl.setFileScriptClass(extension.substring(1));
 			}
-			return new TextDocumentHandler();
+			return impl;
 		}
 		return null;
 
