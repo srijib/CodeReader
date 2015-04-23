@@ -12,14 +12,14 @@ import android.view.Menu;
 import android.widget.Toast;
 
 import com.wkswind.codereader.BaseActivity;
+import com.wkswind.codereader.FileListFragment;
 import com.wkswind.codereader.R;
 import com.wkswind.codereader.ReaderActivity;
-import com.wkswind.codereader.fileexplorer.FileExplorerFragment.IFileSelected;
 
 import java.io.File;
 
 public class FileExplorerActivity extends BaseActivity implements
-		IFileSelected, OnBackStackChangedListener {
+		FileListFragment.IFileSelected, OnBackStackChangedListener {
     public static final String KEY_EXPLORER_TYPE = "com.wkswind.codereader.KEY_EXPLORER_TYPE";
     public static final int TYPE_FILE = 0;
     public static final int TYPE_DIRECTORY = 1;

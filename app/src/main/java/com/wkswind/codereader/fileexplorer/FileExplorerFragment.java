@@ -21,6 +21,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.wkswind.codereader.BaseListFragment;
+import com.wkswind.codereader.FileListFragment;
 import com.wkswind.codereader.R;
 import com.wkswind.codereader.ReaderActivity;
 import com.wkswind.codereader.SettingsActivity;
@@ -40,7 +41,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class FileExplorerFragment extends BaseListFragment implements
+public class FileExplorerFragment extends FileListFragment implements
 		LoaderManager.LoaderCallbacks<List<File>> {
 	public static final String FILE_DIRECTORY = "file_directory";
 	public static final String CODE_TYPE = "code_type";//只查询指定后缀名的文件
@@ -51,39 +52,8 @@ public class FileExplorerFragment extends BaseListFragment implements
 		fragment.setArguments(args);
 		return fragment;
 	}
-	
-	public static interface IFileSelected{
-		public void onFileSelected(File file);
-	}
 
 	private FileAdapter adapter;
-	private IFileSelected iFileSelected;
-	private boolean isSearching = true;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
-	}
-	
-	@Override
-	public void onAttach(Activity activity) {
-		// TODO Auto-generated method stub
-		super.onAttach(activity);
-		if(activity instanceof IFileSelected){
-			iFileSelected = (IFileSelected) activity;
-		}else{
-			throw new IllegalArgumentException("activity not instanceof IFileSelected ");
-		}
-	}
-	
-	@Override
-	public void onDetach() {
-		// TODO Auto-generated method stub
-		super.onDetach();
-		iFileSelected = null;
-	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -98,92 +68,15 @@ public class FileExplorerFragment extends BaseListFragment implements
 //		getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
 		query();
 	}
-	
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// TODO Auto-generated method stub
-		super.onCreateOptionsMenu(menu, inflater);
-//		inflater.inflate(R.menu.drawer, menu);
-	}
-	
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		super.onPrepareOptionsMenu(menu);
-		menu.setGroupEnabled(R.id.group, !isSearching);
-	}
-
-	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
-		// TODO Auto-generated method stub
-		super.onListItemClick(l, v, position, id);
-		if(iFileSelected != null){
-			iFileSelected.onFileSelected(adapter.getItem(position));
-		}
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		switch (item.getItemId()) {
-		case R.id.sort_by_name:
-			adapter.sort(SortType.byDefault);
-			break;
-		case R.id.sort_by_date:
-			adapter.sort(SortType.byDate);
-			break;
-		case R.id.sort_by_size:
-			adapter.sort(SortType.bySize);
-			break;
-		case R.id.action_refresh:
-			query();
-			break;
-		case android.R.id.home:
-			getActivity().finish();
-			break;
-		case R.id.action_open:
-			startActivityForResult(
-					new Intent(getActivity(), FileExplorerActivity.class),
-					ReaderActivity.REQUEST_FILE_CHOOSE);
-			break;
-		case R.id.action_setting:
-			startActivity(new Intent(getActivity(),SettingsActivity.class));
-			break;
-		default:
-			break;
-		}
-		return true;
-	}
-	
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-	
-	void query(){
+	protected void query(){
 		showProgress(true);
 		if(getLoaderManager().getLoader(LOADER_ID) == null){
 			getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
 		}else{
 			getLoaderManager().restartLoader(LOADER_ID, getArguments(), this);
 		}
-	}
-	
-	void showProgress(boolean show){
-		if(show){
-			setListShown(false);
-		}else{
-			if (isResumed()) {
-				setListShown(true);
-			} else {
-				setListShownNoAnimation(true);
-			}
-		}
-		setListShown(!show);
-		isSearching = show;
-		getActivity().supportInvalidateOptionsMenu();
 	}
 	
 	static class FileLoader extends AsyncTaskLoaderEx<List<File>>{
