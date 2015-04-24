@@ -7,10 +7,12 @@ import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 
 import com.wkswind.codereader.fileexplorer.FileExplorerFragment;
 import com.wkswind.codereader.fileexplorer.RelatedFragment;
 import com.wkswind.codereader.model.RootInfo;
+import com.wkswind.minilibrary.utils.LLog;
 import com.wkswind.minilibrary.utils.PrefsUtils;
 
 import java.io.File;
@@ -23,6 +25,7 @@ public class MainActivity extends BaseActivity implements
 	 * navigation drawer.
 	 */
 	private NavigationDrawerFragment mNavigationDrawerFragment;
+	private String mTitle;
 
 //	private CharSequence mTitle;
 
@@ -40,20 +43,23 @@ public class MainActivity extends BaseActivity implements
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 	}
 
-//	public void onSectionAttached(RootInfo info) {
-//		mTitle = info.getTitle();
-//	}
+	public void onSectionAttached(RootInfo info) {
+		mTitle = info.getTitle();
+	}
 
-//	public void restoreActionBar() {
-//		ActionBar actionBar = getSupportActionBar();
-//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-//		actionBar.setDisplayShowTitleEnabled(true);
-//		actionBar.setTitle(mTitle);
-//	}
+	public void restoreActionBar() {
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		actionBar.setDisplayShowTitleEnabled(true);
+		LLog.i(mTitle);
+		actionBar.setTitle(mTitle);
+	}
 
 	@Override
 	public void onNavigationDrawerItemSelected(RootInfo info) {
-		getSupportActionBar().setTitle(info.getIntent());
+		onSectionAttached(info);
+		restoreActionBar();
+//		getSupportActionBar().setTitle(info.getIntent());
 		if(info.getIntent().equals(getString(R.string.title_activity_settings))){
 			startActivity(new Intent(this,SettingsActivity.class));
 		}else if(info.getIntent().equals(getString(R.string.action_history))){

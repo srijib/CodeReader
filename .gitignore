@@ -104,4 +104,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# keystore
+*.keystore
 >>>>>>> ac82e792d4825ba7af61d7a126261b1773ad7e5a

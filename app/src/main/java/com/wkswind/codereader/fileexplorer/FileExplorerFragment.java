@@ -92,25 +92,6 @@ public class FileExplorerFragment extends FileListFragment implements
 
 			File file = null;
 			String codeType = extras == null ? null : extras.getString(CODE_TYPE);
-			if(getContext().getString(R.string.action_starred).equals(codeType)){
-				ArrayList<File> stars = new ArrayList<>();
-				Cursor cursor = getContext().getContentResolver().query(CodeProvider.Stars.CONTENT_URI,new String[]{"*"},StarsColumn.star+"=1",null,null);
-				if(cursor.moveToFirst()){
-					while(cursor.moveToNext()){
-						stars.add(new File(cursor.getString(cursor.getColumnIndex(StarsColumn.fileName))));
-					}
-				}
-				return stars;
-			}else if((getContext().getString(R.string.action_history)).equals(codeType)){
-				ArrayList<File> historys = new ArrayList<>();
-				Cursor cursor = getContext().getContentResolver().query(CodeProvider.Historys.CONTENT_URI,new String[]{"*"},null,null,null);
-				if(cursor.moveToFirst()){
-					while(cursor.moveToNext()){
-						historys.add(new File(cursor.getString(cursor.getColumnIndex(HistorysColumn.fileName))));
-					}
-				}
-				return historys;
-			}
 			if(extras==null || extras.getSerializable(FILE_DIRECTORY) == null){
 				file = Environment.getExternalStorageDirectory();
 			}else{

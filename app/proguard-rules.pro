@@ -57,3 +57,16 @@
 -keep public class org.acra.ErrorReporter {
     public void handleSilentException(java.lang.Throwable);
 }
+
+# support v7
+-keep public class android.support.v7.widget.** { *;}
+-keep public class android.support.v7.internal.widget.** { *;}
+-keep public class android.support.v7.internal.view.menu.** { *; }
+# support v4
+-keep class android.support.v4.** { *; }
+#minilibrary
+-keep public class com.wkswind.minilibrary.library.** { *;}
+#keep custom menu checkbox
+-keep public class com.wkswind.codereader.utils.OptionsMenuCheckBox {
+    *;
+}

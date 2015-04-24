@@ -169,6 +169,9 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		
 		final MenuItem starredItem = menu.findItem(R.id.action_starred);
 		final CheckBox chkStarred = (CheckBox) MenuItemCompat.getActionView(starredItem);
+//		if(chkStarred == null){
+//			return true;
+//		}
 		chkStarred.setClickable(true);
 //		if(getApplication().getContentResolver().)
 		Cursor cursor = getApplication().getContentResolver().query(CodeProvider.Stars.CONTENT_URI,new String[]{"*"}, StarsColumn.fileName+"=? and "+StarsColumn.star+"=?", new String[]{selectedFile.getPath(),"1"},null);

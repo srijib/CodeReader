@@ -161,6 +161,9 @@ public class NavigationDrawerFragment extends BaseFragment {
                     return;
                 }
                 getActivity().supportInvalidateOptionsMenu();
+				if(getActivity() instanceof MainActivity){
+					((MainActivity) getActivity()).restoreActionBar();
+				}
             }
 
             @Override
