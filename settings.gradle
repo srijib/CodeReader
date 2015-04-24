@@ -1,1 +1,1 @@
-include ':app',':minilibrary',':days'
+include ':app',':minilibrary'
