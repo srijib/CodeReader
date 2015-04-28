@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/toolbar_actionbar_with_headerbar" />
+    <fragment
+        android:id="@+id/preference_general"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.wkswind.diary.SettingsActivity$GeneralPreferenceFragment" />
+    <fragment
+        android:id="@+id/preference_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.wkswind.diary.SettingsActivity$NotificationPreferenceFragment" />
+    <fragment
+        android:id="@+id/preference_datasync"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.wkswind.diary.SettingsActivity$DataSyncPreferenceFragment" />
+</android.support.v7.widget.LinearLayoutCompat>

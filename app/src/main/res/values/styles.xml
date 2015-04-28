@@ -22,6 +22,7 @@
         <!-- actionbar颜色 -->
         <item name="colorPrimary">#3F51B5</item>
         <item name="colorAccent">#9FA8DA</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">?attr/colorPrimaryDark</item>
         <item name="actionModeShareDrawable">@drawable/ic_action_share</item>
 
     </style>
