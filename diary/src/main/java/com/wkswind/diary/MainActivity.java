@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wkswind.diary.account.LoginActivity;
 import com.wkswind.diary.base.BaseActivity;
 
 
@@ -79,7 +78,6 @@ public class MainActivity extends BaseActivity
 //        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 //        actionBar.setDisplayShowTitleEnabled(true);
 //        actionBar.setTitle(mTitle);
-        ViewCompat
         Toolbar toolbar = getToolbar();
         toolbar.setTitle(mTitle);
     }
@@ -107,8 +105,7 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, LoginActivity.class));
-//            startActivity(new Intent(this, SettingsActivity.class));
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
