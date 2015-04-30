@@ -25,10 +25,10 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("wkswind.keystore")
-            storePassword "123456789"
-            keyAlias "jubangit"
-            keyPassword "123456789"
+            storeFile file("wkswind.jks")
+            storePassword "123456"
+            keyAlias "CodeReader"
+            keyPassword "123456"
         }
     }
 
