@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">WhereIsMyMoney</string>
+    <!--Drawer Item-->
+    <string name="item_wallet">My Wallet</string>
+    <string name="item_transactions">Transactions</string>
+    <string name="item_incoming">Incoming</string>
+    <string name="item_expense">Expense</string>
+    <string name="item_chart_week">ChartOfWeek</string>
+    <string name="item_chart_month">ChartOfMonth</string>
+    <string name="item_chart_year">ChartOfYear</string>
+    <string name="item_settings">Settings</string>
+    <string name="item_feedback">Help&amp;Feedback</string>
+
+
+</resources>
