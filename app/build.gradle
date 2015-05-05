@@ -34,19 +34,43 @@ android {
 
     buildTypes {
         debug {
+//            apkname(applicationVariants, defaultConfig)
         }
         release {
             minifyEnabled true
             signingConfig signingConfigs.release
+//            applicationVariants.outputs.each { output ->
+//                println output.outputFile.name
+//                def date = new Date();
+//                def dateFormat = date.format("yyyyMMddHHmmss");
+//                output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace("-release","-"+dateFormat))
+//            }
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace(".apk", "-" + new Date().format("yyyyMMddHHmm") +"-" + defaultConfig.versionName + ".apk"))
+                }
+            }
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
     }
 }
 
+//def apkname(variant, defaultConfig){
+//        println "change name";
+//        variant.outputs.each { output ->
+//            def date = new Date();
+//            def formattedDate = date.format('yyyyMMddHHmmss')
+//            output.outputFile = new File(output.outputFile.parent,
+//                    output.outputFile.name.replace("-release","-"+ defaultConfig.versionCode +"-"+ defaultConfig.versionName + "-" + formattedDate)
+//            )
+//        }
+//}
+
 dependencies {
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.1.0'
+    compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'ch.acra:acra:4.5.0'
 //    compile 'com.afollestad:material-dialogs:0.5.9'
     compile project(':minilibrary')
