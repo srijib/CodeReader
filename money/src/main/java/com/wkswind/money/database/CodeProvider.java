@@ -12,7 +12,7 @@ import net.simonvt.schematic.annotation.TableEndpoint;
  */
 @ContentProvider(authority = CodeProvider.AUTHORITY,
         database =  CodeDatabase.class,
-        packageName = "com.wkswind.codereader.provider"
+        packageName = "com.wkswind.money.provider"
     )
 public class CodeProvider {
     private CodeProvider() {
