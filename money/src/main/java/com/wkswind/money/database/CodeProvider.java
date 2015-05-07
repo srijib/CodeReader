@@ -25,6 +25,7 @@ public class CodeProvider {
     interface Path {
         String TRANSACTION_TYPES = "transaction_types";
         String TRANSACTIONS = "transactions";
+        String ACCOUNTS = "accounts";
     }
 
     private static Uri buildUri(String... paths) {
@@ -49,6 +50,22 @@ public class CodeProvider {
                 whereColumn = TransactionType.ID,
                 pathSegment = 1 )
         public static Uri withId(long id){return buildUri(Path.TRANSACTION_TYPES,String.valueOf(id));}
+    }
+
+    @TableEndpoint(table = CodeDatabase.Tables.ACCOUNS)
+    public static class Accounts {
+        @ContentUri(path = Path.TRANSACTION_TYPES,
+                type = "vnd.android.cursor.dir/list",
+                defaultSort = Account.name + " DESC")
+        public static final Uri CONTENT_URI = buildUri(Path.ACCOUNTS);
+
+        @InexactContentUri(
+                path = Path.ACCOUNTS +"/#",
+                name = "ACCOUNTS_ID",
+                type = "vnd.android.cursor.item/list",
+                whereColumn = Account.ID,
+                pathSegment = 1 )
+        public static Uri withId(long id){return buildUri(Path.ACCOUNTS,String.valueOf(id));}
     }
 
     @TableEndpoint(table = CodeDatabase.Tables.TRANSACTIONS)

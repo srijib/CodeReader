@@ -21,9 +21,11 @@ public final class CodeDatabase {
 
     public static class Tables {
         @Table(TransactionType.class)
-        public static final String TRANSACTION_TYPES = "stars";
+        public static final String TRANSACTION_TYPES = "transaction_types";
         @Table(Transaction.class)
-        public static final String TRANSACTIONS = "historys";
+        public static final String TRANSACTIONS = "transactions";
+        @Table(Account.class)
+        public static final String ACCOUNS = "accounts";
     }
     @OnCreate
     public static void onCreate(Context context, SQLiteDatabase db){
