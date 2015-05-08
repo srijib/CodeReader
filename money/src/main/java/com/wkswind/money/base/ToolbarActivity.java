@@ -8,7 +8,7 @@ import com.wkswind.money.R;
  * Created by Administrator on 2015/5/5.
  */
 public class ToolbarActivity extends BaseActivity {
-    protected Toolbar getToolbar(){
+    public Toolbar getToolbar(){
         return (Toolbar) findViewById(R.id.toolbar_actionbar);
     }
 

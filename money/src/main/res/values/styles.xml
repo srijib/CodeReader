@@ -1,10 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="BaseTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">#2196F3</item>
         <item name="colorPrimaryDark">#1E88E5</item>
+    </style>
+
+    <style name="BaseThemeNoActionBar" parent="BaseTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="BaseThemeNoActionBar">
+        <!-- Customize your theme here. -->
+
     </style>
 
     <style name="HeaderBar">
@@ -14,6 +21,7 @@
 
     <style name="ActionBarThemeOverlay" parent="">
         <item name="android:textColorPrimary">#fff</item>
+        <!--<item name="textColorPrimary">#000</item>-->
         <item name="colorControlNormal">#fff</item>
         <item name="colorControlHighlight">#3fff</item>
     </style>

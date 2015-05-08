@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="label_items_money">
+        <item>@string/item_wallet</item>
+        <item>@string/item_transactions</item>
+        <item>@string/item_incoming</item>
+        <item>@string/item_expense</item>
+    </string-array>
+
+    <string-array name="label_items_chart">
+        <item>@string/item_chart_day</item>
+        <item>@string/item_chart_week</item>
+        <item>@string/item_chart_month</item>
+        <item>@string/item_chart_year</item>
+    </string-array>
+
+    <string-array name="label_items_others">
+        <item>@string/item_settings</item>
+        <item>@string/item_feedback</item>
+    </string-array>
+    <string name="item_chart_day">ChartOfToday</string>
+</resources>

@@ -5,19 +5,21 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import com.wkswind.money.base.ToolbarActivity;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -86,26 +88,11 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        mDrawerListView = (ListView) inflater.inflate(
-//                R.layout.fragment_navigation_drawer, container, false);
-//        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                selectItem(position);
-//            }
-//        });
-//        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-//                getActionBar().getThemedContext(),
-//                android.R.layout.simple_list_item_1,
-//                android.R.id.text1,
-//                new String[]{
-//                        getString(R.string.title_section1),
-//                        getString(R.string.title_section2),
-//                        getString(R.string.title_section3),
-//                }));
-//        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-//        return mDrawerListView;
         View view = inflater.inflate(R.layout.fragment_navigation_drawer,container, false);
+        FrameLayout accountContainer = (FrameLayout) view.findViewById(R.id.nav_profile_container);
+        if(BuildConfig.DEBUG){
+            accountContainer.addView(inflater.inflate(R.layout.navdrawer_item_account, container, false));
+        }
         return view;
     }
 
@@ -127,19 +114,8 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-
-        // ActionBarDrawerToggle ties together the the proper interactions
-        // between the navigation drawer and the action bar app icon.
-        mDrawerToggle = new ActionBarDrawerToggle(
-                getActivity(),                    /* host Activity */
-                mDrawerLayout,                    /* DrawerLayout object */
-                R.drawable.ic_drawer,             /* nav drawer image to replace 'Up' caret */
-                R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
-                R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
-        ) {
+        Toolbar toolbar = getActionBar();
+        mDrawerToggle = new ActionBarDrawerToggle(getActivity(),mDrawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close){
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
@@ -169,6 +145,44 @@ public class NavigationDrawerFragment extends Fragment {
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };
+        // ActionBarDrawerToggle ties together the the proper interactions
+        // between the navigation drawer and the action bar app icon.
+//        mDrawerToggle = new ActionBarDrawerToggle(
+//                getActivity(),                    /* host Activity */
+//                mDrawerLayout,                    /* DrawerLayout object */
+//                R.drawable.ic_drawer,             /* nav drawer image to replace 'Up' caret */
+//                R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
+//                R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
+//        ) {
+//            @Override
+//            public void onDrawerClosed(View drawerView) {
+//                super.onDrawerClosed(drawerView);
+//                if (!isAdded()) {
+//                    return;
+//                }
+//
+//                getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+//            }
+//
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                super.onDrawerOpened(drawerView);
+//                if (!isAdded()) {
+//                    return;
+//                }
+//
+//                if (!mUserLearnedDrawer) {
+//                    // The user manually opened the drawer; store this flag to prevent auto-showing
+//                    // the navigation drawer automatically in the future.
+//                    mUserLearnedDrawer = true;
+//                    SharedPreferences sp = PreferenceManager
+//                            .getDefaultSharedPreferences(getActivity());
+//                    sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
+//                }
+//
+//                getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+//            }
+//        };
 
         // If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
         // per the navigation drawer design guidelines.
@@ -233,10 +247,6 @@ public class NavigationDrawerFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // If the drawer is open, show the global app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
-        if (mDrawerLayout != null && isDrawerOpen()) {
-            inflater.inflate(R.menu.global, menu);
-            showGlobalContextActionBar();
-        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -246,10 +256,10 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-            return true;
-        }
+//        if (item.getItemId() == R.id.action_example) {
+//            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -259,14 +269,14 @@ public class NavigationDrawerFragment extends Fragment {
      * 'context', rather than just what's in the current screen.
      */
     private void showGlobalContextActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setTitle(R.string.app_name);
+        Toolbar toolbar = getActionBar();
+//        toolbar.setDisplayShowTitleEnabled(true);
+//        toolbar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        toolbar.setTitle(R.string.app_name);
     }
 
-    private ActionBar getActionBar() {
-        return ((ActionBarActivity) getActivity()).getSupportActionBar();
+    private Toolbar getActionBar() {
+        return ((ToolbarActivity) getActivity()).getToolbar();
     }
 
     /**

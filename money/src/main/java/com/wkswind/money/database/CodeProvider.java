@@ -54,7 +54,7 @@ public class CodeProvider {
 
     @TableEndpoint(table = CodeDatabase.Tables.ACCOUNS)
     public static class Accounts {
-        @ContentUri(path = Path.TRANSACTION_TYPES,
+        @ContentUri(path = Path.ACCOUNTS,
                 type = "vnd.android.cursor.dir/list",
                 defaultSort = Account.name + " DESC")
         public static final Uri CONTENT_URI = buildUri(Path.ACCOUNTS);
