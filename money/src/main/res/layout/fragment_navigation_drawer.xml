@@ -23,9 +23,10 @@
             android:layout_height="@dimen/navdrawer_chosen_account_height"
             android:layout_gravity="center"
             android:foreground="?android:selectableItemBackground"/>
-        <com.wkswind.minilibrary.library.widget.ScrimInsetsFrameLayout
+        <LinearLayout
             android:id="@+id/nav_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
     </LinearLayout>
 </com.wkswind.minilibrary.library.widget.ScrimInsetsScrollView>

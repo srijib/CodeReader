@@ -1,26 +1,23 @@
 package com.wkswind.money;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
-import com.wkswind.money.base.BaseActivity;
 import com.wkswind.money.base.ToolbarActivity;
+import com.wkswind.money.drawer.DrawerItem;
 
 
 public class MainActivity extends ToolbarActivity
@@ -35,6 +32,7 @@ public class MainActivity extends ToolbarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private Handler mHandler = new Handler() ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,29 +47,41 @@ public class MainActivity extends ToolbarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+//        mHandler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                getWindow().getDecorView().setBackgroundColor(Color.BLACK);
+//            }
+//        }, 5 * 1000);
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
+    public void onNavigationDrawerItemSelected(DrawerItem item) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        if(getString(R.string.item_settings).equals(item.getLabel())){
+            startActivity(new Intent(this, SettingsActivity.class));
+        }else{
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, PlaceholderFragment.newInstance(item.getLabel()))
+                    .commit();
+        }
+
     }
 
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-        }
+    public void onSectionAttached(String label) {
+//        switch (number) {
+//            case 1:
+//                mTitle = getString(R.string.title_section1);
+//                break;
+//            case 2:
+//                mTitle = getString(R.string.title_section2);
+//                break;
+//            case 3:
+//                mTitle = getString(R.string.title_section3);
+//                break;
+//        }
+        mTitle = label;
     }
 
     public void restoreActionBar() {
@@ -120,10 +130,10 @@ public class MainActivity extends ToolbarActivity
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+        public static PlaceholderFragment newInstance(String label) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putString(ARG_SECTION_NUMBER, label);
             fragment.setArguments(args);
             return fragment;
         }
@@ -142,7 +152,7 @@ public class MainActivity extends ToolbarActivity
         public void onAttach(Activity activity) {
             super.onAttach(activity);
             ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
+                    getArguments().getString(ARG_SECTION_NUMBER));
         }
     }
 

@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wkswind.codereader.model.RootInfo;
-import com.wkswind.codereader.utils.UIUtils;
+import com.wkswind.minilibrary.utils.UIUtils;
 
 import java.util.ArrayList;
 

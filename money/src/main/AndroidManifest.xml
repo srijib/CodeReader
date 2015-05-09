@@ -2,21 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.wkswind.money" >
-    <uses-sdk tools:overrideLibrary="net.simonvt.schematic, com.eftimoff.mylibrary"/>
+    <uses-sdk tools:overrideLibrary="net.simonvt.schematic"/>
     <application
+        android:name=".base.MoneyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SettingsActivity" android:label="@string/item_settings" />
     </application>
 
 </manifest>

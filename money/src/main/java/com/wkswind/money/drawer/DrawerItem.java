@@ -45,9 +45,7 @@ public class DrawerItem {
         this.type = type;
     }
 
-    public static DrawerItem newDivider(){
-        DrawerItem item = new DrawerItem();
-        item.setType(TYPE_DIVIDER);
-        return item;
+    public boolean isSeparator(){
+        return type == TYPE_DIVIDER;
     }
 }
