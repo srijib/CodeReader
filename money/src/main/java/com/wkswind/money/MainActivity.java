@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.wkswind.money.base.ToolbarActivity;
 import com.wkswind.money.drawer.DrawerItem;
+import com.wkswind.money.ui.TransactionFragment;
 
 
 public class MainActivity extends ToolbarActivity
@@ -61,12 +62,14 @@ public class MainActivity extends ToolbarActivity
 //        if(getString(R.string.item_settings).equals(item.getLabel())){
 //            startActivity(new Intent(this, SettingsActivity.class));
 //        }else{
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, PlaceholderFragment.newInstance(item.getLabel()))
-                    .commit();
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.container, PlaceholderFragment.newInstance(item.getLabel()))
+//                    .commit();
 //        }
-
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment target = TransactionFragment.newInstance();
+        fm.beginTransaction().addToBackStack(target.toString()).add(R.id.container, target, target.toString()).commit();
     }
 
     public void onSectionAttached(String label) {
