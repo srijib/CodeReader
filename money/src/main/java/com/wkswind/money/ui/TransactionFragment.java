@@ -21,10 +21,24 @@ import java.util.ArrayList;
 public class TransactionFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout refreshLayout;
     private ListView content;
-
-    public static final TransactionFragment newInstance(){
+    private final static String LABEL = "label";
+    public static final TransactionFragment newInstance(String label){
         TransactionFragment fragment = new TransactionFragment();
+        Bundle args = new Bundle();
+        args.putString(LABEL, label);
+        fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(getArguments() != null){
+            Bundle args = getArguments();
+            if(args.containsKey(LABEL)){
+                getActivity().setTitle(args.getString(LABEL));
+            }
+        }
     }
 
     @Nullable

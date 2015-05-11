@@ -68,7 +68,7 @@ public class MainActivity extends ToolbarActivity
 //                    .commit();
 //        }
         FragmentManager fm = getSupportFragmentManager();
-        Fragment target = TransactionFragment.newInstance();
+        Fragment target = TransactionFragment.newInstance(item.getLabel());
         fm.beginTransaction().addToBackStack(target.toString()).add(R.id.container, target, target.toString()).commit();
     }
 
