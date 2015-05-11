@@ -58,14 +58,14 @@ public class MainActivity extends ToolbarActivity
     @Override
     public void onNavigationDrawerItemSelected(DrawerItem item) {
         // update the main content by replacing fragments
-        if(getString(R.string.item_settings).equals(item.getLabel())){
-            startActivity(new Intent(this, SettingsActivity.class));
-        }else{
+//        if(getString(R.string.item_settings).equals(item.getLabel())){
+//            startActivity(new Intent(this, SettingsActivity.class));
+//        }else{
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(item.getLabel()))
                     .commit();
-        }
+//        }
 
     }
 

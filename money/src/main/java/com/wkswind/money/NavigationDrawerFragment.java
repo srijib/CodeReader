@@ -1,12 +1,14 @@
 package com.wkswind.money;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -106,6 +108,19 @@ public class NavigationDrawerFragment extends Fragment {
         }
         ViewGroup itemContainer = (ViewGroup) view.findViewById(R.id.nav_item);
         makeItemView(itemContainer);
+        view.findViewById(R.id.container_settings).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+            }
+        });
+        view.findViewById(R.id.container_feedback).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        ViewCompat.setElevation(view.findViewById(R.id.container_others), getResources().getDimensionPixelSize(R.dimen.headerbar_elevation));
         return view;
     }
 

@@ -42,7 +42,7 @@ public class DrawerItemUtils {
         }
         labelArray.recycle();
         iconArray.recycle();
-        result.remove(result.size()-1);
+//        result.remove(result.size()-1);
         return result;
     }
 //    public static ArrayList<DrawerItem> initDrawerItems(Context context){

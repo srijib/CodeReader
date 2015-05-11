@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wkswind.minilibrary.library.widget.ScrimInsetsFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/chosen_account_view"
     android:layout_width="match_parent"
     android:layout_height="@dimen/navdrawer_chosen_account_height"
+    android:layout_marginLeft="@dimen/keyline_1"
+    android:layout_marginRight="@dimen/keyline_1"
     android:foreground="?android:selectableItemBackground">
 
     <ImageView android:layout_width="match_parent"
@@ -19,6 +22,7 @@
         android:paddingLeft="@dimen/keyline_1"
         android:paddingRight="@dimen/keyline_1"
         android:paddingTop="@dimen/keyline_1"
+        android:elevation="@dimen/headerbar_elevation"
         android:id="@+id/chosen_account_content_view">
 
         <com.wkswind.minilibrary.library.widget.BezelImageView
@@ -76,4 +80,4 @@
 
     </RelativeLayout>
 
-</FrameLayout>
+</com.wkswind.minilibrary.library.widget.ScrimInsetsFrameLayout>

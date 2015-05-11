@@ -19,10 +19,6 @@
         <item>@string/item_chart_year</item>
     </string-array>
 
-    <string-array name="label_items_others">
-        <item>@string/item_settings</item>
-        <item>@string/item_feedback</item>
-    </string-array>
     <!--####-->
 
     <!--Drawer Icons-->
@@ -34,10 +30,6 @@
         <item>@drawable/ic_action_transactions</item>
         <item>@drawable/ic_action_incoming</item>
         <item>@drawable/ic_action_expense</item>
-    </integer-array>
-    <integer-array name="icon_items_others">
-        <item>@drawable/ic_action_settings</item>
-        <item>@drawable/ic_action_feedback</item>
     </integer-array>
     <integer-array name="icon_items_chart">
         <item>@drawable/ic_action_today</item>
@@ -51,13 +43,11 @@
         <item>@array/label_items_my</item>
         <item>@array/label_items_money</item>
         <item>@array/label_items_chart</item>
-        <item>@array/label_items_others</item>
     </integer-array>
     <integer-array name="drawer_icons">
         <item>@array/icon_items_my</item>
         <item>@array/icon_items_money</item>
         <item>@array/icon_items_chart</item>
-        <item>@array/icon_items_others</item>
     </integer-array>
 
 </resources>
