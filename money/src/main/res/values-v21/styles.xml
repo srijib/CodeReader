@@ -5,4 +5,10 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
+    <style name="HeaderBar">
+        <item name="android:background">?colorPrimary</item>
+        <item name="elevation">@dimen/headerbar_elevation</item>
+        <item name="android:elevation">@dimen/headerbar_elevation</item>
+    </style>
 </resources>

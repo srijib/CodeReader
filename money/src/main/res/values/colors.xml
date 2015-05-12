@@ -12,5 +12,6 @@
     <color name="navdrawer_text_color_selected">@color/colorPrimary</color>
     <color name="navdrawer_icon_tint">#888</color>
     <color name="navdrawer_icon_tint_selected">@color/colorPrimary</color>
+    <color name="translucent_actionbar_background">#cc3f51b5</color>
 
 </resources>

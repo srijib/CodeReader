@@ -1,5 +1,6 @@
 package com.wkswind.money.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.wkswind.money.BuildConfig;
+import com.wkswind.money.MainActivity;
 import com.wkswind.money.R;
 import com.wkswind.money.base.BaseFragment;
 
@@ -33,12 +35,7 @@ public class TransactionFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(getArguments() != null){
-            Bundle args = getArguments();
-            if(args.containsKey(LABEL)){
-                getActivity().setTitle(args.getString(LABEL));
-            }
-        }
+
     }
 
     @Nullable
@@ -65,6 +62,20 @@ public class TransactionFragment extends BaseFragment implements SwipeRefreshLay
             }
             ArrayAdapter<String> fakeAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,android.R.id.text1, datas);
             content.setAdapter(fakeAdapter);
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof MainActivity){
+            if(getArguments() != null){
+                Bundle args = getArguments();
+                if(args.containsKey(LABEL)){
+                    ((MainActivity) activity).onSectionAttached(args.getString(LABEL));
+                }
+            }
+
         }
     }
 
