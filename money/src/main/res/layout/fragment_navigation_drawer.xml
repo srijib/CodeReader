@@ -50,8 +50,8 @@
 
                 <ImageView
                     android:src="@drawable/ic_action_settings"
-                    android:layout_height="32dp"
-                    android:layout_width="32dp"
+                    android:layout_height="@dimen/navdrawer_item_size"
+                    android:layout_width="@dimen/navdrawer_item_size"
                     android:layout_marginRight="32dp" />
 
                 <TextView
@@ -76,8 +76,8 @@
 
                 <ImageView
                     android:src="@drawable/ic_action_feedback"
-                    android:layout_height="32dp"
-                    android:layout_width="32dp"
+                    android:layout_height="@dimen/navdrawer_item_size"
+                    android:layout_width="@dimen/navdrawer_item_size"
                     android:layout_marginRight="32dp" />
 
                 <TextView

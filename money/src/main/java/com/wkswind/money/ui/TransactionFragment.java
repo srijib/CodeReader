@@ -1,12 +1,16 @@
 package com.wkswind.money.ui;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -14,6 +18,7 @@ import com.wkswind.money.BuildConfig;
 import com.wkswind.money.MainActivity;
 import com.wkswind.money.R;
 import com.wkswind.money.base.BaseFragment;
+import com.wkswind.money.base.ToolbarActivity;
 
 import java.util.ArrayList;
 
@@ -24,12 +29,35 @@ public class TransactionFragment extends BaseFragment implements SwipeRefreshLay
     private SwipeRefreshLayout refreshLayout;
     private ListView content;
     private final static String LABEL = "label";
-    public static final TransactionFragment newInstance(String label){
+    private final static String COLOR_PRIMARY = "color_primary";
+    private final static String COLOR_PRIMARY_DARK = "color_primary_dark";
+    public static final TransactionFragment newInstance(String label, int colorPrimary, int colorPrimaryDark){
         TransactionFragment fragment = new TransactionFragment();
         Bundle args = new Bundle();
         args.putString(LABEL, label);
+        args.putInt(COLOR_PRIMARY, colorPrimary);
+        args.putInt(COLOR_PRIMARY_DARK, colorPrimaryDark);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null){
+            int colorPrimary = getArguments().getInt(COLOR_PRIMARY);
+            int colorPrimaryDark = getArguments().getInt(COLOR_PRIMARY_DARK);
+
+            FragmentActivity activity = getActivity();
+            if(activity instanceof ToolbarActivity){
+                ((ToolbarActivity) activity).getToolbar().setBackgroundColor(colorPrimary);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Window window = activity.getWindow();
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    window.setStatusBarColor(colorPrimaryDark);
+                }
+            }
+        }
     }
 
     @Override
@@ -72,7 +100,9 @@ public class TransactionFragment extends BaseFragment implements SwipeRefreshLay
             if(getArguments() != null){
                 Bundle args = getArguments();
                 if(args.containsKey(LABEL)){
-                    ((MainActivity) activity).onSectionAttached(args.getString(LABEL));
+                    if(activity instanceof MainActivity){
+                        ((MainActivity) activity).onSectionAttached(args.getString(LABEL));
+                    }
                 }
             }
 

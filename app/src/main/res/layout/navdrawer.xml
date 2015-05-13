@@ -21,6 +21,8 @@
     android:layout_gravity="start"
     android:id="@+id/navdrawer"
     android:background="@color/navdrawer_background"
+    android:scrollbars="vertical"
+    android:scrollbarStyle="insideOverlay"
     android:fitsSystemWindows="true">
 
     <FrameLayout android:layout_width="match_parent"

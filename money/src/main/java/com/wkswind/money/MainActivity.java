@@ -2,6 +2,8 @@ package com.wkswind.money;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +11,7 @@ import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,7 +63,7 @@ public class MainActivity extends ToolbarActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(DrawerItem item) {
+    public void onNavigationDrawerItemSelected(final DrawerItem item) {
         // update the main content by replacing fragments
 //        if(getString(R.string.item_settings).equals(item.getLabel())){
 //            startActivity(new Intent(this, SettingsActivity.class));
@@ -70,9 +73,21 @@ public class MainActivity extends ToolbarActivity
 //                    .replace(R.id.container, PlaceholderFragment.newInstance(item.getLabel()))
 //                    .commit();
 //        }
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), item.getIconId());
+        Palette.Builder builder = new Palette.Builder(bitmap);
+        builder.resizeBitmapSize(R.dimen.navdrawer_item_size);
+        builder.generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                int colorPrimary = palette.getLightVibrantColor(R.color.colorPrimaryDark);
+                int colorPrimaryDark = palette.getDarkVibrantColor(R.color.colorPrimary);
+                Fragment target = TransactionFragment.newInstance(item.getLabel(),colorPrimary, colorPrimaryDark);
+                fm.beginTransaction()
+//                        .addToBackStack(item.getLabel())
+                        .add(R.id.container, target, item.toString()).commit();
+            }
+        });
 
-        Fragment target = TransactionFragment.newInstance(item.getLabel());
-        fm.beginTransaction().addToBackStack(item.getLabel()).add(R.id.container, target, item.toString()).commit();
 
     }
 
@@ -110,12 +125,11 @@ public class MainActivity extends ToolbarActivity
 
     @Override
     public void onBackPressed() {
-        if(fm.getBackStackEntryCount() <2 ){
-//            super.onBackPressed();
-            finish();
-        }else{
+//        if(fm.getBackStackEntryCount() <2 ){
+//            finish();
+//        }else{
             super.onBackPressed();
-        }
+//        }
     }
 
     @Override

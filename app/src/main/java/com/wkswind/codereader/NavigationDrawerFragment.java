@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.wkswind.codereader.model.RootInfo;
@@ -172,7 +173,6 @@ public class NavigationDrawerFragment extends BaseFragment {
                 if (!isAdded()) {
                     return;
                 }
-
                 if (!mUserLearnedDrawer) {
                     // The user manually opened the drawer; store this flag to
                     // prevent auto-showing
