@@ -1,26 +1,26 @@
 <resources>
     <string name="app_name">WhereIsMyMoney</string>
     <!--Drawer Item-->
-    <string name="item_wallet">My Wallet</string>
-    <string name="item_transactions">Transactions</string>
-    <string name="item_incoming">Incoming</string>
-    <string name="item_expense">Expense</string>
-    <string name="item_chart_week">ChartOfWeek</string>
-    <string name="item_chart_month">ChartOfMonth</string>
-    <string name="item_chart_year">ChartOfYear</string>
-    <string name="item_settings">Settings</string>
-    <string name="item_feedback">Help&amp;Feedback</string>
+    <string name="item_wallet">我的钱包</string>
+    <string name="item_transactions">交易流水</string>
+    <string name="item_incoming">收入</string>
+    <string name="item_expense">支出</string>
+    <string name="item_chart_week">周视图</string>
+    <string name="item_chart_month">月视图</string>
+    <string name="item_chart_year">年视图</string>
+    <string name="item_settings">设置</string>
+    <string name="item_feedback">帮助&amp;反馈</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_example">Example action</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">设置</string>
     <string name="action_search">搜索</string>
 
-    <string name="item_chart_day">ChartOfToday</string>
-    <string name="item_type">transaction type</string>
+    <string name="item_chart_day">日视图</string>
+    <string name="item_type">流水类型</string>
 
     <string name="pref_header_general">常用</string>
 

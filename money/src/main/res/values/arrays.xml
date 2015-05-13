@@ -23,19 +23,19 @@
 
     <!--Drawer Icons-->
     <integer-array name="icon_items_my">
-        <item>@drawable/ic_action_wallet</item>
-        <item>@drawable/ic_action_type</item>
+        <item>@drawable/ic_drawer_my_wallet</item>
+        <item>@drawable/ic_drawer_transaction_types</item>
     </integer-array>
     <integer-array name="icon_items_money">
-        <item>@drawable/ic_action_transactions</item>
-        <item>@drawable/ic_action_incoming</item>
-        <item>@drawable/ic_action_expense</item>
+        <item>@drawable/ic_drawer_transactions</item>
+        <item>@drawable/ic_drawer_income</item>
+        <item>@drawable/ic_drawer_expense</item>
     </integer-array>
     <integer-array name="icon_items_chart">
-        <item>@drawable/ic_action_today</item>
-        <item>@drawable/ic_action_week</item>
-        <item>@drawable/ic_action_week</item>
-        <item>@drawable/ic_action_year</item>
+        <item>@drawable/ic_drawer_cart</item>
+        <item>@drawable/ic_drawer_cart</item>
+        <item>@drawable/ic_drawer_cart</item>
+        <item>@drawable/ic_drawer_cart</item>
     </integer-array>
     <!--#########-->
 

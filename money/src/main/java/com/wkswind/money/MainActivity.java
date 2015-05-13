@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +23,7 @@ import com.wkswind.money.ui.TransactionFragment;
 
 
 public class MainActivity extends ToolbarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, FragmentManager.OnBackStackChangedListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -33,17 +34,19 @@ public class MainActivity extends ToolbarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private FragmentManager fm;
 //    private Handler mHandler = new Handler() ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fm = getSupportFragmentManager();
         setContentView(R.layout.activity_main);
         initToolbar();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
-
+        fm.addOnBackStackChangedListener(this);
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
@@ -67,31 +70,17 @@ public class MainActivity extends ToolbarActivity
 //                    .replace(R.id.container, PlaceholderFragment.newInstance(item.getLabel()))
 //                    .commit();
 //        }
-        FragmentManager fm = getSupportFragmentManager();
+
         Fragment target = TransactionFragment.newInstance(item.getLabel());
-        fm.beginTransaction().addToBackStack(target.toString()).add(R.id.container, target, target.toString()).commit();
+        fm.beginTransaction().addToBackStack(item.getLabel()).add(R.id.container, target, item.toString()).commit();
+
     }
 
     public void onSectionAttached(String label) {
-//        switch (number) {
-//            case 1:
-//                mTitle = getString(R.string.title_section1);
-//                break;
-//            case 2:
-//                mTitle = getString(R.string.title_section2);
-//                break;
-//            case 3:
-//                mTitle = getString(R.string.title_section3);
-//                break;
-//        }
         mTitle = label;
     }
 
     public void restoreActionBar() {
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-//        actionBar.setDisplayShowTitleEnabled(true);
-//        actionBar.setTitle(mTitle);
         Toolbar toolbar = getToolbar();
         toolbar.setTitle(mTitle);
     }
@@ -119,44 +108,23 @@ public class MainActivity extends ToolbarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-//    public static class PlaceholderFragment extends Fragment {
-//        /**
-//         * The fragment argument representing the section number for this
-//         * fragment.
-//         */
-//        private static final String ARG_SECTION_NUMBER = "section_number";
-//
-//        /**
-//         * Returns a new instance of this fragment for the given section
-//         * number.
-//         */
-//        public static PlaceholderFragment newInstance(String label) {
-//            PlaceholderFragment fragment = new PlaceholderFragment();
-//            Bundle args = new Bundle();
-//            args.putString(ARG_SECTION_NUMBER, label);
-//            fragment.setArguments(args);
-//            return fragment;
-//        }
-//
-//        public PlaceholderFragment() {
-//        }
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                                 Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-//            return rootView;
-//        }
-//
-//        @Override
-//        public void onAttach(Activity activity) {
-//            super.onAttach(activity);
-////            ((MainActivity) activity).onSectionAttached(
-////                    getArguments().getString(ARG_SECTION_NUMBER));
-//        }
-//    }
+    @Override
+    public void onBackPressed() {
+        if(fm.getBackStackEntryCount() <2 ){
+//            super.onBackPressed();
+            finish();
+        }else{
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        Log.i("FRAGMENT ENTRY", " COUNT # " + fm.getBackStackEntryCount());
+        FragmentManager.BackStackEntry entry = fm.getBackStackEntryAt(fm.getBackStackEntryCount() - 1);
+        mTitle = entry.getName();
+        setTitle(mTitle);
+//        fm.get
+    }
 
 }

@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrixColorFilter;
@@ -73,6 +74,11 @@ public class UIUtils {
 
     public static final String GOOGLE_PLUS_PACKAGE_NAME = "com.google.android.apps.plus";
 
+    public static int getAttributeResourceId(Context context, int attrId, int themeResId){
+        TypedArray a = context.getTheme().obtainStyledAttributes(themeResId, new int[] {attrId});
+        int attributeResourceId = a.getResourceId(0, -1);
+        return attributeResourceId;
+    }
     /**
      * Populate the given {@link TextView} with the requested text, formatting
      * through {@link Html#fromHtml(String)} when applicable. Also sets
