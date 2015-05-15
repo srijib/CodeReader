@@ -23,25 +23,37 @@ public class DrawerItemUtils {
         ArrayList<DrawerItem> result = new ArrayList<>();
         TypedArray labelArray = res.obtainTypedArray(R.array.drawer_labels);
         TypedArray iconArray = res.obtainTypedArray(R.array.drawer_icons);
+        TypedArray colorPrimaryArray = res.obtainTypedArray(R.array.drawer_color_primary);
+        TypedArray colorPrimaryDarkArray = res.obtainTypedArray(R.array.drawer_color_primary_dark);
         for(int i=0, j= labelArray.length();i<j;i++){
             int labelsId = labelArray.getResourceId(i, -1);
             int iconsId = iconArray.getResourceId(i,-1);
+            int colorPrimaryId = colorPrimaryArray.getResourceId(i,-1);
+            int colorPrimaryDarkId = colorPrimaryDarkArray.getResourceId(i,-1);
             TypedArray ita = res.obtainTypedArray(iconsId);
+            TypedArray cpa = res.obtainTypedArray(colorPrimaryId);
+            TypedArray cpda = res.obtainTypedArray(colorPrimaryDarkId);
             String[] labels = res.getStringArray(labelsId);
             for(int m=0, n=labels.length;m<n;m++){
                 DrawerItem item = new DrawerItem();
                 item.setLabel(labels[m]);
-                item.setIconId(ita.getResourceId(m,-1));
+                item.setIconId(ita.getResourceId(m, -1));
                 item.setQueryType(item.getLabel());
+                item.setColorPrimaryId(cpa.getResourceId(m,-1));
+                item.setColorPrimaryDarkId(cpda.getResourceId(m, -1));
                 result.add(item);
             }
 //            if(i<j){
                 result.add(newDivider());
 //            }
             ita.recycle();
+            cpa.recycle();
+            cpda.recycle();
         }
         labelArray.recycle();
         iconArray.recycle();
+        colorPrimaryArray.recycle();
+        colorPrimaryDarkArray.recycle();
 //        result.remove(result.size()-1);
         return result;
     }

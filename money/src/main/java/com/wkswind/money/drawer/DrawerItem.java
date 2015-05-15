@@ -10,6 +10,24 @@ public class DrawerItem {
     private String label;
     private String queryType;
     private int iconId ;
+    private int colorPrimaryId;
+    private int colorPrimaryDarkId;
+
+    public int getColorPrimaryId() {
+        return colorPrimaryId;
+    }
+
+    public void setColorPrimaryId(int colorPrimaryId) {
+        this.colorPrimaryId = colorPrimaryId;
+    }
+
+    public int getColorPrimaryDarkId() {
+        return colorPrimaryDarkId;
+    }
+
+    public void setColorPrimaryDarkId(int colorPrimaryDarkId) {
+        this.colorPrimaryDarkId = colorPrimaryDarkId;
+    }
 
     public int getIconId() {
         return iconId;

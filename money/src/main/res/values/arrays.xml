@@ -39,6 +39,40 @@
     </integer-array>
     <!--#########-->
 
+    <!-- colorPrimary -->
+    <integer-array name="color_my_primary">
+        <item>@color/wallet_primary</item>
+        <item>@color/type_primary</item>
+    </integer-array>
+    <integer-array name="color_money_primary">
+        <item>@color/transaction_primary</item>
+        <item>@color/income_primary</item>
+        <item>@color/expense_primary</item>
+    </integer-array>
+    <integer-array name="color_chart_primary">
+        <item>@color/chart_primary</item>
+        <item>@color/chart_primary</item>
+        <item>@color/chart_primary</item>
+        <item>@color/chart_primary</item>
+    </integer-array>
+    <!-- ###############-->
+    <!--colorPrimaryDark-->
+    <integer-array name="color_my_primary_dark">
+        <item>@color/wallet_primary_dark</item>
+        <item>@color/type_primary_dark</item>
+    </integer-array>
+    <integer-array name="color_money_primary_dark">
+        <item>@color/transaction_primary_dark</item>
+        <item>@color/income_primary_dark</item>
+        <item>@color/expense_primary_dark</item>
+    </integer-array>
+    <integer-array name="color_chart_primary_dark">
+        <item>@color/chart_primary_dark</item>
+        <item>@color/chart_primary_dark</item>
+        <item>@color/chart_primary_dark</item>
+        <item>@color/chart_primary_dark</item>
+    </integer-array>
+    <!--##################-->
     <integer-array name="drawer_labels">
         <item>@array/label_items_my</item>
         <item>@array/label_items_money</item>
@@ -49,5 +83,14 @@
         <item>@array/icon_items_money</item>
         <item>@array/icon_items_chart</item>
     </integer-array>
-
+    <integer-array name="drawer_color_primary">
+        <item>@array/color_my_primary</item>
+        <item>@array/color_money_primary</item>
+        <item>@array/color_chart_primary</item>
+    </integer-array>
+    <integer-array name="drawer_color_primary_dark">
+        <item>@array/color_my_primary_dark</item>
+        <item>@array/color_money_primary_dark</item>
+        <item>@array/color_chart_primary_dark</item>
+    </integer-array>
 </resources>

@@ -1,24 +1,16 @@
 package com.wkswind.money;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.wkswind.money.base.ToolbarActivity;
 import com.wkswind.money.drawer.DrawerItem;
@@ -39,13 +31,51 @@ public class MainActivity extends ToolbarActivity
     private CharSequence mTitle;
     private FragmentManager fm;
 //    private Handler mHandler = new Handler() ;
-
+//    public static int testMethod(){
+//        EGL10 egl = (EGL10)EGLContext.getEGL();
+//
+//        EGLDisplay dpy = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY);
+//        int[] vers = new int[2];
+//        egl.eglInitialize(dpy, vers);
+//
+//        int[] configAttr = {
+//                EGL10.EGL_COLOR_BUFFER_TYPE, EGL10.EGL_RGB_BUFFER,
+//                EGL10.EGL_LEVEL, 0,
+//                EGL10.EGL_SURFACE_TYPE, EGL10.EGL_PBUFFER_BIT,
+//                EGL10.EGL_NONE
+//        };
+//        EGLConfig[] configs = new EGLConfig[1];
+//        int[] numConfig = new int[1];
+//        egl.eglChooseConfig(dpy, configAttr, configs, 1, numConfig);
+//        if (numConfig[0] == 0) {
+//            // TROUBLE! No config found.
+//        }
+//        EGLConfig config = configs[0];
+//
+//        int[] surfAttr = {
+//                EGL10.EGL_WIDTH, 64,
+//                EGL10.EGL_HEIGHT, 64,
+//                EGL10.EGL_NONE
+//        };
+//        EGLSurface surf = egl.eglCreatePbufferSurface(dpy, config, surfAttr);
+//        final int EGL_CONTEXT_CLIENT_VERSION = 0x3098;  // missing in EGL10
+//        int[] ctxAttrib = {
+//                EGL_CONTEXT_CLIENT_VERSION, 1,
+//                EGL10.EGL_NONE
+//        };
+//        EGLContext ctx = egl.eglCreateContext(dpy, config, EGL10.EGL_NO_CONTEXT, ctxAttrib);
+//        egl.eglMakeCurrent(dpy, surf, surf, ctx);
+//        int[] maxSize = new int[1];
+//        GLES10.glGetIntegerv(GLES10.GL_MAX_TEXTURE_SIZE, maxSize, 0);
+//        return maxSize[0];
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fm = getSupportFragmentManager();
         setContentView(R.layout.activity_main);
         initToolbar();
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -73,22 +103,27 @@ public class MainActivity extends ToolbarActivity
 //                    .replace(R.id.container, PlaceholderFragment.newInstance(item.getLabel()))
 //                    .commit();
 //        }
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), item.getIconId());
-        Palette.Builder builder = new Palette.Builder(bitmap);
-        builder.resizeBitmapSize(R.dimen.navdrawer_item_size);
-        builder.generate(new Palette.PaletteAsyncListener() {
-            @Override
-            public void onGenerated(Palette palette) {
-                int colorPrimary = palette.getLightVibrantColor(R.color.colorPrimaryDark);
-                int colorPrimaryDark = palette.getDarkVibrantColor(R.color.colorPrimary);
-                Fragment target = TransactionFragment.newInstance(item.getLabel(),colorPrimary, colorPrimaryDark);
+//        Toast.makeText(this, "MAX # " + testMethod(), Toast.LENGTH_SHORT) ;
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), item.getIconId());
+//        Palette.Builder builder = new Palette.Builder(bitmap);
+//        builder.resizeBitmapSize(R.dimen.navdrawer_item_size);
+//        builder.generate(new Palette.PaletteAsyncListener() {
+//            @Override
+//            public void onGenerated(Palette palette) {
+//                int colorPrimary = palette.getLightVibrantColor(R.color.colorPrimary);
+//                int colorPrimaryDark = palette.getLightMutedColor(R.color.colorPrimaryDark);
+////                int colorPrimaryDark = palette.getDarkVibrantColor(R.color.colorPrimary);
+//                Fragment target = TransactionFragment.newInstance(item.getLabel(),colorPrimary, colorPrimaryDark);
+//                fm.beginTransaction()
+////                        .addToBackStack(item.getLabel())
+//                        .add(R.id.container, target, item.toString()).commit();
+//            }
+//        });
+
+        Fragment target = TransactionFragment.newInstance(item.getLabel(),item.getColorPrimaryId(), item.getColorPrimaryDarkId());
                 fm.beginTransaction()
 //                        .addToBackStack(item.getLabel())
                         .add(R.id.container, target, item.toString()).commit();
-            }
-        });
-
-
     }
 
     public void onSectionAttached(String label) {
