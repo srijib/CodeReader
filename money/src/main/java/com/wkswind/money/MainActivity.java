@@ -30,60 +30,23 @@ public class MainActivity extends ToolbarActivity
      */
     private CharSequence mTitle;
     private FragmentManager fm;
-//    private Handler mHandler = new Handler() ;
-//    public static int testMethod(){
-//        EGL10 egl = (EGL10)EGLContext.getEGL();
-//
-//        EGLDisplay dpy = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY);
-//        int[] vers = new int[2];
-//        egl.eglInitialize(dpy, vers);
-//
-//        int[] configAttr = {
-//                EGL10.EGL_COLOR_BUFFER_TYPE, EGL10.EGL_RGB_BUFFER,
-//                EGL10.EGL_LEVEL, 0,
-//                EGL10.EGL_SURFACE_TYPE, EGL10.EGL_PBUFFER_BIT,
-//                EGL10.EGL_NONE
-//        };
-//        EGLConfig[] configs = new EGLConfig[1];
-//        int[] numConfig = new int[1];
-//        egl.eglChooseConfig(dpy, configAttr, configs, 1, numConfig);
-//        if (numConfig[0] == 0) {
-//            // TROUBLE! No config found.
-//        }
-//        EGLConfig config = configs[0];
-//
-//        int[] surfAttr = {
-//                EGL10.EGL_WIDTH, 64,
-//                EGL10.EGL_HEIGHT, 64,
-//                EGL10.EGL_NONE
-//        };
-//        EGLSurface surf = egl.eglCreatePbufferSurface(dpy, config, surfAttr);
-//        final int EGL_CONTEXT_CLIENT_VERSION = 0x3098;  // missing in EGL10
-//        int[] ctxAttrib = {
-//                EGL_CONTEXT_CLIENT_VERSION, 1,
-//                EGL10.EGL_NONE
-//        };
-//        EGLContext ctx = egl.eglCreateContext(dpy, config, EGL10.EGL_NO_CONTEXT, ctxAttrib);
-//        egl.eglMakeCurrent(dpy, surf, surf, ctx);
-//        int[] maxSize = new int[1];
-//        GLES10.glGetIntegerv(GLES10.GL_MAX_TEXTURE_SIZE, maxSize, 0);
-//        return maxSize[0];
-//    }
+    private DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fm = getSupportFragmentManager();
         setContentView(R.layout.activity_main);
         initToolbar();
-
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
         fm.addOnBackStackChangedListener(this);
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+                R.id.scrimInsetsFrameLayout,
+                mDrawerLayout);
 //        mHandler.postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
@@ -176,4 +139,9 @@ public class MainActivity extends ToolbarActivity
 //        fm.get
     }
 
+    public void changeStatusBarColor(int colorResId){
+        if(mDrawerLayout != null){
+            mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(colorResId));
+        }
+    }
 }

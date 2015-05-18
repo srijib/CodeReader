@@ -46,32 +46,19 @@ public class TransactionFragment extends BaseFragment implements SwipeRefreshLay
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments() != null){
-//            int colorPrimary = getArguments().getInt(COLOR_PRIMARY);
-//            int colorPrimaryDark = getArguments().getInt(COLOR_PRIMARY_DARK);
-//            int alpha = Color.alpha(colorPrimary);
-//            int r = Color.red(colorPrimary);
-//            int g = Color.green(colorPrimary);
-//            int b = Color.blue(colorPrimary);
-//            alpha -= 100;
-//            if(alpha  <=0 ){
-//                alpha = 0;
-//            }
-//            r += 50;
-//            if(r >= 0){
-//                r = 255;
-//            }
-//            colorPrimaryDark = Color.argb(alpha,r,g,b);
-//            Color color = Color..
             int colorPrimary = getArguments().getInt(COLOR_PRIMARY);
             int colorPrimaryDark = getArguments().getInt(COLOR_PRIMARY_DARK);
             FragmentActivity activity = getActivity();
             if(activity instanceof ToolbarActivity){
                 ((ToolbarActivity) activity).getToolbar().setBackgroundColor(getResources().getColor(colorPrimary));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    Window window = activity.getWindow();
-                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                    window.setStatusBarColor(getResources().getColor(colorPrimaryDark));
+                if(activity instanceof MainActivity){
+                    ((MainActivity)activity).changeStatusBarColor(colorPrimaryDark);
                 }
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    Window window = activity.getWindow();
+//                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//                    window.setStatusBarColor(getResources().getColor(colorPrimaryDark));
+//                }
             }
         }
     }

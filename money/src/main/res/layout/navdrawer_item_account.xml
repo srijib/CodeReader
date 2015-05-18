@@ -7,6 +7,7 @@
     android:layout_height="@dimen/navdrawer_chosen_account_height"
     android:layout_marginLeft="@dimen/keyline_1"
     android:layout_marginRight="@dimen/keyline_1"
+    app:insetForeground="#4000"
     android:foreground="?android:selectableItemBackground">
 
     <ImageView android:layout_width="match_parent"

@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -120,7 +121,9 @@ public class NavigationDrawerFragment extends Fragment {
 
             }
         });
-        ViewCompat.setElevation(view.findViewById(R.id.container_others), getResources().getDimensionPixelSize(R.dimen.headerbar_elevation));
+        accountContainer.setFitsSystemWindows(true);
+//        view.setFitsSystemWindows(true);
+//        ViewCompat.setElevation(view.findViewById(R.id.container_others), getResources().getDimensionPixelSize(R.dimen.headerbar_elevation));
         return view;
     }
 
@@ -232,7 +235,8 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     public boolean isDrawerOpen() {
-        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
+        return mDrawerLayout != null && mDrawerLayout.isDrawerVisible(Gravity.START);
+//        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
     }
 
     /**
@@ -280,6 +284,7 @@ public class NavigationDrawerFragment extends Fragment {
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };
+//        mDrawerLayout.setStatusBar
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
 //        mDrawerToggle = new ActionBarDrawerToggle(
