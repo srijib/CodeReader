@@ -196,6 +196,8 @@ public class NavigationDrawerFragment extends Fragment {
         if (mCallbacks != null) {
             mCallbacks.onNavigationDrawerItemSelected(info);
         }
+
+
     }
 
     private void setSelectedNavDrawerItem(int position) {

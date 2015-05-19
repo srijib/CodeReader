@@ -8,7 +8,7 @@
 
     <string-array name="label_items_money">
         <item>@string/item_transactions</item>
-        <item>@string/item_incoming</item>
+        <item>@string/item_income</item>
         <item>@string/item_expense</item>
     </string-array>
 

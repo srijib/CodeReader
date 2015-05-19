@@ -13,8 +13,10 @@ import com.wkswind.diary.R;
 public class BaseActivity extends AppCompatActivity {
     private boolean mHasToolbar = false;
     protected Toolbar getToolbar(){
-        return (Toolbar) findViewById(R.id.toolbar_actionbar);
+//        return (Toolbar) findViewById(R.id.toolbar_actionbar);
+        return null;
     }
+
 
     protected void setHasToolbar(boolean hasToolbar){
         mHasToolbar = hasToolbar;

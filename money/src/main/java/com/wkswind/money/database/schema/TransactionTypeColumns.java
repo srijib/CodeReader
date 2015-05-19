@@ -1,4 +1,4 @@
-package com.wkswind.money.database;
+package com.wkswind.money.database.schema;
 
 import net.simonvt.schematic.annotation.DataType;
 
@@ -6,7 +6,7 @@ import net.simonvt.schematic.annotation.DataType;
  * 流水类型
  * Created by Administrator on 2015/5/6.
  */
-public interface TransactionType extends Base {
+public interface TransactionTypeColumns extends BaseColumns {
     @DataType(DataType.Type.INTEGER)
     String type = "transaction_type";//分类
     @DataType(DataType.Type.TEXT)

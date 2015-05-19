@@ -29,9 +29,8 @@ import java.util.ArrayList;
 public class TransactionFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout refreshLayout;
     private ListView content;
-    private final static String LABEL = "label";
-    private final static String COLOR_PRIMARY = "color_primary";
-    private final static String COLOR_PRIMARY_DARK = "color_primary_dark";
+
+
     public static final TransactionFragment newInstance(String label, int colorPrimary, int colorPrimaryDark){
         TransactionFragment fragment = new TransactionFragment();
         Bundle args = new Bundle();
@@ -45,22 +44,7 @@ public class TransactionFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null){
-            int colorPrimary = getArguments().getInt(COLOR_PRIMARY);
-            int colorPrimaryDark = getArguments().getInt(COLOR_PRIMARY_DARK);
-            FragmentActivity activity = getActivity();
-            if(activity instanceof ToolbarActivity){
-                ((ToolbarActivity) activity).getToolbar().setBackgroundColor(getResources().getColor(colorPrimary));
-                if(activity instanceof MainActivity){
-                    ((MainActivity)activity).changeStatusBarColor(colorPrimaryDark);
-                }
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    Window window = activity.getWindow();
-//                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//                    window.setStatusBarColor(getResources().getColor(colorPrimaryDark));
-//                }
-            }
-        }
+
     }
 
     @Override
@@ -93,22 +77,6 @@ public class TransactionFragment extends BaseFragment implements SwipeRefreshLay
             }
             ArrayAdapter<String> fakeAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,android.R.id.text1, datas);
             content.setAdapter(fakeAdapter);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if(activity instanceof MainActivity){
-            if(getArguments() != null){
-                Bundle args = getArguments();
-                if(args.containsKey(LABEL)){
-                    if(activity instanceof MainActivity){
-                        ((MainActivity) activity).onSectionAttached(args.getString(LABEL));
-                    }
-                }
-            }
-
         }
     }
 

@@ -3,7 +3,7 @@
     <!--Drawer Item-->
     <string name="item_wallet">我的钱包</string>
     <string name="item_transactions">交易流水</string>
-    <string name="item_incoming">收入</string>
+    <string name="item_income">收入</string>
     <string name="item_expense">支出</string>
     <string name="item_chart_week">周视图</string>
     <string name="item_chart_month">月视图</string>

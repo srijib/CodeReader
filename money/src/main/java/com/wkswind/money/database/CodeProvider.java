@@ -2,6 +2,10 @@ package com.wkswind.money.database;
 
 import android.net.Uri;
 
+import com.wkswind.money.database.schema.AccountColumns;
+import com.wkswind.money.database.schema.TransactionColumns;
+import com.wkswind.money.database.schema.TransactionTypeColumns;
+
 import net.simonvt.schematic.annotation.ContentProvider;
 import net.simonvt.schematic.annotation.ContentUri;
 import net.simonvt.schematic.annotation.InexactContentUri;
@@ -40,14 +44,14 @@ public class CodeProvider {
     public static class TransactionTypes {
         @ContentUri(path = Path.TRANSACTION_TYPES,
         type = "vnd.android.cursor.dir/list",
-        defaultSort = TransactionType.name + " DESC")
+        defaultSort = TransactionTypeColumns.name + " DESC")
         public static final Uri CONTENT_URI = buildUri(Path.TRANSACTION_TYPES);
 
         @InexactContentUri(
                 path = Path.TRANSACTION_TYPES +"/#",
                 name = "TRANSACTION_TYPES_ID",
                 type = "vnd.android.cursor.item/list",
-                whereColumn = TransactionType.ID,
+                whereColumn = TransactionTypeColumns.ID,
                 pathSegment = 1 )
         public static Uri withId(long id){return buildUri(Path.TRANSACTION_TYPES,String.valueOf(id));}
     }
@@ -56,14 +60,14 @@ public class CodeProvider {
     public static class Accounts {
         @ContentUri(path = Path.ACCOUNTS,
                 type = "vnd.android.cursor.dir/list",
-                defaultSort = Account.name + " DESC")
+                defaultSort = AccountColumns.name + " DESC")
         public static final Uri CONTENT_URI = buildUri(Path.ACCOUNTS);
 
         @InexactContentUri(
                 path = Path.ACCOUNTS +"/#",
                 name = "ACCOUNTS_ID",
                 type = "vnd.android.cursor.item/list",
-                whereColumn = Account.ID,
+                whereColumn = AccountColumns.ID,
                 pathSegment = 1 )
         public static Uri withId(long id){return buildUri(Path.ACCOUNTS,String.valueOf(id));}
     }
@@ -72,14 +76,14 @@ public class CodeProvider {
     public static class Transactions {
         @ContentUri(path = Path.TRANSACTIONS,
                 type = "vnd.android.cursor.dir/list",
-                defaultSort = Transaction.timeInMS + " DESC")
+                defaultSort = TransactionColumns.timeInMS + " DESC")
         public static final Uri CONTENT_URI = buildUri(Path.TRANSACTIONS);
 
         @InexactContentUri(
                 path = Path.TRANSACTIONS +"/#",
                 name = "TRANSACTIONS_ID",
                 type = "vnd.android.cursor.item/list",
-                whereColumn = Transaction.ID,
+                whereColumn = TransactionColumns.ID,
                 pathSegment = 1 )
         public static Uri withId(long id){return buildUri(Path.TRANSACTIONS,String.valueOf(id));}
     }

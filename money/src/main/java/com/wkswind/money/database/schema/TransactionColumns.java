@@ -1,4 +1,4 @@
-package com.wkswind.money.database;
+package com.wkswind.money.database.schema;
 
 import net.simonvt.schematic.annotation.DataType;
 
@@ -6,7 +6,7 @@ import net.simonvt.schematic.annotation.DataType;
  * 流水
  * Created by Administrator on 2015/5/6.
  */
-public interface Transaction extends Base {
+public interface TransactionColumns extends BaseColumns {
     @DataType(DataType.Type.TEXT)
     String account = "account";
     @DataType(DataType.Type.TEXT)

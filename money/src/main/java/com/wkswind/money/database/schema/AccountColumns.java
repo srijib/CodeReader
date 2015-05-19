@@ -1,4 +1,4 @@
-package com.wkswind.money.database;
+package com.wkswind.money.database.schema;
 
 import net.simonvt.schematic.annotation.DataType;
 
@@ -6,7 +6,7 @@ import net.simonvt.schematic.annotation.DataType;
  * 账号
  * Created by Administrator on 2015/5/7.
  */
-public interface Account extends Base {
+public interface AccountColumns extends BaseColumns {
     @DataType(DataType.Type.TEXT)
     String name = "name";
     @DataType(DataType.Type.TEXT)

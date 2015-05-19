@@ -1,12 +1,10 @@
 package com.wkswind.money;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -15,16 +13,19 @@ import android.view.MenuItem;
 import com.wkswind.money.base.ToolbarActivity;
 import com.wkswind.money.drawer.DrawerItem;
 import com.wkswind.money.ui.TransactionFragment;
+import com.wkswind.money.ui.TypeFragment;
 
 
 public class MainActivity extends ToolbarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, FragmentManager.OnBackStackChangedListener {
 
+    private static final long NAVDRAWER_LAUNCH_DELAY = 250;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
+    private Handler mHandler;
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -36,6 +37,7 @@ public class MainActivity extends ToolbarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fm = getSupportFragmentManager();
+        mHandler = new Handler();
         setContentView(R.layout.activity_main);
         initToolbar();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -58,35 +60,13 @@ public class MainActivity extends ToolbarActivity
     @Override
     public void onNavigationDrawerItemSelected(final DrawerItem item) {
         // update the main content by replacing fragments
-//        if(getString(R.string.item_settings).equals(item.getLabel())){
-//            startActivity(new Intent(this, SettingsActivity.class));
-//        }else{
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            fragmentManager.beginTransaction()
-//                    .replace(R.id.container, PlaceholderFragment.newInstance(item.getLabel()))
-//                    .commit();
-//        }
-//        Toast.makeText(this, "MAX # " + testMethod(), Toast.LENGTH_SHORT) ;
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), item.getIconId());
-//        Palette.Builder builder = new Palette.Builder(bitmap);
-//        builder.resizeBitmapSize(R.dimen.navdrawer_item_size);
-//        builder.generate(new Palette.PaletteAsyncListener() {
-//            @Override
-//            public void onGenerated(Palette palette) {
-//                int colorPrimary = palette.getLightVibrantColor(R.color.colorPrimary);
-//                int colorPrimaryDark = palette.getLightMutedColor(R.color.colorPrimaryDark);
-////                int colorPrimaryDark = palette.getDarkVibrantColor(R.color.colorPrimary);
-//                Fragment target = TransactionFragment.newInstance(item.getLabel(),colorPrimary, colorPrimaryDark);
-//                fm.beginTransaction()
-////                        .addToBackStack(item.getLabel())
-//                        .add(R.id.container, target, item.toString()).commit();
-//            }
-//        });
+        gotoNavigationItem(item);
+    }
 
-        Fragment target = TransactionFragment.newInstance(item.getLabel(),item.getColorPrimaryId(), item.getColorPrimaryDarkId());
-                fm.beginTransaction()
-//                        .addToBackStack(item.getLabel())
-                        .add(R.id.container, target, item.toString()).commit();
+    private void gotoNavigationItem(final DrawerItem item){
+        Fragment target = TypeFragment.newInstance(item.getLabel(), item.getColorPrimaryId(), item.getColorPrimaryDarkId());
+        fm.beginTransaction()
+                .add(R.id.container, target, item.toString()).commit();
     }
 
     public void onSectionAttached(String label) {
