@@ -1,25 +1,17 @@
-package com.wkswind.money.ui;
+package com.wkswind.money.ui.fragment;
 
-import android.app.Activity;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.wkswind.money.BuildConfig;
-import com.wkswind.money.MainActivity;
 import com.wkswind.money.R;
 import com.wkswind.money.base.BaseFragment;
-import com.wkswind.money.base.ToolbarActivity;
 
 import java.util.ArrayList;
 

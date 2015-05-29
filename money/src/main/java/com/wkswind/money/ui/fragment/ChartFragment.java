@@ -1,4 +1,4 @@
-package com.wkswind.money.ui;
+package com.wkswind.money.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +16,7 @@ public class ChartFragment extends BaseFragment {
     public static final int TYPE_WEEK_CHART = 0;
     public static final int TYPE_MONTH_CHART = 0;
     public static final int TYPE_YEAR_CHART = 0;
-    private static final String TYPE = "com.wkswind.money.ui.ChartFragment.TYPE";
+    private static final String TYPE = "com.wkswind.money.ui.fragment.ChartFragment.TYPE";
     private int chartType = TYPE_DAY_CHART;
     public static final ChartFragment newInstance(int chartType){
         ChartFragment fragment = new ChartFragment();

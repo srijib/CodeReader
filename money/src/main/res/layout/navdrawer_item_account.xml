@@ -27,6 +27,7 @@
         android:id="@+id/chosen_account_content_view">
 
         <com.wkswind.minilibrary.library.widget.BezelImageView
+            android:layout_marginTop="@dimen/keyline_1"
             android:id="@+id/profile_image"
             android:layout_width="@dimen/navdrawer_profile_image_size"
             android:layout_height="@dimen/navdrawer_profile_image_size"

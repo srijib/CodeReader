@@ -13,6 +13,8 @@ public interface TransactionTypeColumns extends BaseColumns {
     String name = "transaction_name";//名称
     @DataType(DataType.Type.INTEGER)
     String periodicity = "transaction_periodicity";//周期
+    @DataType(DataType.Type.REAL)
+    String color = "color";
 
     public static final int INCOMING = 0; //收入，需要手动录入
     public static final int EXPENSE = 1; //支出，需要手动录入

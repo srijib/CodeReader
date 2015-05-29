@@ -12,8 +12,7 @@ import android.view.MenuItem;
 
 import com.wkswind.money.base.ToolbarActivity;
 import com.wkswind.money.drawer.DrawerItem;
-import com.wkswind.money.ui.TransactionFragment;
-import com.wkswind.money.ui.TypeFragment;
+import com.wkswind.money.ui.fragment.TypeFragment;
 
 
 public class MainActivity extends ToolbarActivity

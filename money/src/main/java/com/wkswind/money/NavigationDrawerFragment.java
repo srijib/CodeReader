@@ -220,20 +220,17 @@ public class NavigationDrawerFragment extends Fragment {
         }
         ImageView iconView = (ImageView) view.findViewById(R.id.icon);
         TextView titleView = (TextView) view.findViewById(R.id.title);
-        int backgroundResId = R.drawable.selected_navdrawer_item_background;
-        if(!selected){
-            backgroundResId = UIUtils.getAttributeResourceId(getActivity(),android.R.attr.selectableItemBackground, R.style.AppTheme);
-        }
-        view.setBackgroundResource(backgroundResId);
+//        int backgroundResId = R.drawable.selected_navdrawer_item_background;
+//        if(!selected){
+//            backgroundResId = UIUtils.getAttributeResourceId(getActivity(),android.R.attr.selectableItemBackground, R.style.AppTheme);
+//        }
+//        view.setBackgroundResource(backgroundResId);
         Log.i(TAG, "TITLE NULL # " + (titleView == null));
         Log.i(TAG, "ICON NULL # " + (iconView == null));
         // configure its appearance according to whether or not it's selected
         titleView.setTextColor(selected ?
                 getResources().getColor(R.color.navdrawer_text_color_selected) :
                 getResources().getColor(R.color.navdrawer_text_color));
-//        iconView.setColorFilter(selected ?
-//                getResources().getColor(R.color.navdrawer_icon_tint_selected) :
-//                getResources().getColor(R.color.navdrawer_icon_tint));
     }
 
     public boolean isDrawerOpen() {
