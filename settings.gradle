@@ -1,1 +1,1 @@
-include ':app',':minilibrary', ':diary', ':money'
+include ':app',':minilibrary', ':diary', ':money', ':password'

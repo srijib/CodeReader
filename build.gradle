@@ -17,8 +17,33 @@ allprojects {
     }
 }
 
+ext {
+    minSdk = 14;
+    targetSdk = 22;
 
+    buildTools = "22.0.1"
 
+    libraryVersion = "22.2.0"
+    leakCanaryVersion = "1.3"
+}
+
+//def libraryVersion = '22.2.0'
+
+ext.libraries = [
+//        design : 'com.android.support:design:22.2.0',
+        design : "com.android.support:design:${libraryVersion}",
+        appcompat : "com.android.support:appcompat-v7:${libraryVersion}",
+        recyclerview : "com.android.support:recyclerview-v7:${libraryVersion}",
+        cardview : "com.android.support:cardview-v7:${libraryVersion}",
+        palette : "com.android.support:palette-v7:${libraryVersion}",
+
+        debugLeakCanary: "com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",
+        releaseLeakCanary : "com.squareup.leakcanary:leakcanary-android-no-op:${leakCanaryVersion}"
+]
+
+task printLibraries {
+    println libraryVersion
+}
 //ext {
 //    versionCode = 2
 //    versionName = '2.0'
