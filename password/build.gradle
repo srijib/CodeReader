@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion rootProject.ext.targetSdk
@@ -21,20 +22,13 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-//        compile rootProject.ext.libraries.appcompat
     compile rootProject.ext.libraries.design
     compile rootProject.ext.libraries.recyclerview
     compile rootProject.ext.libraries.palette
+//    compile rootProject.ext.libraries.patternLock
     debugCompile rootProject.ext.libraries.debugLeakCanary
     releaseCompile rootProject.ext.libraries.releaseLeakCanary
-//        debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3'
-//        releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
-
-//    compile 'com.android.support:design:22.2.0'
-//    compile 'com.android.support:recyclerview-v7:22.2.0'
-//    compile 'com.android.support:appcompat-v7:22.2.0'
-//    compile 'com.android.support:palette-v7:22.2.0'
-//    compile 'com.android.support:recyclerview-v7:22.2.0'
-//    compile 'com.android.support:cardview-v7:22.2.0'
-//    compile 'com.android.support:support-v4:22.2.0'
+    apt rootProject.ext.libraries.aptDbFlow
+    compile rootProject.ext.libraries.coreDbFlow
+    compile rootProject.ext.libraries.dbFlow
 }
