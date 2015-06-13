@@ -18,7 +18,7 @@ import net.simonvt.schematic.annotation.Table;
 @Database(version = CodeDatabase.VERSION,
     packageName = "com.wkswind.money.provider")
 public final class CodeDatabase {
-    public static final int VERSION = 1;
+    public static final int VERSION =2;
     private CodeDatabase(){
 
     }

@@ -16,5 +16,4 @@
 
 <resources>
     <item name="header_shadow" type="drawable">@null</item>
-    <item name="bottom_shadow" type="drawable">@null</item>
 </resources>

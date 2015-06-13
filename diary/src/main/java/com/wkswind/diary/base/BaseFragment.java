@@ -16,7 +16,7 @@ public class BaseFragment  extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    protected Toolbar getToolbar(){
-        return (Toolbar) getView().findViewById(R.id.toolbar_actionbar);
-    }
+//    protected Toolbar getToolbar(){
+//        return (Toolbar) getView().findViewById(R.id.toolbar_actionbar);
+//    }
 }

@@ -2,14 +2,13 @@
 <com.github.clans.fab.FloatingActionMenu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/menu1"
+    android:id="@+id/fab_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentBottom="true"
     android:layout_alignParentRight="true"
     fab:menu_labels_ellipsize="end"
-    fab:menu_labels_singleLine="true"
-    fab:menu_backgroundColor="#ccffffff">
+    fab:menu_labels_singleLine="true">
 
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fab_type"
