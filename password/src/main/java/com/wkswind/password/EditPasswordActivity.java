@@ -44,7 +44,7 @@ public class EditPasswordActivity extends ToolbarActivity implements ColorPicker
         TypedArray ta = getResources().obtainTypedArray(R.array.default_color_choice_values);
         int[] colors = new int[ta.length()];
         for(int i=0,j=ta.length();i<j;i++){
-            colors[i] = getResources().getColor(ta.getResourceId(i,R.color.colorPrimary));
+            colors[i] = getResources().getColor(ta.getResourceId(i, R.color.colorPrimary));
         }
         ta.recycle();
         ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.action_color_selector,colors,getResources().getColor(R.color.colorPrimary), 4,ColorPickerDialog.SIZE_SMALL);

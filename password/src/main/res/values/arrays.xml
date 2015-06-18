@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="default_color_choice_values" translatable="false">
-        <item>#2196F3</item>
-        <item>#40C4FF</item>
-        <item>#aa66cc</item>
-        <item>#99cc00</item>
-        <item>#ff4444</item>
-        <item>#9933cc</item>
-        <item>#669900</item>
-        <item>#ff8800</item>
-        <item>#cc0000</item>
+        <item>@color/colorPrimary</item>
+        <item>@color/colorAccent</item>
+        <item>@color/color_aa66cc</item>
+        <item>@color/color_99cc00</item>
+        <item>@color/color_ff4444</item>
+        <item>@color/color_9933cc</item>
+        <item>@color/color_ff8800</item>
+        <item>@color/color_cc0000</item>
     </string-array>
 </resources>
