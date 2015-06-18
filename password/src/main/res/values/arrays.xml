@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="default_color_choice_values" translatable="false">
+        <item>@color/colorPrimary</item>
+        <item>@color/colorAccent</item>
+        <item>@color/color_aa66cc</item>
+        <item>@color/color_99cc00</item>
+        <item>@color/color_ff4444</item>
+        <item>@color/color_9933cc</item>
+        <item>@color/color_ff8800</item>
+        <item>@color/color_cc0000</item>
+    </string-array>
+</resources>
