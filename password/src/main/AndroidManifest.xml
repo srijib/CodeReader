@@ -1,13 +1,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.wkswind.password">
 
     <application android:allowBackup="true" android:label="@string/app_name"
-        android:icon="@mipmap/ic_launcher" android:theme="@style/AppTheme"
+        android:icon="@mipmap/ic_launcher" android:theme="@style/AppTheme.NoActionBar"
         android:name=".base.PasswordApplication">
         <activity android:name=".HomeActivity" android:excludeFromRecents="true">
             <intent-filter>
-                <action android:name="ANDROID.INTENT.ACTION.MAIN" />
-                <category android:name="ANDROID.INTENT.CATEGORY.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".SettingsActivity"
+            android:label="@string/title_settings"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+        <activity android:name=".ViewPasswordActivity"
+            android:label="@string/title_view"
+            android:parentActivityName=".ViewPasswordActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+        <activity android:name=".EditPasswordActivity"
+            android:label="@string/title_edit"
+            android:parentActivityName=".EditPasswordActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
         </activity>
     </application>
 

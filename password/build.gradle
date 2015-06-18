@@ -25,7 +25,7 @@ dependencies {
     compile rootProject.ext.libraries.design
     compile rootProject.ext.libraries.recyclerview
     compile rootProject.ext.libraries.palette
-//    compile rootProject.ext.libraries.patternLock
+    //    compile rootProject.ext.libraries.patternLock
     debugCompile rootProject.ext.libraries.debugLeakCanary
     releaseCompile rootProject.ext.libraries.releaseLeakCanary
     apt rootProject.ext.libraries.aptDbFlow

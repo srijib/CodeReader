@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/toolbar_actionbar_with_headerbar" />
+    <com.wkswind.password.custom.DrawShadowFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shadowDrawable="@drawable/header_shadow">
+        <fragment
+            android:id="@+id/settings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.wkswind.password.SettingsFragment" />
+    </com.wkswind.password.custom.DrawShadowFrameLayout>
+</LinearLayout>
