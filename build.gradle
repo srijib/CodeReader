@@ -41,6 +41,8 @@ ext.libraries = [
 
         patternLock      : "com.eftimoff:android-patternview:1.0.2@aar",
 
+        twowayview : "org.lucasr.twowayview:twowayview:0.1.4",
+
 /**
          * To using DBFLOW :
          * 1.apply plugin: 'com.neenbedankt.android-apt'

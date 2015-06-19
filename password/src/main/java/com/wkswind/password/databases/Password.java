@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Administrator on 2015/6/9.
  */
 @Table(databaseName = AppDatabase.NAME)
-public class Password extends BaseModel {
+public class Password extends BaseModel{
     @Column
     @PrimaryKey(autoincrement = true)
     long id;
@@ -35,12 +35,18 @@ public class Password extends BaseModel {
     ForeignKeyContainer<SafetyQuestion> safetyQuestions;
     @Column
     int status;
+    @Column
+    String secureMobile;
+    @Column
+    String secureEmail;
+    @Column
+    int backgroundColor;
     List<SafetyQuestion> allSafetyQuestions;
 
     @OneToMany(methods = {OneToMany.Method.ALL})
     public List<SafetyQuestion> getAllSafetyQuestions(){
         if(allSafetyQuestions == null){
-            allSafetyQuestions = new Select().from(SafetyQuestion.class).where(Condition.column(SafetyQuestion$Table.PASSWORD_PASSWORD_ID).is(id)).queryList();
+            allSafetyQuestions = new Select().from(SafetyQuestion.class).where(Condition.column(SafetyQuestion$Table.PASSWORDID).is(id)).queryList();
         }
         return allSafetyQuestions;
     }

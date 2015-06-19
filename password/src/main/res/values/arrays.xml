@@ -2,12 +2,12 @@
 <resources>
     <string-array name="default_color_choice_values" translatable="false">
         <item>@color/colorPrimary</item>
-        <item>@color/colorAccent</item>
-        <item>@color/color_aa66cc</item>
-        <item>@color/color_99cc00</item>
-        <item>@color/color_ff4444</item>
-        <item>@color/color_9933cc</item>
-        <item>@color/color_ff8800</item>
-        <item>@color/color_cc0000</item>
+        <item>@color/color_red</item>
+        <item>@color/color_purple</item>
+        <item>@color/color_indigo</item>
+        <item>@color/color_green</item>
+        <item>@color/color_orange</item>
+        <item>@color/color_brown</item>
+        <item>@color/color_gray</item>
     </string-array>
 </resources>

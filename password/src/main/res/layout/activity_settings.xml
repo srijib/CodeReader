@@ -8,6 +8,7 @@
     <com.wkswind.password.custom.DrawShadowFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="@dimen/keyline_1"
         app:shadowDrawable="@drawable/header_shadow">
         <fragment
             android:id="@+id/settings"

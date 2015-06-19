@@ -24,6 +24,7 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity android:name=".EditPasswordActivity"
+            android:windowSoftInputMode="stateVisible"
             android:label="@string/title_edit"
             android:parentActivityName=".EditPasswordActivity">
             <meta-data

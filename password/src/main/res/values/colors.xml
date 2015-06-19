@@ -4,10 +4,11 @@
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorAccent">#40C4FF</color>
 
-    <color name="color_aa66cc">#aa66cc</color>
-    <color name="color_99cc00">#99cc00</color>
-    <color name="color_ff4444">#ff4444</color>
-    <color name="color_9933cc">#9933cc</color>
-    <color name="color_ff8800">#ff8800</color>
-    <color name="color_cc0000">#cc0000</color>
+    <color name="color_red">#F44336</color>
+    <color name="color_purple">#9C27B0</color>
+    <color name="color_indigo">#3F51B5</color>
+    <color name="color_green">#4CAF50</color>
+    <color name="color_orange">#FF9800</color>
+    <color name="color_brown">#795548</color>
+    <color name="color_gray">#607D8B</color>
 </resources>

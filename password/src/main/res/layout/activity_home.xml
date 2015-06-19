@@ -16,17 +16,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:shadowDrawable="@drawable/header_shadow">
+            <org.lucasr.twowayview.TwoWayView
+                android:id="@+id/password_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
         </com.wkswind.password.custom.DrawShadowFrameLayout>
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton android:id="@+id/action_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fabSize="normal"
+        app:borderWidth="0dp"
         android:src="@drawable/ic_action_add"
         android:layout_gravity="end|bottom"
         android:layout_marginBottom="@dimen/keyline_1"
         android:layout_marginEnd="@dimen/keyline_1"
-        android:layout_marginRight="@dimen/keyline_1"/>
+        android:layout_marginRight="@dimen/keyline_1"
+        />
 </FrameLayout>
 <!--</android.support.design.widget.CoordinatorLayout>-->
 

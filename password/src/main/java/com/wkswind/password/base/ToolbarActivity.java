@@ -1,9 +1,12 @@
 package com.wkswind.password.base;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.wkswind.password.R;
 
@@ -60,5 +63,16 @@ public class ToolbarActivity extends BaseActivity {
 
     protected void onHomeClearIndicatorClick(View v){
         finish();
+    }
+
+    protected void changeThemeColor(int color){
+        Toolbar toolbar = getToolbar();
+        if(toolbar != null){
+            toolbar.setBackgroundColor(color);
+        }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(color);
+        }
     }
 }

@@ -11,16 +11,23 @@ import android.view.View;
 
 import com.wkswind.password.base.ToolbarActivity;
 
+import org.lucasr.twowayview.TwoWayView;
+
 /**
  * Created by Administrator on 2015/6/5.
  */
 public class HomeActivity extends ToolbarActivity implements View.OnClickListener {
     private View fabAdd;
+    private TwoWayView passwordContent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         fabAdd = findViewById(R.id.action_add);
+        passwordContent = (TwoWayView) findViewById(R.id.password_content);
+        passwordContent.setItemAnimator(new DefaultItemAnimator());
+        passwordContent.setLayoutManager(new GridLayoutManager(this,getResources().getInteger(R.integer.main_grid_columns), LinearLayoutManager.VERTICAL, false));
+
         fabAdd.setOnClickListener(this);
         setupToolbar();
     }

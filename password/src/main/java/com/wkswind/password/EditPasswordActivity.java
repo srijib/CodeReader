@@ -1,26 +1,43 @@
 package com.wkswind.password;
 
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 import com.wkswind.password.base.ToolbarActivity;
 import com.wkswind.password.custom.ColorPickerDialog;
 import com.wkswind.password.custom.ColorPickerSwatch;
+import com.wkswind.password.databases.Password;
+import com.wkswind.password.databases.Password$Table;
 import com.wkswind.password.utils.Utils;
 
 /**
  * Created by Administrator on 2015/6/18.
  */
 public class EditPasswordActivity extends ToolbarActivity implements ColorPickerSwatch.OnColorSelectedListener {
+    private Password password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_password);
         setupToolbar();
         enableClearIndicator();
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+//            getToolbar().setElevation(0);
+//        }
+        String passwordId = getIntent().getStringExtra(Password$Table.ID);
+        if(TextUtils.isEmpty(passwordId)){
+            password = new Password();
+        }else{
+            password = new Select().from(Password.class).where(Condition.column(Password$Table.ID).is(passwordId)).querySingle();
+        }
+
     }
 
     @Override
@@ -54,6 +71,6 @@ public class EditPasswordActivity extends ToolbarActivity implements ColorPicker
 
     @Override
     public void onColorSelected(int color) {
-
+        changeThemeColor(color);
     }
 }

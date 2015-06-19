@@ -21,4 +21,5 @@ public class PasswordType extends BaseModel {
     int colorBackground;
     @Column
     int status;
+
 }
