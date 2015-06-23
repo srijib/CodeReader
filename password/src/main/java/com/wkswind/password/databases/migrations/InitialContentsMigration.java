@@ -18,8 +18,8 @@ import java.util.ArrayList;
  * Created by 南风不竞 on 2015-06-22.
  */
 @Migration(version = 0,databaseName = AppDatabase.NAME)
-public class InitialContents extends AlterTableMigration<PasswordType> {
-    public InitialContents(){
+public class InitialContentsMigration extends AlterTableMigration<PasswordType> {
+    public InitialContentsMigration(){
         super(PasswordType.class);
     }
 

@@ -4,6 +4,12 @@
         android:icon="@mipmap/ic_launcher" android:theme="@style/AppTheme.NoActionBar"
         android:name=".base.PasswordApplication">
         <activity android:name=".HomeActivity" android:excludeFromRecents="true">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".NavigationHomeActivity" android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

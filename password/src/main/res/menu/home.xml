@@ -6,14 +6,7 @@
         android:title="@string/action_search"
         android:icon="@drawable/ic_action_search"
         app:showAsAction="always" />
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:icon="@drawable/ic_action_settings"
-        app:showAsAction="never"/>
     <item android:id="@+id/action_view"
         android:title="@string/title_view"
-        app:showAsAction="never" />
-    <item android:id="@+id/action_edit"
-        android:title="@string/title_edit"
         app:showAsAction="never" />
 </menu>

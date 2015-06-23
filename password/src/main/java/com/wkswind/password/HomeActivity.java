@@ -60,8 +60,11 @@ public class HomeActivity extends ToolbarActivity implements View.OnClickListene
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
             toolbar.addView(spinnerContainer, lp);
             Spinner spinner = (Spinner) spinnerContainer.findViewById(R.id.actionbar_spinner);
-            List<PasswordType> types = new Select().from(PasswordType.class).where(Condition.column(PasswordType$Table.STATUS).is(AppDatabase.STATUS_NORMAL)).orderBy(true, PasswordType$Table.NAME).queryList();
+            List<PasswordType> types = new Select().from(PasswordType.class).where(Condition.column(PasswordType$Table.STATUS).is(AppDatabase.STATUS_NORMAL)).orderBy(true, PasswordType$Table.ID).queryList();
             if(types != null && !types.isEmpty()){
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+//                toolbar.setTitle(null);
+//                toolbar.setNavigationIcon(R.mipmap.ic_launcher);
                 PasswordTypeAdapter adapter = new PasswordTypeAdapter(this,types, false);
                 spinner.setAdapter(adapter);
             }

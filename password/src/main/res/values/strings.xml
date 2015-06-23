@@ -21,4 +21,7 @@
     <string name="label_secure_email">安全邮箱</string>
     <string name="label_secure_mobile">安全手机</string>
     <string name="action_done">保存</string>
+    <string name="title_feedback">反馈</string>
+
+    <string name="title_password_type">密码分类</string>
 </resources>

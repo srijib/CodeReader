@@ -61,11 +61,8 @@ public class PasswordTypeAdapter extends BaseAdapter {
         }
         TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
         textView.setText(getTitle(position));
+        textView.setTextColor(context.getResources().getColor(android.R.color.white));
         return convertView;
-    }
-
-    private boolean isHeader(int position) {
-        return position >= 0 && position < datas.size();
     }
 
     @Override
@@ -108,18 +105,18 @@ public class PasswordTypeAdapter extends BaseAdapter {
         View dividerView = view.findViewById(R.id.divider_view);
         TextView normalTextView = (TextView) view.findViewById(android.R.id.text1);
 
-        if (isHeader(position)) {
-            headerTextView.setText(getTitle(position));
-            headerTextView.setVisibility(View.VISIBLE);
-            normalTextView.setVisibility(View.GONE);
-            dividerView.setVisibility(View.VISIBLE);
-        } else {
+//        if (isHeader(position)) {
+//            headerTextView.setText(getTitle(position));
+//            headerTextView.setVisibility(View.VISIBLE);
+//            normalTextView.setVisibility(View.GONE);
+//            dividerView.setVisibility(View.VISIBLE);
+//        } else {
             headerTextView.setVisibility(View.GONE);
             normalTextView.setVisibility(View.VISIBLE);
             dividerView.setVisibility(View.GONE);
 
             setUpNormalDropdownView(position, normalTextView);
-        }
+//        }
 
         return view;
     }

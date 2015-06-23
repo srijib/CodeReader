@@ -12,12 +12,14 @@ public class PasswordTypeConsts {
     static {
         NAMES = new ArrayList<>();
         REMARKS = new ArrayList<>();
+        NAMES.add("全部");
         NAMES.add("网站");
         NAMES.add("银行");
         NAMES.add("游戏");
         NAMES.add("学习");
         NAMES.add("其它");
 
+        REMARKS.add("");
         REMARKS.add("");
         REMARKS.add("");
         REMARKS.add("");
