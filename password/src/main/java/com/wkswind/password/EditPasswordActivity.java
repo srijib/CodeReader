@@ -70,7 +70,6 @@ public class EditPasswordActivity extends ToolbarActivity implements ThemePicker
 
     @Override
     public void onThemeSelected(int theme) {
-        int color = getResources().getColor(Utils.AttributeParser.parseAttribute(this,theme,R.attr.colorPrimary));
-        changeThemeColor(color);
+        changeThemeColor(theme);
     }
 }

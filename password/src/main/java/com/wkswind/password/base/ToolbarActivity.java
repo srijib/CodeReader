@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.wkswind.password.R;
+import com.wkswind.password.utils.Utils;
 
 /**
  * Created by Administrator on 2015/6/18.
@@ -65,14 +66,14 @@ public class ToolbarActivity extends BaseActivity {
         finish();
     }
 
-    protected void changeThemeColor(int color){
+    protected void changeThemeColor(int theme){
         Toolbar toolbar = getToolbar();
         if(toolbar != null){
-            toolbar.setBackgroundColor(color);
+            toolbar.setBackgroundColor(getResources().getColor(Utils.AttributeParser.parseAttribute(this,theme,R.attr.colorPrimary)));
         }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(color);
+            getWindow().setStatusBarColor(getResources().getColor(Utils.AttributeParser.parseAttribute(this,theme,R.attr.colorPrimaryDark)));
         }
     }
 }
