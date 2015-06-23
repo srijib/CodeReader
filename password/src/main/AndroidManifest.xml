@@ -3,12 +3,6 @@
     <application android:allowBackup="true" android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher" android:theme="@style/AppTheme.NoActionBar"
         android:name=".base.PasswordApplication">
-        <activity android:name=".HomeActivity" android:excludeFromRecents="true">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
         <activity android:name=".NavigationHomeActivity" android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,17 +11,17 @@
         </activity>
         <activity android:name=".SettingsActivity"
             android:label="@string/title_settings"
-            android:parentActivityName=".HomeActivity">
+            android:parentActivityName=".NavigationHomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
+                android:value=".NavigationHomeActivity" />
         </activity>
         <activity android:name=".ViewPasswordActivity"
             android:label="@string/title_view"
             android:parentActivityName=".ViewPasswordActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
+                android:value=".NavigationHomeActivity" />
         </activity>
         <activity android:name=".EditPasswordActivity"
             android:windowSoftInputMode="stateVisible"
@@ -35,7 +29,7 @@
             android:parentActivityName=".EditPasswordActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
+                android:value=".NavigationHomeActivity" />
         </activity>
     </application>
 

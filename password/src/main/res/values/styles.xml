@@ -12,6 +12,35 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.NoActionBar.Red">
+        <item name="colorPrimary">@color/color_primary_red</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_red</item>
+    </style>
+    <style name="AppTheme.NoActionBar.Purple">
+        <item name="colorPrimary">@color/color_primary_purple</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_purple</item>
+    </style>
+    <style name="AppTheme.NoActionBar.Indigo">
+        <item name="colorPrimary">@color/color_primary_indigo</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_indigo</item>
+    </style>
+    <style name="AppTheme.NoActionBar.Green">
+        <item name="colorPrimary">@color/color_primary_green</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_green</item>
+    </style>
+    <style name="AppTheme.NoActionBar.Orange">
+        <item name="colorPrimary">@color/color_primary_orange</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_orange</item>
+    </style>
+    <style name="AppTheme.NoActionBar.Brown">
+        <item name="colorPrimary">@color/color_primary_brown</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_brown</item>
+    </style>
+    <style name="AppTheme.NoActionBar.Gray">
+        <item name="colorPrimary">@color/color_primary_gray</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_gray</item>
+    </style>
+
     <style name="HeaderBar">
         <item name="android:background">?colorPrimary</item>
         <item name="android:elevation" tools:ignore="NewApi">@dimen/headerbar_elevation</item>

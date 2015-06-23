@@ -40,7 +40,7 @@ public class Password extends BaseModel{
     @Column
     String secureEmail;
     @Column
-    int backgroundColor;
+    int themeResId;
     List<SafetyQuestion> allSafetyQuestions;
 
     @OneToMany(methods = {OneToMany.Method.ALL})

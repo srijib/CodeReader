@@ -17,7 +17,7 @@
  * https://android.googlesource.com/platform/frameworks/opt/colorpicker/+/master/src/com/android/colorpicker
  */
 
-package com.wkswind.password.custom;
+package com.wkswind.password.custom.themepicker;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -27,43 +27,44 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.wkswind.password.R;
+import com.wkswind.password.utils.Utils;
 
 
 /**
  * Creates a circular swatch of a specified color.  Adds a checkmark if marked as checked.
  */
-public class ColorPickerSwatch extends FrameLayout implements View.OnClickListener {
-    private int mColor;
+public class ThemePickerSwatch extends FrameLayout implements View.OnClickListener {
+    private int mTheme;
     private ImageView mSwatchImage;
     private ImageView mCheckmarkImage;
-    private OnColorSelectedListener mOnColorSelectedListener;
+    private OnThemeSelectedListener mOnThemeSelectedListener;
 
     /**
      * Interface for a callback when a color square is selected.
      */
-    public static interface OnColorSelectedListener {
+    public static interface OnThemeSelectedListener {
 
         /**
          * Called when a specific color square has been selected.
          */
-        public void onColorSelected(int color);
+        public void onThemeSelected(int theme);
     }
 
-    public ColorPickerSwatch(Context context, int color, boolean checked,
-            OnColorSelectedListener listener) {
+    public ThemePickerSwatch(Context context, int theme, boolean checked,
+                             OnThemeSelectedListener listener) {
         super(context);
-        mColor = color;
-        mOnColorSelectedListener = listener;
+        mTheme = theme;
+        mOnThemeSelectedListener = listener;
 
         LayoutInflater.from(context).inflate(R.layout.calendar_color_picker_swatch, this);
         mSwatchImage = (ImageView) findViewById(R.id.color_picker_swatch);
         mCheckmarkImage = (ImageView) findViewById(R.id.color_picker_checkmark);
-        setColor(color);
+        setTheme(context.getResources().getColor(Utils.AttributeParser.parseAttribute(context, theme, R.attr.colorPrimary)));
         setChecked(checked);
         setOnClickListener(this);
     }
 
-    protected void setColor(int color) {
+    protected void setTheme(int color) {
         Drawable[] colorDrawable = new Drawable[]
                 {getContext().getResources().getDrawable(R.drawable.calendar_color_picker_swatch)};
         mSwatchImage.setImageDrawable(new ColorStateDrawable(colorDrawable, color));
@@ -79,8 +80,8 @@ public class ColorPickerSwatch extends FrameLayout implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if (mOnColorSelectedListener != null) {
-            mOnColorSelectedListener.onColorSelected(mColor);
+        if (mOnThemeSelectedListener != null) {
+            mOnThemeSelectedListener.onThemeSelected(mTheme);
         }
     }
 }

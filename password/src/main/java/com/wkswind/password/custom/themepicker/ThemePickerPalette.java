@@ -1,4 +1,4 @@
-package com.wkswind.password.custom;
+package com.wkswind.password.custom.themepicker;
 
 /*
  * Copyright (C) 2013 The Android Open Source Project
@@ -37,9 +37,9 @@ import com.wkswind.password.R;
  * A color picker custom view which creates an grid of color squares.  The number of squares per
  * row (and the padding between the squares) is determined by the user.
  */
-public class ColorPickerPalette extends TableLayout {
+public class ThemePickerPalette extends TableLayout {
 
-    public ColorPickerSwatch.OnColorSelectedListener mOnColorSelectedListener;
+    public ThemePickerSwatch.OnThemeSelectedListener mOnThemeSelectedListener;
 
 //    private String mDescription;
 //    private String mDescriptionSelected;
@@ -48,11 +48,11 @@ public class ColorPickerPalette extends TableLayout {
     private int mMarginSize;
     private int mNumColumns;
 
-    public ColorPickerPalette(Context context, AttributeSet attrs) {
+    public ThemePickerPalette(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ColorPickerPalette(Context context) {
+    public ThemePickerPalette(Context context) {
         super(context);
     }
 
@@ -60,17 +60,17 @@ public class ColorPickerPalette extends TableLayout {
      * Initialize the size, columns, and listener.  Size should be a pre-defined size (SIZE_LARGE
      * or SIZE_SMALL) from ColorPickerDialogFragment.
      */
-    public void init(int size, int columns, ColorPickerSwatch.OnColorSelectedListener listener) {
+    public void init(int size, int columns, ThemePickerSwatch.OnThemeSelectedListener listener) {
         mNumColumns = columns;
         Resources res = getResources();
-        if (size == ColorPickerDialog.SIZE_LARGE) {
+        if (size == ThemePickerDialog.SIZE_LARGE) {
             mSwatchLength = res.getDimensionPixelSize(R.dimen.color_swatch_large);
             mMarginSize = res.getDimensionPixelSize(R.dimen.color_swatch_margins_large);
         } else {
             mSwatchLength = res.getDimensionPixelSize(R.dimen.color_swatch_small);
             mMarginSize = res.getDimensionPixelSize(R.dimen.color_swatch_margins_small);
         }
-        mOnColorSelectedListener = listener;
+        mOnThemeSelectedListener = listener;
 
 //        mDescription = null;
 //        mDescriptionSelected = null;
@@ -87,8 +87,8 @@ public class ColorPickerPalette extends TableLayout {
     /**
      * Adds swatches to table in a serpentine format.
      */
-    public void drawPalette(int[] colors, int selectedColor) {
-        if (colors == null) {
+    public void drawPalette(int[] themes, int selectedTheme) {
+        if (themes == null) {
             return;
         }
 
@@ -99,11 +99,11 @@ public class ColorPickerPalette extends TableLayout {
 
         // Fills the table with swatches based on the array of colors.
         TableRow row = createTableRow();
-        for (int color : colors) {
+        for (int theme : themes) {
             tableElements++;
 
-            View colorSwatch = createColorSwatch(color, selectedColor);
-            setSwatchDescription(rowNumber, tableElements, rowElements, color == selectedColor,
+            View colorSwatch = createColorSwatch(theme, selectedTheme);
+            setSwatchDescription(rowNumber, tableElements, rowElements, theme == selectedTheme,
                     colorSwatch);
             addSwatchToRow(row, colorSwatch, rowNumber);
 
@@ -179,9 +179,9 @@ public class ColorPickerPalette extends TableLayout {
     /**
      * Creates a color swatch.
      */
-    private ColorPickerSwatch createColorSwatch(int color, int selectedColor) {
-        ColorPickerSwatch view = new ColorPickerSwatch(getContext(), color,
-                color == selectedColor, mOnColorSelectedListener);
+    private ThemePickerSwatch createColorSwatch(int theme, int selectedTheme) {
+        ThemePickerSwatch view = new ThemePickerSwatch(getContext(), theme,
+                theme == selectedTheme, mOnThemeSelectedListener);
         TableRow.LayoutParams params = new TableRow.LayoutParams(mSwatchLength, mSwatchLength);
         params.setMargins(mMarginSize, mMarginSize, mMarginSize, mMarginSize);
         view.setLayoutParams(params);

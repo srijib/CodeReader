@@ -2,6 +2,7 @@ package com.wkswind.password.utils;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 
 import com.wkswind.password.R;
@@ -17,6 +18,14 @@ public class Utils {
 
     public static final String decrypt(String value){
         return value;
+    }
+
+    public static class AttributeParser{
+        public static int parseAttribute(Context context, int themeId, int attributeId){
+            TypedArray a = context.getTheme().obtainStyledAttributes(themeId, new int[] {attributeId});
+            int attributeResourceId = a.getResourceId(0, 0);
+            return attributeResourceId;
+        }
     }
 
     public static class ColorUtils{

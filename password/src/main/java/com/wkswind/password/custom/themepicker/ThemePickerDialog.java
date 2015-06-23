@@ -1,4 +1,4 @@
-package com.wkswind.password.custom;
+package com.wkswind.password.custom.themepicker;
 
 /*
  * Copyright (C) 2013 The Android Open Source Project
@@ -30,13 +30,14 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.wkswind.password.R;
+import com.wkswind.password.utils.Utils;
 
 
 /**
  * A dialog which takes in as input an array of colors and creates a palette allowing the user to
  * select a specific color swatch, which invokes a listener.
  */
-public class ColorPickerDialog extends DialogFragment implements ColorPickerSwatch.OnColorSelectedListener {
+public class ThemePickerDialog extends DialogFragment implements ThemePickerSwatch.OnThemeSelectedListener {
 
     public static final int SIZE_LARGE = 1;
     public static final int SIZE_SMALL = 2;
@@ -44,36 +45,36 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     protected AlertDialog mAlertDialog;
 
     protected static final String KEY_TITLE_ID = "title_id";
-    protected static final String KEY_COLORS = "colors";
-    protected static final String KEY_SELECTED_COLOR = "selected_color";
+    protected static final String KEY_THEMES = "colors";
+    protected static final String KEY_SELECTED_THEME = "selected_color";
     protected static final String KEY_COLUMNS = "columns";
     protected static final String KEY_SIZE = "size";
 
     protected int mTitleResId = R.string.action_color_selector;
-    protected int[] mColors = null;
-    protected int mSelectedColor;
+    protected int[] mThemes = null;
+    protected int mSelectedTheme;
     protected int mColumns;
     protected int mSize;
 
-    private ColorPickerPalette mPalette;
+    private ThemePickerPalette mPalette;
     private ProgressBar mProgress;
 
-    protected ColorPickerSwatch.OnColorSelectedListener mListener;
+    protected ThemePickerSwatch.OnThemeSelectedListener mListener;
 
-    public ColorPickerDialog() {
+    public ThemePickerDialog() {
         // Empty constructor required for dialog fragments.
     }
 
-    public static ColorPickerDialog newInstance(int titleResId, int[] colors, int selectedColor,
+    public static ThemePickerDialog newInstance(int titleResId, int[] themes, int selectedTheme,
             int columns, int size) {
-        ColorPickerDialog ret = new ColorPickerDialog();
-        ret.initialize(titleResId, colors, selectedColor, columns, size);
+        ThemePickerDialog ret = new ThemePickerDialog();
+        ret.initialize(titleResId, themes, selectedTheme, columns, size);
         return ret;
     }
 
-    public void initialize(int titleResId, int[] colors, int selectedColor, int columns, int size) {
+    public void initialize(int titleResId, int[] themes, int selectedTheme, int columns, int size) {
         setArguments(titleResId, columns, size);
-        setColors(colors, selectedColor);
+        setColors(themes, selectedTheme);
     }
 
     public void setArguments(int titleResId, int columns, int size) {
@@ -84,7 +85,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
         setArguments(bundle);
     }
 
-    public void setOnColorSelectedListener(ColorPickerSwatch.OnColorSelectedListener listener) {
+    public void setOnColorSelectedListener(ThemePickerSwatch.OnThemeSelectedListener listener) {
         mListener = listener;
     }
 
@@ -99,8 +100,8 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
         }
 
         if (savedInstanceState != null) {
-            mColors = savedInstanceState.getIntArray(KEY_COLORS);
-            mSelectedColor = (Integer) savedInstanceState.getSerializable(KEY_SELECTED_COLOR);
+            mThemes = savedInstanceState.getIntArray(KEY_THEMES);
+            mSelectedTheme = (Integer) savedInstanceState.getSerializable(KEY_SELECTED_THEME);
         }
     }
 
@@ -110,10 +111,10 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.calendar_color_picker_dialog, null);
         mProgress = (ProgressBar) view.findViewById(android.R.id.progress);
-        mPalette = (ColorPickerPalette) view.findViewById(R.id.color_picker);
+        mPalette = (ThemePickerPalette) view.findViewById(R.id.color_picker);
         mPalette.init(mSize, mColumns, this);
 
-        if (mColors != null) {
+        if (mThemes != null) {
             showPaletteView();
         }
 
@@ -126,21 +127,21 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     }
 
     @Override
-    public void onColorSelected(int color) {
+    public void onThemeSelected(int theme) {
         if (mListener != null) {
-            mListener.onColorSelected(color);
+            mListener.onThemeSelected(theme);
         }
 
-        if (getTargetFragment() instanceof ColorPickerSwatch.OnColorSelectedListener) {
-            final ColorPickerSwatch.OnColorSelectedListener listener =
-                    (ColorPickerSwatch.OnColorSelectedListener) getTargetFragment();
-            listener.onColorSelected(color);
+        if (getTargetFragment() instanceof ThemePickerSwatch.OnThemeSelectedListener) {
+            final ThemePickerSwatch.OnThemeSelectedListener listener =
+                    (ThemePickerSwatch.OnThemeSelectedListener) getTargetFragment();
+            listener.onThemeSelected(theme);
         }
 
-        if (color != mSelectedColor) {
-            mSelectedColor = color;
+        if (theme != mSelectedTheme) {
+            mSelectedTheme = theme;
             // Redraw palette to show checkmark on newly selected color before dismissing.
-            mPalette.drawPalette(mColors, mSelectedColor);
+            mPalette.drawPalette(mThemes, mSelectedTheme);
         }
 
         dismiss();
@@ -162,45 +163,51 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     }
 
     public void setColors(int[] colors, int selectedColor) {
-        if (mColors != colors || mSelectedColor != selectedColor) {
-            mColors = colors;
-            mSelectedColor = selectedColor;
+        if (mThemes != colors || mSelectedTheme != selectedColor) {
+            mThemes = colors;
+            mSelectedTheme = selectedColor;
             refreshPalette();
         }
     }
 
     public void setColors(int[] colors) {
-        if (mColors != colors) {
-            mColors = colors;
+        if (mThemes != colors) {
+            mThemes = colors;
             refreshPalette();
         }
     }
 
     public void setSelectedColor(int color) {
-        if (mSelectedColor != color) {
-            mSelectedColor = color;
+        if (mSelectedTheme != color) {
+            mSelectedTheme = color;
             refreshPalette();
         }
     }
 
     private void refreshPalette() {
-        if (mPalette != null && mColors != null) {
-            mPalette.drawPalette(mColors, mSelectedColor);
+        if (mPalette != null && mThemes != null) {
+//            int[] colors = new int[mThemes.length];
+//            for(int i=0,j=mThemes.length;i<j;i++){
+//                colors[i] = Utils.AttributeParser.parseAttribute(getActivity(),mThemes[i],R.attr.colorPrimary);
+//            }
+//            int mSelectedColor = Utils.AttributeParser.parseAttribute(getActivity(),mSelectedTheme, R.attr.colorPrimary);
+//            mPalette.drawPalette(colors, mSelectedTheme);
+            mPalette.drawPalette(mThemes, mSelectedTheme);
         }
     }
 
     public int[] getColors() {
-        return mColors;
+        return mThemes;
     }
 
     public int getSelectedColor() {
-        return mSelectedColor;
+        return mSelectedTheme;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putIntArray(KEY_COLORS, mColors);
-        outState.putSerializable(KEY_SELECTED_COLOR, mSelectedColor);
+        outState.putIntArray(KEY_THEMES, mThemes);
+        outState.putSerializable(KEY_SELECTED_THEME, mSelectedTheme);
     }
 }

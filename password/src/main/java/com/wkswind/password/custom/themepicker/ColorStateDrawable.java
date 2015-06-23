@@ -1,4 +1,4 @@
-package com.wkswind.password.custom;
+package com.wkswind.password.custom.themepicker;
 
 /*
  * Copyright (C) 2013 The Android Open Source Project
