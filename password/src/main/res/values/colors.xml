@@ -11,4 +11,9 @@
     <color name="color_orange">#FF9800</color>
     <color name="color_brown">#795548</color>
     <color name="color_gray">#607D8B</color>
+    <color name="body_text_3">#60000000</color>
+    <color name="theme_primary_light">#7986cb</color>
+    <color name="list_dropdown_foreground_normal">#ff333333</color>
+    <color name="list_dropdown_divider_color">#92a3a3a3</color>
+    <color name="body_text_2_inverse">#8affffff</color>
 </resources>

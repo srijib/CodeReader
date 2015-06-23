@@ -24,7 +24,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile rootProject.ext.libraries.design
     compile rootProject.ext.libraries.recyclerview
-    compile rootProject.ext.libraries.twowayview
+//    compile rootProject.ext.libraries.twowayview
     compile rootProject.ext.libraries.palette
     compile rootProject.ext.libraries.cardview
     //    compile rootProject.ext.libraries.patternLock

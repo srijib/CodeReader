@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:shadowDrawable="@drawable/header_shadow">
-            <org.lucasr.twowayview.TwoWayView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/password_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
