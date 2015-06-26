@@ -1,10 +1,15 @@
 package com.wkswind.password;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 
 import com.wkswind.password.R;
 import com.wkswind.password.base.ToolbarActivity;
@@ -14,6 +19,8 @@ import com.wkswind.password.base.ToolbarActivity;
  */
 public class ViewPasswordActivity extends ToolbarActivity {
     private View collapsingView;
+    private Animator mCircularReveal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +29,32 @@ public class ViewPasswordActivity extends ToolbarActivity {
 
         setupToolbar();
         enableHomeUpIndicator();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    animateCircularReveal();
+                }
+            }
+        });
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void animateCircularReveal() {
+        int centerX = (collapsingView.getLeft() + collapsingView.getRight()) / 2;
+        int centerY = (collapsingView.getTop() + collapsingView.getBottom()) / 2;
+        int finalRadius = Math.max(collapsingView.getWidth(), collapsingView.getHeight());
+        mCircularReveal = ViewAnimationUtils.createCircularReveal(collapsingView, centerX, centerY, 0, finalRadius);
+        mCircularReveal.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mCircularReveal.removeListener(this);
+            }
+        });
+
+        mCircularReveal.start();
     }
 
     public View getEditButton(){

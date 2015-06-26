@@ -30,7 +30,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.wkswind.password.R;
-import com.wkswind.password.utils.Utils;
 
 
 /**
