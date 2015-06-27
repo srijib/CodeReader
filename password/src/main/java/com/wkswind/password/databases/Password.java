@@ -34,6 +34,8 @@ public class Password extends BaseModel{
             saveForeignKeyModel = false)
     ForeignKeyContainer<SafetyQuestion> safetyQuestions;
     @Column
+    String password;
+    @Column
     int status;
     @Column
     String secureMobile;
@@ -41,6 +43,8 @@ public class Password extends BaseModel{
     String secureEmail;
     @Column
     int themeResId;
+    @Column
+    String remark;
     List<SafetyQuestion> allSafetyQuestions;
 
     @OneToMany(methods = {OneToMany.Method.ALL})
@@ -51,4 +55,79 @@ public class Password extends BaseModel{
         return allSafetyQuestions;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public PasswordType getPasswordType() {
+        return passwordType;
+    }
+
+    public void setPasswordType(PasswordType passwordType) {
+        this.passwordType = passwordType;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getSecureMobile() {
+        return secureMobile;
+    }
+
+    public void setSecureMobile(String secureMobile) {
+        this.secureMobile = secureMobile;
+    }
+
+    public String getSecureEmail() {
+        return secureEmail;
+    }
+
+    public void setSecureEmail(String secureEmail) {
+        this.secureEmail = secureEmail;
+    }
+
+    public int getThemeResId() {
+        return themeResId;
+    }
+
+    public void setThemeResId(int themeResId) {
+        this.themeResId = themeResId;
+    }
+
+    public void setAllSafetyQuestions(List<SafetyQuestion> allSafetyQuestions) {
+        this.allSafetyQuestions = allSafetyQuestions;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

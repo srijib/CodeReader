@@ -8,7 +8,7 @@ import com.raizlabs.android.dbflow.annotation.Database;
 @Database(name=AppDatabase.NAME, version = AppDatabase.VERSION)
 public final class AppDatabase {
     public static final String NAME = "password";
-    public static final int VERSION = 3;
+    public static final int VERSION = 4;
 
     public static final int STATUS_NORMAL = 0;
     public static final int STATUS_DELETED = 65536;

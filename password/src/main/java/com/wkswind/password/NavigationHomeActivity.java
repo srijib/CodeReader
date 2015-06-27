@@ -1,12 +1,17 @@
 package com.wkswind.password;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.app.AppOpsManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,19 +22,20 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.ViewAnimator;
 
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.wkswind.password.adapters.PasswordTypeAdapter;
 import com.wkswind.password.base.ToolbarActivity;
 import com.wkswind.password.databases.AppDatabase;
+import com.wkswind.password.databases.Password;
 import com.wkswind.password.databases.PasswordType;
 import com.wkswind.password.databases.PasswordType$Table;
 import com.wkswind.password.utils.ItemClickSupport;
-import com.wkswind.password.utils.ItemSelectionSupport;
 
 import java.util.List;
 
@@ -37,6 +43,9 @@ import java.util.List;
  * Created by Administrator on 2015/6/23.
  */
 public class NavigationHomeActivity extends ToolbarActivity implements SearchView.OnQueryTextListener, View.OnClickListener, ItemClickSupport.OnItemClickListener {
+    public static final int DURATION = 400;
+    private static final int REQUEST_ADD = 0x1;
+    private static final float SCALE_DOWN = 0.8f;
     private FloatingActionButton fab;
     private static final long DELAY_IN_MS = 200;
     private DrawerLayout mDrawerLayout;
@@ -52,7 +61,22 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
         setContentView(R.layout.activity_home_navigation_view);
         mHandler = new android.os.Handler();
         fab = (FloatingActionButton) findViewById(R.id.action_add);
-        animateFab();
+        fab.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (MotionEventCompat.getActionMasked(event)){
+                    case MotionEvent.ACTION_DOWN:
+                        scaleFab(true);
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_UP:
+                        scaleFab(false);
+                        break;
+                }
+                return false;
+            }
+        });
+        animateFabIn(100);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.home_drawer);
         mNavigationView = (NavigationView) findViewById(R.id.home_drawer_menu);
         content = (RecyclerView) findViewById(R.id.password_content);
@@ -61,14 +85,27 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
         RecyclerView.LayoutManager manager = columns == 1 ? new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) : new GridLayoutManager(this,columns);
         content.setLayoutManager(manager);
         ItemClickSupport.addTo(content).setOnItemClickListener(this);
-
         setupToolbar();
         setupNavigationDrawer();
         fab.setOnClickListener(this);
     }
 
-    private void animateFab() {
-        fab.animate().setStartDelay(100).scaleX(1).scaleY(1).setDuration(400).setInterpolator(new FastOutSlowInInterpolator());
+    private void scaleFab(boolean scaleDown){
+        ViewPropertyAnimator animator = fab.animate().setDuration(DURATION/2).setInterpolator(new AccelerateDecelerateInterpolator());
+        if(scaleDown){
+            animator.scaleX(SCALE_DOWN).scaleY(SCALE_DOWN);
+        }else{
+            animator.scaleX(1f).scaleY(1f);
+        }
+        animator.start();
+    }
+
+    private void animateFabIn(long delay) {
+        fab.animate().setStartDelay(delay).scaleX(1).scaleY(1).setDuration(DURATION).setInterpolator(new FastOutSlowInInterpolator());
+    }
+
+    private ViewPropertyAnimator animateFabOut(long delay){
+        return fab.animate().setStartDelay(delay).scaleX(0).scaleY(0).setDuration(DURATION).setInterpolator(new FastOutSlowInInterpolator());
     }
 
     @Override
@@ -78,6 +115,16 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
         SearchView mSearchView = (SearchView) MenuItemCompat.getActionView(item);
         mSearchView.setOnQueryTextListener(this);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_view:
+                startActivity(new Intent(this,ViewPasswordActivity.class));
+            break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupNavigationDrawer() {
@@ -145,11 +192,29 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
         return false;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.action_add:
-                startActivity(new Intent(this, EditPasswordActivity.class));
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+                    animateFabOut(0).withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivityForResult(new Intent(NavigationHomeActivity.this, EditPasswordActivity.class),REQUEST_ADD);
+                        }
+                    });
+                }else{
+                    animateFabOut(0).setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            startActivityForResult(new Intent(NavigationHomeActivity.this, EditPasswordActivity.class), REQUEST_ADD);
+                        }
+                    });
+                }
+
+
                 break;
         }
     }
@@ -157,5 +222,22 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
     @Override
     public void onItemClick(RecyclerView parent, View view, int position, long id) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        animateFabIn(0);
+        if(resultCode == RESULT_OK){
+            switch (requestCode){
+                case REQUEST_ADD:
+                    addItemToContent(data);
+                    break;
+            }
+        }
+    }
+
+    private void addItemToContent(Intent data) {
+        content.getAdapter().notifyItemInserted(0);
     }
 }
