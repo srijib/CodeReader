@@ -27,13 +27,6 @@ public class Password extends BaseModel{
     @ForeignKey(references = {@ForeignKeyReference(columnName = "type_id", columnType = Long.class, foreignColumnName = "id")}, saveForeignKeyModel = false)
     PasswordType passwordType;
     @Column
-    @ForeignKey(
-            references = {@ForeignKeyReference(columnName = "question_id",
-                    columnType = Long.class,
-                    foreignColumnName = "id")},
-            saveForeignKeyModel = false)
-    ForeignKeyContainer<SafetyQuestion> safetyQuestions;
-    @Column
     String password;
     @Column
     int status;
@@ -45,14 +38,25 @@ public class Password extends BaseModel{
     int themeResId;
     @Column
     String remark;
-    List<SafetyQuestion> allSafetyQuestions;
+    @Column
+    String safetyQuestion;
+    @Column
+    String safetyAnswer;
 
-    @OneToMany(methods = {OneToMany.Method.ALL})
-    public List<SafetyQuestion> getAllSafetyQuestions(){
-        if(allSafetyQuestions == null){
-            allSafetyQuestions = new Select().from(SafetyQuestion.class).where(Condition.column(SafetyQuestion$Table.PASSWORDID).is(id)).queryList();
-        }
-        return allSafetyQuestions;
+    public String getSafetyQuestion() {
+        return safetyQuestion;
+    }
+
+    public void setSafetyQuestion(String safetyQuestion) {
+        this.safetyQuestion = safetyQuestion;
+    }
+
+    public String getSafetyAnswer() {
+        return safetyAnswer;
+    }
+
+    public void setSafetyAnswer(String safetyAnswer) {
+        this.safetyAnswer = safetyAnswer;
     }
 
     public long getId() {
@@ -109,10 +113,6 @@ public class Password extends BaseModel{
 
     public void setThemeResId(int themeResId) {
         this.themeResId = themeResId;
-    }
-
-    public void setAllSafetyQuestions(List<SafetyQuestion> allSafetyQuestions) {
-        this.allSafetyQuestions = allSafetyQuestions;
     }
 
     public String getRemark() {

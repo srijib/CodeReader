@@ -15,30 +15,37 @@
     <style name="AppTheme.NoActionBar.Red">
         <item name="colorPrimary">@color/color_primary_red</item>
         <item name="colorPrimaryDark">@color/color_primary_dark_red</item>
+        <item name="colorAccent">@color/theme_red_accent</item>
     </style>
     <style name="AppTheme.NoActionBar.Purple">
         <item name="colorPrimary">@color/color_primary_purple</item>
         <item name="colorPrimaryDark">@color/color_primary_dark_purple</item>
+        <item name="colorAccent">@color/theme_purple_accent</item>
     </style>
     <style name="AppTheme.NoActionBar.Indigo">
         <item name="colorPrimary">@color/color_primary_indigo</item>
         <item name="colorPrimaryDark">@color/color_primary_dark_indigo</item>
+        <item name="colorAccent">@color/theme_indigo_accent</item>
     </style>
     <style name="AppTheme.NoActionBar.Green">
         <item name="colorPrimary">@color/color_primary_green</item>
         <item name="colorPrimaryDark">@color/color_primary_dark_green</item>
+        <item name="colorAccent">@color/theme_green_accent</item>
     </style>
     <style name="AppTheme.NoActionBar.Orange">
         <item name="colorPrimary">@color/color_primary_orange</item>
         <item name="colorPrimaryDark">@color/color_primary_dark_orange</item>
+        <item name="colorAccent">@color/theme_orange_accent</item>
     </style>
     <style name="AppTheme.NoActionBar.Brown">
         <item name="colorPrimary">@color/color_primary_brown</item>
         <item name="colorPrimaryDark">@color/color_primary_dark_brown</item>
+        <item name="colorAccent">@color/theme_brown_accent</item>
     </style>
     <style name="AppTheme.NoActionBar.Gray">
         <item name="colorPrimary">@color/color_primary_gray</item>
         <item name="colorPrimaryDark">@color/color_primary_dark_gray</item>
+        <item name="colorAccent">@color/theme_gray_accent</item>
     </style>
 
     <style name="HeaderBar">

@@ -21,6 +21,26 @@ public class PasswordType extends BaseModel {
     int colorBackground;
     @Column
     int status;
+    @Column
+    boolean excludeFromEdit = true;
+    @Column
+    boolean queryAll = false;
+
+    public boolean isExcludeFromEdit() {
+        return excludeFromEdit;
+    }
+
+    public void setExcludeFromEdit(boolean excludeFromEdit) {
+        this.excludeFromEdit = excludeFromEdit;
+    }
+
+    public boolean isQueryAll() {
+        return queryAll;
+    }
+
+    public void setQueryAll(boolean queryAll) {
+        this.queryAll = queryAll;
+    }
 
     public long getId() {
         return id;

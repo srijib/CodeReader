@@ -31,7 +31,11 @@ public class InitialContentsMigration extends AlterTableMigration<PasswordType> 
             PasswordType type = new PasswordType();
             type.setName(PasswordTypeConsts.NAMES.get(i));
             type.setRemark(PasswordTypeConsts.REMARKS.get(i));
+            type.setExcludeFromEdit(i==0);
+            type.setQueryAll(i==0);
+//            type.save();
             types.add(type);
+
         }
         TransactionManager.getInstance().addTransaction(new SaveModelTransaction(ProcessModelInfo.withModels(types)));
     }

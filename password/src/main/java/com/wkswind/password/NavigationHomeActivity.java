@@ -2,11 +2,15 @@ package com.wkswind.password;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
-import android.app.AppOpsManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,22 +24,26 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.wkswind.password.adapters.PasswordTypeAdapter;
 import com.wkswind.password.base.ToolbarActivity;
+import com.wkswind.password.custom.spans.MutableForegroundColorSpan;
 import com.wkswind.password.databases.AppDatabase;
-import com.wkswind.password.databases.Password;
 import com.wkswind.password.databases.PasswordType;
 import com.wkswind.password.databases.PasswordType$Table;
 import com.wkswind.password.utils.ItemClickSupport;
+import com.wkswind.password.utils.Utils;
 
 import java.util.List;
 
@@ -54,11 +62,18 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
     private android.os.Handler mHandler;
 
     private PasswordTypeAdapter adapter;
+    private MutableForegroundColorSpan mute;
 
+    private static final String SELECTED_ID = NavigationHomeActivity.class.getName()+".SELECTED_ID";
+    private int mSelectedId = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_navigation_view);
+        if(savedInstanceState != null && savedInstanceState.containsKey(SELECTED_ID)){
+            mSelectedId = savedInstanceState.getInt(SELECTED_ID);
+        }
+        mute = new MutableForegroundColorSpan(255, getResources().getColor(R.color.white));
         mHandler = new android.os.Handler();
         fab = (FloatingActionButton) findViewById(R.id.action_add);
         fab.setOnTouchListener(new View.OnTouchListener() {
@@ -76,6 +91,7 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
                 return false;
             }
         });
+        fab.setOnClickListener(this);
         animateFabIn(100);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.home_drawer);
         mNavigationView = (NavigationView) findViewById(R.id.home_drawer_menu);
@@ -87,7 +103,18 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
         ItemClickSupport.addTo(content).setOnItemClickListener(this);
         setupToolbar();
         setupNavigationDrawer();
-        fab.setOnClickListener(this);
+    }
+
+    private void navigateItem(final MenuItem menuItem) {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                animateTitle(menuItem.getTitle());
+            }
+        },DELAY_IN_MS);
+
+        menuItem.setChecked(true);
+        mSelectedId = menuItem.getItemId();
     }
 
     private void scaleFab(boolean scaleDown){
@@ -127,6 +154,12 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt(SELECTED_ID, mSelectedId);
+    }
+
     private void setupNavigationDrawer() {
         final Toolbar toolbar = getToolbar();
         if(toolbar != null){
@@ -141,16 +174,19 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
             Menu mMenuBuilder = mNavigationView.getMenu();
             List<PasswordType> types = new Select().from(PasswordType.class).where(Condition.column(PasswordType$Table.STATUS).is(AppDatabase.STATUS_NORMAL)).orderBy(true, PasswordType$Table.ID).queryList();
             if(types != null && !types.isEmpty()){
+                Toast.makeText(this,"type initial", Toast.LENGTH_SHORT).show();
                 for(int i=0,j=types.size();i<j;i++){
                     PasswordType type = types.get(i);
                     mMenuBuilder.add(0, (int) type.getId(), Menu.NONE, type.getName());
                 }
+                navigateItem(mNavigationView.getMenu().findItem(mSelectedId));
             }
+
             mMenuBuilder.setGroupCheckable(0,true,true);
             getMenuInflater().inflate(R.menu.home_navigation, mMenuBuilder);
             mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
-                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                public boolean onNavigationItemSelected(final MenuItem menuItem) {
 //                    menuItem.setChecked(true);
                     mDrawerLayout.closeDrawer(GravityCompat.START);
                     switch (menuItem.getItemId()){
@@ -171,15 +207,30 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
                             }, DELAY_IN_MS);
                             break;
                         default:
-                            toolbar.setTitle(menuItem.getTitle());
-                            menuItem.setChecked(true);
+                            navigateItem(menuItem);
                             break;
                     }
                     return true;
                 }
             });
+
 //            mMenuBuilder.setGroupCheckable(0, true, true);
         }
+    }
+
+    private void animateTitle(final CharSequence title) {
+        ObjectAnimator animator = ObjectAnimator.ofInt(mute,"alpha",0,255);
+        animator.setDuration(200);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                SpannableString mTitle = new SpannableString(title);
+                mTitle.setSpan(mute,0,mTitle.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                setTitle(mTitle);
+            }
+        });
+        animator.start();
+
     }
 
     @Override
@@ -213,8 +264,6 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
                         }
                     });
                 }
-
-
                 break;
         }
     }
@@ -238,6 +287,6 @@ public class NavigationHomeActivity extends ToolbarActivity implements SearchVie
     }
 
     private void addItemToContent(Intent data) {
-        content.getAdapter().notifyItemInserted(0);
+//        content.getAdapter().notifyItemInserted(0);
     }
 }

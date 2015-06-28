@@ -39,6 +39,7 @@ public class EditPasswordActivity extends ToolbarActivity implements ThemePicker
                 }
             }
         }
+        setTheme(R.style.AppTheme_NoActionBar_Gray);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_password);
         setupToolbar();
