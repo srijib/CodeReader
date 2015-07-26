@@ -31,26 +31,26 @@ import android.view.WindowManager;
 public final class SystemUiHelper {
 
     /**
-     * In this level, the helper will toggle low profile mode.
+     * In this level, the helper will toggle low profile addon.mode.
      */
     public static final int LEVEL_LOW_PROFILE = 0;
 
     /**
      * In this level, the helper will toggle the visibility of the status bar.
-     * If there is a navigation bar, it will toggle low profile mode.
+     * If there is a navigation bar, it will toggle low profile addon.mode.
      */
     public static final int LEVEL_HIDE_STATUS_BAR = 1;
 
     /**
      * In this level, the helper will toggle the visibility of the navigation bar
      * (if present and if possible) and status bar. In cases where the navigation
-     * bar is present but cannot be hidden, it will toggle low profile mode.
+     * bar is present but cannot be hidden, it will toggle low profile addon.mode.
      */
     public static final int LEVEL_LEAN_BACK = 2;
 
     /**
      * In this level, the helper will toggle the visibility of the navigation bar
-     * (if present and if possible) and status bar, in an immersive mode. This means that the app
+     * (if present and if possible) and status bar, in an immersive addon.mode. This means that the app
      * will continue to receive all touch events. The user can reveal the system bars with an
      * inward swipe along the region where the system bars normally appear.
      *
@@ -135,7 +135,7 @@ public final class SystemUiHelper {
     }
 
     /**
-     * @return true if the system UI is currently showing. What this means depends on the mode this
+     * @return true if the system UI is currently showing. What this means depends on the addon.mode this
      *         {@link android.example.android.systemuivis.SystemUiHelper} was instantiated with.
      */
     public boolean isShowing() {
@@ -143,7 +143,7 @@ public final class SystemUiHelper {
     }
 
     /**
-     * Show the system UI. What this means depends on the mode this {@link android.example.android.systemuivis.SystemUiHelper} was
+     * Show the system UI. What this means depends on the addon.mode this {@link android.example.android.systemuivis.SystemUiHelper} was
      * instantiated with.
      *
      * <p>Any currently queued delayed hide requests will be removed.
@@ -156,7 +156,7 @@ public final class SystemUiHelper {
     }
 
     /**
-     * Hide the system UI. What this means depends on the mode this {@link android.example.android.systemuivis.SystemUiHelper} was
+     * Hide the system UI. What this means depends on the addon.mode this {@link android.example.android.systemuivis.SystemUiHelper} was
      * instantiated with.
      *
      * <p>Any currently queued delayed hide requests will be removed.

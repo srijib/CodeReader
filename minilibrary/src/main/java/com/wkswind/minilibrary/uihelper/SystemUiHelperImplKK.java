@@ -34,7 +34,7 @@ class SystemUiHelperImplKK extends SystemUiHelperImplJB {
         int flag = super.createHideFlags();
 
         if (mLevel == SystemUiHelper.LEVEL_IMMERSIVE) {
-            // If the client requested immersive mode, and we're on Android 4.4
+            // If the client requested immersive addon.mode, and we're on Android 4.4
             // or later, add relevant flags. Applying HIDE_NAVIGATION without
             // IMMERSIVE prevents the activity from accepting all touch events,
             // so we only do this on Android 4.4 and later (where IMMERSIVE is

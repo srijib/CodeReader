@@ -58,7 +58,7 @@ public class ItemSelectionSupport {
 
     /**
      * Returns the number of items currently selected. This will only be valid
-     * if the choice mode is not {@link ChoiceMode#NONE} (default).
+     * if the choice addon.mode is not {@link ChoiceMode#NONE} (default).
      *
      * <p>To determine the specific items that are currently selected, use one of
      * the <code>getChecked*</code> methods.
@@ -75,11 +75,11 @@ public class ItemSelectionSupport {
 
     /**
      * Returns the checked state of the specified position. The result is only
-     * valid if the choice mode has been set to {@link ChoiceMode#SINGLE}
+     * valid if the choice addon.mode has been set to {@link ChoiceMode#SINGLE}
      * or {@link ChoiceMode#MULTIPLE}.
      *
      * @param position The item whose checked state to return
-     * @return The item's checked state or <code>false</code> if choice mode
+     * @return The item's checked state or <code>false</code> if choice addon.mode
      *         is invalid
      *
      * @see #setChoiceMode(ChoiceMode)
@@ -94,7 +94,7 @@ public class ItemSelectionSupport {
 
     /**
      * Returns the currently checked item. The result is only valid if the choice
-     * mode has been set to {@link ChoiceMode#SINGLE}.
+     * addon.mode has been set to {@link ChoiceMode#SINGLE}.
      *
      * @return The position of the currently checked item or
      *         {@link #INVALID_POSITION} if nothing is selected
@@ -111,11 +111,11 @@ public class ItemSelectionSupport {
 
     /**
      * Returns the set of checked items in the list. The result is only valid if
-     * the choice mode has not been set to {@link ChoiceMode#NONE}.
+     * the choice addon.mode has not been set to {@link ChoiceMode#NONE}.
      *
      * @return  A SparseBooleanArray which will return true for each call to
      *          get(int position) where position is a position in the list,
-     *          or <code>null</code> if the choice mode is set to
+     *          or <code>null</code> if the choice addon.mode is set to
      *          {@link ChoiceMode#NONE}.
      */
     public SparseBooleanArray getCheckedItemPositions() {
@@ -128,7 +128,7 @@ public class ItemSelectionSupport {
 
     /**
      * Returns the set of checked items ids. The result is only valid if the
-     * choice mode has not been set to {@link ChoiceMode#NONE} and the adapter
+     * choice addon.mode has not been set to {@link ChoiceMode#NONE} and the adapter
      * has stable IDs.
      *
      * @return A new array which contains the id of each checked item in the
@@ -154,7 +154,7 @@ public class ItemSelectionSupport {
 
     /**
      * Sets the checked state of the specified position. The is only valid if
-     * the choice mode has been set to {@link ChoiceMode#SINGLE} or
+     * the choice addon.mode has been set to {@link ChoiceMode#SINGLE} or
      * {@link ChoiceMode#MULTIPLE}.
      *
      * @param position The item whose checked state is to be checked
@@ -243,7 +243,7 @@ public class ItemSelectionSupport {
     }
 
     /**
-     * Returns the current choice mode.
+     * Returns the current choice addon.mode.
      *
      * @see #setChoiceMode(ChoiceMode)
      */

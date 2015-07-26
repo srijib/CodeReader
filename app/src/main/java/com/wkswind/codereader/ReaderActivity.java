@@ -6,7 +6,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -14,13 +13,11 @@ import android.support.v7.widget.ShareActionProvider;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -32,16 +29,14 @@ import com.wkswind.codereader.database.StarsColumn;
 import com.wkswind.codereader.fileexplorer.FileAdapter;
 import com.wkswind.codereader.synatax.DocumentHandler;
 import com.wkswind.codereader.synatax.DocumentHandlerImpl;
+import com.wkswind.codereader.utils.SourceEditor;
 import com.wkswind.minilibrary.uihelper.SystemUiHelper;
 import com.wkswind.minilibrary.utils.CharsetDetector;
 import com.wkswind.minilibrary.utils.LLog;
 import com.wkswind.minilibrary.utils.PrefsUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Calendar;
 
@@ -49,6 +44,8 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 	private Uri selectedFile;
 	public static final int REQUEST_FILE_CHOOSE = 0;
 	private WebView codeReader;
+
+	private SourceEditor sourceEditor;
 
 	public static final int MAXFILESIZE = 1024 * 128;
 	private static final String LAST_READ = "last_read";
@@ -65,36 +62,26 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         uiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE, SystemUiHelper.FLAG_IMMERSIVE_STICKY, this);
-//        uiHelper.hide();
 		codeReader = (WebView) findViewById(R.id.code_reader);
-		gestureDetectorCompat = new GestureDetectorCompat(this,new GestureDetector.SimpleOnGestureListener(){
-			@Override
-			public boolean onDown(MotionEvent e) {
-				return super.onDown(e);
-			}
+		sourceEditor = new SourceEditor(codeReader);
+        gestureDetectorCompat = new GestureDetectorCompat(this, new GestureDetector.SimpleOnGestureListener(){
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return super.onDown(e);
+            }
 
-			@Override
-			public boolean onDoubleTap(MotionEvent e) {
-				uiHelper.show();
-				return super.onDoubleTap(e);
-			}
-		});
-		codeReader.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				return gestureDetectorCompat.onTouchEvent(event);
-			};
-		});
-		codeReader.setWebViewClient(new WebChrome2());
-		WebSettings s = codeReader.getSettings();
-		s.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
-		s.setUseWideViewPort(false);
-		s.setAllowFileAccess(true);
-		s.setLightTouchEnabled(true);
-		s.setLoadsImagesAutomatically(true);
-		s.setSupportZoom(true);
-		s.setSupportMultipleWindows(true);
-		s.setJavaScriptEnabled(true);
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                uiHelper.show();
+                return true;
+            }
+        });
+        codeReader.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetectorCompat.onTouchEvent(event);
+            }
+        });
 		String action = getIntent().getAction();
 		if (Intent.ACTION_VIEW.equals(action) || Intent.ACTION_OPEN_DOCUMENT.equals(action)) {
 			selectedFile = getIntent().getData();
@@ -134,16 +121,14 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		if (selectedFile != null) {
 			outState.putString(LAST_READ, String.valueOf(selectedFile));
 		}
 	}
 
-	@Override
+    @Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		if (selectedFile != null) {
 			PrefsUtils.put(this, LAST_READ, selectedFile.toString());
 		}
@@ -166,20 +151,15 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		// Note that you can set/change the intent any time,
 		// say when the user has selected an image.
 		actionProvider.setShareIntent(createShareIntent());
-		
+
 		final MenuItem starredItem = menu.findItem(R.id.action_starred);
 		final CheckBox chkStarred = (CheckBox) MenuItemCompat.getActionView(starredItem);
-//		if(chkStarred == null){
-//			return true;
-//		}
 		chkStarred.setClickable(true);
-//		if(getApplication().getContentResolver().)
 		Cursor cursor = getApplication().getContentResolver().query(CodeProvider.Stars.CONTENT_URI,new String[]{"*"}, StarsColumn.fileName+"=? and "+StarsColumn.star+"=?", new String[]{selectedFile.getPath(),"1"},null);
 		chkStarred.setChecked(cursor != null && cursor.moveToLast() &&cursor.getCount()>0);
 		chkStarred.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				// TODO Auto-generated method stub
 				getApplication().getContentResolver().delete(CodeProvider.Stars.CONTENT_URI, StarsColumn.fileName + "= ? ", new String[]{selectedFile.getPath()});
 				ContentValues cv = new ContentValues();
 				cv.put(StarsColumn.lastReadTime, Calendar.getInstance().getTimeInMillis());
@@ -190,17 +170,14 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		});
 		return true;
 	}
-	
+
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
 		menu.findItem(R.id.action_share).setEnabled(selectedFile != null);
-//		menu.findItem(R.id.action_starred).setVisible(false);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
 	private Intent createShareIntent() {
-		// TODO Auto-generated method stub
 		Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/*");
         shareIntent.putExtra(Intent.EXTRA_STREAM, selectedFile);
@@ -208,11 +185,11 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {		
+	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
             /**
-             * handle like {@link com.wkswind.codereader.SettingsActivity}'s up button click
+             * handle like {@link SettingsActivity}'s up button click
              */
             onBackPressed();
             break;
@@ -243,7 +220,6 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 	}
 
 	private void loadFile(Uri uri) throws IOException {
-		// TODO Auto-generated method stub
 		File file = new File(uri.getPath());
 		if (!file.exists()) {
 			Toast.makeText(this, R.string.file_not_exists, Toast.LENGTH_SHORT)
@@ -263,52 +239,10 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		if (handler == null) {
 			return;
 		}
-
-		byte[] array = new byte[(int) length];
-		InputStream is = null;
-		try {
-			is = new FileInputStream(file);
-			is.read(array);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
+		sourceEditor.setSource(uri);
 		getSupportActionBar().setTitle(file.getName());
 		getSupportActionBar().setSubtitle(file.getAbsolutePath());
-		StringBuilder contentString = new StringBuilder("");
-		contentString.append("<html><head><title></title>");
-		contentString
-				.append("<link href=\"file:///android_asset/idea.css\" rel=\"stylesheet\" type=\"text/css\">");
-		contentString
-				.append("<script src=\"file:///android_asset/highlight.pack.js\"></script> ");
-		contentString.append("<script>hljs.initHighlightingOnLoad();</script>");
-        contentString.append("</head>");
-//        contentString.append("<body>");
-		contentString.append("<pre>");
-		contentString.append("<code class="+handler.getFileScriptFiles()+">");
-//        contentString.append("<code class=\""+ handler.getFilePrettifyClass()+" \">");
-        String sourceString = new String(array,charset.name());
-		contentString.append(handler.getFileFormattedString(sourceString));
-        contentString.append("</code>");
-		contentString.append("</pre>");
-//        contentString.append("</body>");
-        contentString.append("</html>");
 
-		codeReader.loadDataWithBaseURL("file:///android_asset/",
-				contentString.toString(), "text/html", charset.displayName(), null);
-		
 		selectedFile = uri;
 		supportInvalidateOptionsMenu();
 		updateRecentReading(uri.getPath());
@@ -339,26 +273,7 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 	}
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()){
-            case MotionEvent.ACTION_UP:
-                break;
-        }
-        return super.onTouchEvent(event);
-    }
-
-    @Override
     public void onVisibilityChange(boolean visible) {
-        if(visible){
-//            uiHelper.delayHide(2 * 1000);
-        }
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(KeyEvent.KEYCODE_MENU == keyCode && (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)){
-            uiHelper.show();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

@@ -65,7 +65,7 @@ class SystemUiHelperImplJB extends SystemUiHelperImplICS {
     @Override
     protected void onSystemUiShown() {
         if (mLevel == SystemUiHelper.LEVEL_LOW_PROFILE) {
-            // Manually show the action bar when in low profile mode.
+            // Manually show the action bar when in low profile addon.mode.
             ActionBar ab = mActivity.getActionBar();
             if (ab != null) {
                 ab.show();
@@ -78,7 +78,7 @@ class SystemUiHelperImplJB extends SystemUiHelperImplICS {
     @Override
     protected void onSystemUiHidden() {
         if (mLevel == SystemUiHelper.LEVEL_LOW_PROFILE) {
-            // Manually hide the action bar when in low profile mode.
+            // Manually hide the action bar when in low profile addon.mode.
             ActionBar ab = mActivity.getActionBar();
             if (ab != null) {
                 ab.hide();
