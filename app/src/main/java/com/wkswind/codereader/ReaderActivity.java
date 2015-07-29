@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebView;
 import android.widget.CheckBox;
@@ -132,7 +134,14 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		if (selectedFile != null) {
 			PrefsUtils.put(this, LAST_READ, selectedFile.toString());
 		}
-		codeReader.getSettings().setBuiltInZoomControls(false);
+//		codeReader.getSettings().setBuiltInZoomControls(false);
+		ViewParent parent = codeReader.getParent();
+		if(parent != null){
+			if(parent instanceof ViewGroup){
+				((ViewGroup) parent).removeView(codeReader);
+			}
+		}
+		codeReader.destroy();
 		super.onDestroy();
 	}
 
