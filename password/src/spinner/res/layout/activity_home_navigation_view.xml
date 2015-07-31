@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/password_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            xmlns:iosched="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar_actionbar"
+            style="@style/HeaderBar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:layout_scrollFlags="exitUntilCollapsed|enterAlways"
+            iosched:popupTheme="@style/ActionBarPopupThemeOverlay"
+            iosched:theme="@style/ActionBarThemeOverlay"
+            iosched:titleTextAppearance="@style/ActionBar.TitleText">
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/action_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="@dimen/keyline_1"
+        android:layout_marginEnd="@dimen/keyline_1"
+        android:layout_marginRight="@dimen/keyline_1"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:src="@drawable/ic_action_add"
+        app:borderWidth="0dp"
+        app:fabSize="normal"
+        app:layout_scrollFlags="enterAlways|scroll" />
+</android.support.design.widget.CoordinatorLayout>

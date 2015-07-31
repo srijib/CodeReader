@@ -16,6 +16,7 @@ import com.wkswind.password.custom.themepicker.ThemePickerSwatch;
 import com.wkswind.password.databases.AppDatabase;
 import com.wkswind.password.databases.Password;
 import com.wkswind.password.databases.Password$Table;
+import com.wkswind.password.utils.NativeUtils;
 import com.wkswind.password.utils.Utils;
 
 /**
@@ -96,7 +97,7 @@ public class EditPasswordActivity extends ToolbarActivity implements ThemePicker
         password.setName("DEMO");
         password.setStatus(AppDatabase.STATUS_NORMAL);
         password.setRemark("DEMO");
-        password.setPassword(Utils.encrypt("demopassword"));
+        password.setPassword(NativeUtils.encrypt("demopassword"));
         password.setSecureEmail("wkswind@gmail.com");
         password.setSecureMobile("18565670861");
     }

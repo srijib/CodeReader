@@ -11,14 +11,6 @@ import com.wkswind.password.R;
  * Created by Administrator on 2015/6/12.
  */
 public class Utils {
-//    public static native String encryptValue(String value);
-    public static final String encrypt(String value){
-        return value;
-    }
-
-    public static final String decrypt(String value){
-        return value;
-    }
 
     public static class AttributeParser{
         public static int parseAttribute(Context context, int themeId, int attributeId){

@@ -9,28 +9,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity"
-            android:label="@string/title_settings"
-            android:parentActivityName=".NavigationHomeActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NavigationHomeActivity" />
-        </activity>
-        <activity android:name=".ViewPasswordActivity"
-            android:label="@string/title_view"
-            android:parentActivityName=".ViewPasswordActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NavigationHomeActivity" />
-        </activity>
-        <activity android:name=".EditPasswordActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:label="@string/title_edit"
-            android:parentActivityName=".EditPasswordActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NavigationHomeActivity" />
-        </activity>
     </application>
 
 </manifest>
