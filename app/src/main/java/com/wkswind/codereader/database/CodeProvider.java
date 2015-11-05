@@ -1,21 +1,11 @@
 package com.wkswind.codereader.database;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 
 import net.simonvt.schematic.annotation.ContentProvider;
 import net.simonvt.schematic.annotation.ContentUri;
 import net.simonvt.schematic.annotation.InexactContentUri;
-import net.simonvt.schematic.annotation.MapColumns;
-import net.simonvt.schematic.annotation.NotifyDelete;
-import net.simonvt.schematic.annotation.NotifyInsert;
-import net.simonvt.schematic.annotation.NotifyUpdate;
 import net.simonvt.schematic.annotation.TableEndpoint;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2015/3/31.
@@ -35,6 +25,8 @@ public class CodeProvider {
     interface Path {
         String STARS = "stars";
         String HISTORYS = "historys";
+        String DOC_TYPES = "doc_types";
+        String QUERY_RESULTS = "query_results";
     }
 
     private static Uri buildUri(String... paths) {
@@ -59,6 +51,42 @@ public class CodeProvider {
                 whereColumn = StarsColumn.ID,
                 pathSegment = 1 )
         public static Uri withId(long id){return buildUri(Path.STARS,String.valueOf(id));}
+    }
+
+    @TableEndpoint(table = CodeDatabase.Tables.QUERY_RESULTS)
+    public static class QueryResults {
+        @ContentUri(path = Path.QUERY_RESULTS,
+        type = "vnd.android.cursor.dir/list",
+        defaultSort = QueryResultColumn.fileName)
+        public static final Uri CONTENT_URI = buildUri(Path.QUERY_RESULTS);
+
+        @InexactContentUri(path = Path.QUERY_RESULTS +"/#",
+        name = "QUERY_RESULT_ID",
+        type = "vnd.android.cursor.item/list",
+        whereColumn = QueryResultColumn.ID,
+        pathSegment = 1)
+        public static Uri withId(long id) {
+            return buildUri(Path.QUERY_RESULTS,String.valueOf(id));
+        }
+    }
+
+    @TableEndpoint(table = CodeDatabase.Tables.DOC_TYPES)
+    public static class DocTypes {
+        @ContentUri(path = Path.DOC_TYPES,
+        type = "vnd.android.cursor.dir/list",
+        defaultSort = DocTypeColumn.docType )
+        public static final Uri CONTENT_URI = buildUri(Path.DOC_TYPES);
+
+        @InexactContentUri(
+                path = Path.DOC_TYPES +"/#",
+                name = "DOC_TYPE_ID",
+                type = "vnd.android.cursor.item/list",
+                whereColumn = DocTypeColumn.ID,
+                pathSegment =  1
+        )
+        public static Uri withId(long id) {
+            return buildUri(Path.DOC_TYPES,String.valueOf(id));
+        }
     }
 
     @TableEndpoint(table = CodeDatabase.Tables.HISTORYS)
