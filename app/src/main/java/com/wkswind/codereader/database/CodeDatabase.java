@@ -24,6 +24,10 @@ public final class CodeDatabase {
         public static final String STARS = "stars";
         @Table(HistorysColumn.class)
         public static final String HISTORYS = "historys";
+        @Table(DocTypeColumn.class)
+        public static final String DOC_TYPES = "doc_types";
+        @Table(QueryResultColumn.class)
+        public static final String QUERY_RESULTS = "query_results";
     }
     @OnCreate
     public static void onCreate(Context context, SQLiteDatabase db){
