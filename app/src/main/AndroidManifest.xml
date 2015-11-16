@@ -66,15 +66,7 @@
                 android:value="com.wkswind.codereader.MainActivity" />
         </activity>
 
-        <provider
-            android:name=".provider.CodeProvider"
-            android:authorities="com.wkswind.codereader.CodeProvider"
-            android:exported="false" />
 
-        <activity
-            android:name=".HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

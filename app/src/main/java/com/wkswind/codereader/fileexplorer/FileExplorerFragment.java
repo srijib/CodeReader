@@ -1,35 +1,15 @@
 package com.wkswind.codereader.fileexplorer;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.AbsListView;
-import android.widget.ListView;
 
-import com.wkswind.codereader.BaseListFragment;
 import com.wkswind.codereader.FileListFragment;
 import com.wkswind.codereader.R;
-import com.wkswind.codereader.ReaderActivity;
-import com.wkswind.codereader.SettingsActivity;
-import com.wkswind.codereader.database.CodeProvider;
-import com.wkswind.codereader.database.HistorysColumn;
-import com.wkswind.codereader.database.StarsColumn;
 import com.wkswind.codereader.fileexplorer.sort.SortFolder;
-import com.wkswind.codereader.fileexplorer.sort.SortType;
 
 import org.apache.commons.io.FileUtils;
 

@@ -33,8 +33,6 @@ import com.wkswind.codereader.R;
 import com.wkswind.codereader.fileexplorer.FileAdapter;
 import com.wkswind.codereader.synatax.DocumentHandler;
 import com.wkswind.codereader.synatax.DocumentHandlerImpl;
-import com.wkswind.minilibrary.utils.CharsetDetector;
-import com.wkswind.minilibrary.utils.LLog;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
@@ -22,25 +21,20 @@ import android.view.ViewParent;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebView;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import com.wkswind.codereader.database.CodeProvider;
-import com.wkswind.codereader.database.HistorysColumn;
-import com.wkswind.codereader.database.StarsColumn;
 import com.wkswind.codereader.fileexplorer.FileAdapter;
 import com.wkswind.codereader.synatax.DocumentHandler;
 import com.wkswind.codereader.synatax.DocumentHandlerImpl;
+import com.wkswind.codereader.utils.CharsetDetector;
+import com.wkswind.codereader.utils.LLog;
+import com.wkswind.codereader.utils.PrefsUtils;
 import com.wkswind.codereader.utils.SourceEditor;
-import com.wkswind.minilibrary.uihelper.SystemUiHelper;
-import com.wkswind.minilibrary.utils.CharsetDetector;
-import com.wkswind.minilibrary.utils.LLog;
-import com.wkswind.minilibrary.utils.PrefsUtils;
+import com.wkswind.codereader.utils.uihelper.SystemUiHelper;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Calendar;
 
 public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVisibilityChangeListener {
 	private Uri selectedFile;
@@ -164,19 +158,19 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 		final MenuItem starredItem = menu.findItem(R.id.action_starred);
 		final CheckBox chkStarred = (CheckBox) MenuItemCompat.getActionView(starredItem);
 		chkStarred.setClickable(true);
-		Cursor cursor = getApplication().getContentResolver().query(CodeProvider.Stars.CONTENT_URI,new String[]{"*"}, StarsColumn.fileName+"=? and "+StarsColumn.star+"=?", new String[]{selectedFile.getPath(),"1"},null);
-		chkStarred.setChecked(cursor != null && cursor.moveToLast() &&cursor.getCount()>0);
-		chkStarred.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				getApplication().getContentResolver().delete(CodeProvider.Stars.CONTENT_URI, StarsColumn.fileName + "= ? ", new String[]{selectedFile.getPath()});
-				ContentValues cv = new ContentValues();
-				cv.put(StarsColumn.lastReadTime, Calendar.getInstance().getTimeInMillis());
-				cv.put(StarsColumn.fileName, selectedFile.getPath());
-				cv.put(StarsColumn.star, isChecked);
-				getApplication().getContentResolver().insert(CodeProvider.Stars.CONTENT_URI,cv);
-			}
-		});
+//		Cursor cursor = getApplication().getContentResolver().query(CodeProvider.Stars.CONTENT_URI,new String[]{"*"}, StarsColumn.fileName+"=? and "+StarsColumn.star+"=?", new String[]{selectedFile.getPath(),"1"},null);
+//		chkStarred.setChecked(cursor != null && cursor.moveToLast() &&cursor.getCount()>0);
+//		chkStarred.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//			@Override
+//			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//				getApplication().getContentResolver().delete(CodeProvider.Stars.CONTENT_URI, StarsColumn.fileName + "= ? ", new String[]{selectedFile.getPath()});
+//				ContentValues cv = new ContentValues();
+//				cv.put(StarsColumn.lastReadTime, Calendar.getInstance().getTimeInMillis());
+//				cv.put(StarsColumn.fileName, selectedFile.getPath());
+//				cv.put(StarsColumn.star, isChecked);
+//				getApplication().getContentResolver().insert(CodeProvider.Stars.CONTENT_URI,cv);
+//			}
+//		});
 		return true;
 	}
 
@@ -259,10 +253,10 @@ public class ReaderActivity extends BaseActivity implements SystemUiHelper.OnVis
 	
 	private void updateRecentReading(String url){
 		ContentValues cv = new ContentValues();
-		cv.put(HistorysColumn.fileName, url);
-		cv.put(HistorysColumn.lastReadTime, Calendar.getInstance().getTimeInMillis());
-		getApplication().getContentResolver().delete(CodeProvider.Historys.CONTENT_URI, HistorysColumn.fileName + "=?", new String[]{url});
-		getApplication().getContentResolver().insert(CodeProvider.Historys.CONTENT_URI, cv);
+//		cv.put(HistorysColumn.fileName, url);
+//		cv.put(HistorysColumn.lastReadTime, Calendar.getInstance().getTimeInMillis());
+//		getApplication().getContentResolver().delete(CodeProvider.Historys.CONTENT_URI, HistorysColumn.fileName + "=?", new String[]{url});
+//		getApplication().getContentResolver().insert(CodeProvider.Historys.CONTENT_URI, cv);
 	}
 
 	private DocumentHandler getHandlerByFileExtension(Uri uri) {

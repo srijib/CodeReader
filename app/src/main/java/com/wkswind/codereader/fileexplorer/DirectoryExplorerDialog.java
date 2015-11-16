@@ -16,7 +16,7 @@ import com.wkswind.codereader.BaseListFragment;
 import com.wkswind.codereader.R;
 import com.wkswind.codereader.adapter.DirectoryAdapter;
 import com.wkswind.codereader.utils.BaseDialogFragment;
-import com.wkswind.minilibrary.utils.PrefsUtils;
+import com.wkswind.codereader.utils.PrefsUtils;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class DirectoryExplorerDialog extends BaseDialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        currentDir = new File(PrefsUtils.get(activity,getString(R.string.pref_key_directory),Environment.getExternalStorageDirectory().getAbsolutePath()));
+        currentDir = new File(PrefsUtils.get(activity, getString(R.string.pref_key_directory), Environment.getExternalStorageDirectory().getAbsolutePath()));
     }
 
     @Override

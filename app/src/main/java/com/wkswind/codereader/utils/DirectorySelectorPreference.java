@@ -14,7 +14,6 @@ import android.widget.ListView;
 import com.wkswind.codereader.R;
 import com.wkswind.codereader.adapter.DirectoryAdapter;
 import com.wkswind.codereader.fileexplorer.FileExplorerFragment;
-import com.wkswind.minilibrary.utils.PrefsUtils;
 
 import java.io.File;
 

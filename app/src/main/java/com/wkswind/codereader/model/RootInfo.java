@@ -1,15 +1,14 @@
 package com.wkswind.codereader.model;
 
+import android.content.Context;
+import android.content.res.Resources;
+
+import com.wkswind.codereader.R;
+import com.wkswind.codereader.utils.PrefsUtils;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
-import android.content.Context;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-
-import com.wkswind.codereader.R;
-import com.wkswind.minilibrary.utils.PrefsUtils;
 
 public class RootInfo {
 	public static final int NAVDRAWER_ITEM = -1;

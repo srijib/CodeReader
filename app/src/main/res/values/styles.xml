@@ -4,15 +4,15 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
-    </style>
+    <!--<style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    </style>-->
 
-    <style name="AppBaseThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar"></style>
+    <style name="AppBaseTheme" parent="@style/MaterialDrawerTheme.TranslucentStatus">
+    </style>
+    <style name="AppBaseThemeNoActionBar" parent="AppBaseTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
@@ -22,7 +22,6 @@
         <!-- actionbar颜色 -->
         <item name="colorPrimary">#3F51B5</item>
         <item name="colorAccent">#9FA8DA</item>
-        <item name="android:navigationBarColor" tools:ignore="NewApi">?attr/colorPrimaryDark</item>
         <item name="actionModeShareDrawable">@drawable/ic_action_share</item>
 
     </style>

@@ -12,8 +12,8 @@ import android.support.v7.app.ActionBar;
 import com.wkswind.codereader.fileexplorer.FileExplorerFragment;
 import com.wkswind.codereader.fileexplorer.RelatedFragment;
 import com.wkswind.codereader.model.RootInfo;
-import com.wkswind.minilibrary.utils.LLog;
-import com.wkswind.minilibrary.utils.PrefsUtils;
+import com.wkswind.codereader.utils.LLog;
+import com.wkswind.codereader.utils.PrefsUtils;
 
 import java.io.File;
 

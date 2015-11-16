@@ -1,30 +1,15 @@
 package com.wkswind.codereader.fileexplorer;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 
-import com.wkswind.codereader.BaseListFragment;
 import com.wkswind.codereader.FileListFragment;
-import com.wkswind.codereader.R;
-import com.wkswind.codereader.ReaderActivity;
-import com.wkswind.codereader.SettingsActivity;
-import com.wkswind.codereader.database.CodeProvider;
-import com.wkswind.codereader.database.HistorysColumn;
-import com.wkswind.codereader.database.StarsColumn;
-import com.wkswind.codereader.fileexplorer.sort.SortType;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -59,8 +44,8 @@ public class RelatedFragment extends FileListFragment implements LoaderManager.L
                 getLoaderManager().restartLoader(loaderId, null, RelatedFragment.this);
             }
         };
-        getActivity().getContentResolver().registerContentObserver(CodeProvider.Stars.CONTENT_URI, true, observer);
-        getActivity().getContentResolver().registerContentObserver(CodeProvider.Historys.CONTENT_URI, true, observer);
+//        getActivity().getContentResolver().registerContentObserver(CodeProvider.Stars.CONTENT_URI, true, observer);
+//        getActivity().getContentResolver().registerContentObserver(CodeProvider.Historys.CONTENT_URI, true, observer);
         getLoaderManager().initLoader(loaderId, null, this);
     }
 
@@ -83,10 +68,10 @@ public class RelatedFragment extends FileListFragment implements LoaderManager.L
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id){
-            case HISTORY_LOADER:
-                return new CursorLoader(getActivity(), CodeProvider.Historys.CONTENT_URI, new String[]{"*"},null,null, HistorysColumn.lastReadTime +" DESC ");
-            case STAR_LOADER:
-                return new CursorLoader(getActivity(),CodeProvider.Stars.CONTENT_URI, new String[]{"*"}, StarsColumn.star+"=?", new String[]{"1"}, StarsColumn.lastReadTime + " DESC ");
+//            case HISTORY_LOADER:
+//                return new CursorLoader(getActivity(), CodeProvider.Historys.CONTENT_URI, new String[]{"*"},null,null, HistorysColumn.lastReadTime +" DESC ");
+//            case STAR_LOADER:
+//                return new CursorLoader(getActivity(),CodeProvider.Stars.CONTENT_URI, new String[]{"*"}, StarsColumn.star+"=?", new String[]{"1"}, StarsColumn.lastReadTime + " DESC ");
         }
         return null;
     }
@@ -96,7 +81,7 @@ public class RelatedFragment extends FileListFragment implements LoaderManager.L
         ArrayList<File> files = new ArrayList<>();
         if(data != null){
             while(data.moveToNext()){
-                files.add(new File(data.getString(data.getColumnIndex(HistorysColumn.fileName))));
+//                files.add(new File(data.getString(data.getColumnIndex(HistorysColumn.fileName))));
             }
         }
         data.close();

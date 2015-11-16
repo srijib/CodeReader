@@ -1,9 +1,7 @@
 package com.wkswind.codereader;
 
 import android.annotation.TargetApi;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -14,17 +12,13 @@ import android.os.Environment;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.content.IntentCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 
 import com.wkswind.codereader.fileexplorer.DirectoryExplorerDialog;
 import com.wkswind.codereader.utils.DirectorySelectorPreference;
-import com.wkswind.minilibrary.utils.PrefsUtils;
+import com.wkswind.codereader.utils.PrefsUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -105,7 +99,7 @@ public class SettingsActivity extends BaseActivity {
                 PackageInfo  packInfo = packageManager.getPackageInfo(getActivity().getPackageName(),0);
                 String version = packInfo.versionName;
                 findPreference(getString(R.string.pref_key_version_code)).setSummary(version);
-                Log.i(TAG,PrefsUtils.get(getActivity(),getString(R.string.pref_key_directory),Environment.getExternalStorageDirectory().getAbsolutePath()));
+                Log.i(TAG, PrefsUtils.get(getActivity(), getString(R.string.pref_key_directory), Environment.getExternalStorageDirectory().getAbsolutePath()));
                 findPreference(getString(R.string.pref_key_directory)).setSummary(PrefsUtils.get(getActivity(),getString(R.string.pref_key_directory),Environment.getExternalStorageDirectory().getAbsolutePath()));
                 getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
             } catch (NameNotFoundException e) {
