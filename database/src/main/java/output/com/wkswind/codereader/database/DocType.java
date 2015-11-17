@@ -6,6 +6,7 @@ package com.wkswind.codereader.database;
  */
 public class DocType {
 
+    private String name;
     private String extensions;
     private Long id;
     private Integer status;
@@ -18,11 +19,20 @@ public class DocType {
         this.id = id;
     }
 
-    public DocType(String extensions, Long id, Integer status, String remark) {
+    public DocType(String name, String extensions, Long id, Integer status, String remark) {
+        this.name = name;
         this.extensions = extensions;
         this.id = id;
         this.status = status;
         this.remark = remark;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getExtensions() {

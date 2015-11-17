@@ -51,7 +51,7 @@ public class HistoryDao extends AbstractDao<History, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"HISTORY\" (" + //
                 "\"LAST_READ_TIME\" INTEGER," + // 0: lastReadTime
                 "\"RESULT_ID\" INTEGER," + // 1: resultId
-                "\"_id\" INTEGER PRIMARY KEY ," + // 2: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 2: id
                 "\"STATUS\" INTEGER," + // 3: status
                 "\"REMARK\" TEXT);"); // 4: remark
     }

@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.wkswind.codereader.MainActivity" >
+    <item android:id="@+id/action_starred"
+        app:showAsAction="always"
+        android:title="@string/action_starred"        
+        app:actionViewClass="com.wkswind.codereader.utils.OptionsMenuCheckBox"/>
+    
+	<item android:id="@+id/action_share"
+        app:showAsAction="ifRoom"
+        android:title="@string/action_share"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider" />    
+    <item android:id="@+id/action_fullscreen"
+        app:showAsAction="ifRoom"
+        android:title="@string/action_fullscreen"
+        android:icon="@drawable/ic_action_fullscreen"/>
+
+</menu>

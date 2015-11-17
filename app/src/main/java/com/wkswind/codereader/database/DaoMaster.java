@@ -23,14 +23,14 @@ public class DaoMaster extends AbstractDaoMaster {
         ResultDao.createTable(db, ifNotExists);
         HistoryDao.createTable(db, ifNotExists);
     }
-
+    
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(SQLiteDatabase db, boolean ifExists) {
         DocTypeDao.dropTable(db, ifExists);
         ResultDao.dropTable(db, ifExists);
         HistoryDao.dropTable(db, ifExists);
     }
-
+    
     public static abstract class OpenHelper extends SQLiteOpenHelper {
 
         public OpenHelper(Context context, String name, CursorFactory factory) {
@@ -43,7 +43,7 @@ public class DaoMaster extends AbstractDaoMaster {
             createAllTables(db, false);
         }
     }
-
+    
     /** WARNING: Drops all table on Upgrade! Use only during development. */
     public static class DevOpenHelper extends OpenHelper {
         public DevOpenHelper(Context context, String name, CursorFactory factory) {
@@ -64,11 +64,11 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(ResultDao.class);
         registerDaoClass(HistoryDao.class);
     }
-
+    
     public DaoSession newSession() {
         return new DaoSession(db, IdentityScopeType.Session, daoConfigMap);
     }
-
+    
     public DaoSession newSession(IdentityScopeType type) {
         return new DaoSession(db, type, daoConfigMap);
     }

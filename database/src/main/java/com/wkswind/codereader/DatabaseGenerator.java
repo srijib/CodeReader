@@ -12,7 +12,7 @@ import de.greenrobot.daogenerator.Schema;
  */
 public class DatabaseGenerator {
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(1,"com.wkswind.codereader.database");
+        Schema schema = new Schema(12,"com.wkswind.codereader.database");
         Entity docType = addDocType(schema);
         assert docType != null;
         Entity result = addResult(docType, schema);
@@ -45,14 +45,15 @@ public class DatabaseGenerator {
 
     private static Entity addDocType(Schema schema) {
         Entity docType = schema.addEntity("DocType");
+        docType.addStringProperty("name");
         docType.addStringProperty("extensions");
         addCommonColumns(docType);
         return docType;
     }
 
     private static void addCommonColumns(Entity entity){
-        entity.addIdProperty();
-        entity.addContentProvider();
+        entity.addIdProperty().autoincrement();
+//        entity.addContentProvider();
         entity.addIntProperty("status");
         entity.addStringProperty("remark");
     }
