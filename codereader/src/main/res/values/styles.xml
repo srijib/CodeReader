@@ -7,7 +7,7 @@
     <!--<style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
     </style>-->
 
-    <style name="AppBaseTheme" parent="@style/MaterialDrawerTheme.TranslucentStatus">
+    <style name="AppBaseTheme" parent="@style/MaterialDrawerTheme.Light.TranslucentStatus">
     </style>
     <style name="AppBaseThemeNoActionBar" parent="AppBaseTheme">
         <item name="windowActionBar">false</item>
@@ -19,10 +19,10 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <!-- statusBar颜色 -->
         <item name="colorPrimaryDark">#1A237E</item>
-        <!-- actionbar颜色 -->
+        <!-- actionbar颜色 colorAccent 9FA8DA-->
         <item name="colorPrimary">#3F51B5</item>
-        <item name="colorAccent">#9FA8DA</item>
-        <item name="actionModeShareDrawable">@drawable/ic_action_share</item>
+        <item name="colorAccent">#3F51B5</item>
+        <item name="actionModeShareDrawable">@drawable/ic_share_24dp</item>
 
     </style>
 

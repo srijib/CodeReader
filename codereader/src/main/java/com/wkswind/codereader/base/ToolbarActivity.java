@@ -2,6 +2,8 @@ package com.wkswind.codereader.base;
 
 import android.support.v7.widget.Toolbar;
 
+import com.wkswind.codereader.R;
+
 /**
  * Created by Administrator on 2015-11-17.
  */

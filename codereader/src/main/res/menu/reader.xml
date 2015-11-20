@@ -14,6 +14,6 @@
     <item android:id="@+id/action_fullscreen"
         app:showAsAction="ifRoom"
         android:title="@string/action_fullscreen"
-        android:icon="@drawable/ic_action_fullscreen"/>
+        android:icon="@drawable/ic_fullscreen_24dp"/>
 
 </menu>
