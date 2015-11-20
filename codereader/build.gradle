@@ -12,9 +12,20 @@ android {
         versionName "4.0"
 //        useJack true
     }
+
+    signingConfigs {
+        release {
+            storeFile file("wkswind.jks")
+            storePassword "123456"
+            keyAlias "CodeReader"
+            keyPassword "123456"
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
