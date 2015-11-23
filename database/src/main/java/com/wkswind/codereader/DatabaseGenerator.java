@@ -47,6 +47,7 @@ public class DatabaseGenerator {
         Entity docType = schema.addEntity("DocType");
         docType.addStringProperty("name");
         docType.addStringProperty("extensions");
+        docType.addStringProperty("scanRoot");
         addCommonColumns(docType);
         return docType;
     }

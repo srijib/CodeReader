@@ -37,6 +37,7 @@ public class HomeActivity extends ToolbarActivity {
         toolbar.setNavigationIcon(R.drawable.ic_menu_24dp);
         ViewCompat.setTranslationZ(toolbar,getResources().getDimensionPixelOffset(R.dimen.headerbar_elevation));
         drawerBuilder = new DrawerBuilder(this).withDelayOnDrawerClose(-1);
+//        drawerBuilder.withStickyFooter()
         drawerBuilder.addDrawerItems(starredDrawerItem()).addDrawerItems(historyDrawerItem()).addDrawerItems(drawerDivider());
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,13 +78,18 @@ public class HomeActivity extends ToolbarActivity {
                         formatDrawerColor(item);
                         drawerBuilder.addDrawerItems(item);
                     }
+
                 }
+                drawerBuilder.addStickyDrawerItems(feedbackDrawerItem(),settingsDrawerItem());
+//                drawerBuilder.addDrawerItems();
                 drawer = drawerBuilder.build();
             }
         });
-
-//        Observable.
     }
+//
+//    private PrimaryDrawerItem mainCategoryDrawerItem(){
+//        return new PrimaryDrawerItem().withName(getString(R.string.category_type)).withIcon(R.drawable.ic_description_24dp).withSelectable(false);
+//    }
 
     private PrimaryDrawerItem docTypeDrawerItem(DocType type){
         PrimaryDrawerItem item = new PrimaryDrawerItem();
@@ -96,6 +102,8 @@ public class HomeActivity extends ToolbarActivity {
         return result;
     }
 
+
+
     /**
      * 收藏
      * @return
@@ -103,6 +111,20 @@ public class HomeActivity extends ToolbarActivity {
     private PrimaryDrawerItem starredDrawerItem(){
         PrimaryDrawerItem item = new PrimaryDrawerItem();
         item.withName(R.string.action_starred).withIcon(R.drawable.ic_star_24dp).withIdentifier(R.id.starred_drawer);
+        formatDrawerColor(item);
+        return item;
+    }
+
+    private PrimaryDrawerItem settingsDrawerItem(){
+        PrimaryDrawerItem item = new PrimaryDrawerItem();
+        item.withName(R.string.action_settings).withIcon(R.drawable.ic_settings_24dp).withIdentifier(R.id.action_settings).withSelectable(false);
+        formatDrawerColor(item);
+        return item;
+    }
+
+    private PrimaryDrawerItem feedbackDrawerItem(){
+        PrimaryDrawerItem item = new PrimaryDrawerItem();
+        item.withName(R.string.action_feedback).withIcon(R.drawable.ic_help_24dp).withIdentifier(R.id.feedback_drawer).withSelectable(false);
         formatDrawerColor(item);
         return item;
     }
@@ -117,6 +139,7 @@ public class HomeActivity extends ToolbarActivity {
         formatDrawerColor(item);
         return item;
     }
+
 
     private IDrawerItem drawerDivider(){
         return new DividerDrawerItem();

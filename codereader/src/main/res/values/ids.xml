@@ -2,4 +2,5 @@
 <resources>
     <item name="history_drawer" type="id" />
     <item name="starred_drawer" type="id" />
+    <item name="feedback_drawer" type="id" />
 </resources>
