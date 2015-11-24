@@ -1,3 +1,5 @@
+package com.wkswind.codereader;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -7,7 +9,6 @@ import android.os.Environment;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 
-import com.wkswind.codereader.R;
 import com.wkswind.codereader.base.BaseActivity;
 import com.wkswind.codereader.base.BasePreferenceActivity;
 import com.wkswind.codereader.utils.DirectoryExplorerDialog;

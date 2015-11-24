@@ -3,7 +3,7 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="com.wkswind.codereader.SettingsActivity$GeneralPreferenceFragment"
+        android:fragment="com.wkswind.codereader.com.wkswind.codereader.SettingsActivity$GeneralPreferenceFragment"
         android:title="@string/pref_header_general" />
 
 </preference-headers>

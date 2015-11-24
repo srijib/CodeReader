@@ -37,7 +37,6 @@ public class HomeActivity extends ToolbarActivity {
         toolbar.setNavigationIcon(R.drawable.ic_menu_24dp);
         ViewCompat.setTranslationZ(toolbar,getResources().getDimensionPixelOffset(R.dimen.headerbar_elevation));
         drawerBuilder = new DrawerBuilder(this).withDelayOnDrawerClose(-1);
-//        drawerBuilder.withStickyFooter()
         drawerBuilder.addDrawerItems(starredDrawerItem()).addDrawerItems(historyDrawerItem()).addDrawerItems(drawerDivider());
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,16 +79,11 @@ public class HomeActivity extends ToolbarActivity {
                     }
 
                 }
-                drawerBuilder.addStickyDrawerItems(feedbackDrawerItem(),settingsDrawerItem());
-//                drawerBuilder.addDrawerItems();
+                drawerBuilder.addStickyDrawerItems(configureDocTypeDrawerItem(),feedbackDrawerItem(),settingsDrawerItem());
                 drawer = drawerBuilder.build();
             }
         });
     }
-//
-//    private PrimaryDrawerItem mainCategoryDrawerItem(){
-//        return new PrimaryDrawerItem().withName(getString(R.string.category_type)).withIcon(R.drawable.ic_description_24dp).withSelectable(false);
-//    }
 
     private PrimaryDrawerItem docTypeDrawerItem(DocType type){
         PrimaryDrawerItem item = new PrimaryDrawerItem();
@@ -111,6 +105,13 @@ public class HomeActivity extends ToolbarActivity {
     private PrimaryDrawerItem starredDrawerItem(){
         PrimaryDrawerItem item = new PrimaryDrawerItem();
         item.withName(R.string.action_starred).withIcon(R.drawable.ic_star_24dp).withIdentifier(R.id.starred_drawer);
+        formatDrawerColor(item);
+        return item;
+    }
+
+    private PrimaryDrawerItem configureDocTypeDrawerItem(){
+        PrimaryDrawerItem item = new PrimaryDrawerItem();
+        item.withName(R.string.action_configure_doctype).withIcon(R.drawable.ic_configure_24dp).withIdentifier(R.id.configure_drawer);
         formatDrawerColor(item);
         return item;
     }
