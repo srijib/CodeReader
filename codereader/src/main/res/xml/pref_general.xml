@@ -7,29 +7,20 @@
          dismiss it.
     -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
-    <Preference android:key="@string/pref_key_directory"
-        android:title="@string/pref_title_directory"
-        android:summary="@string/pref_title_directory_summary" />
-    <MultiSelectListPreference
-        android:defaultValue="@array/default_doc_type"
-        android:entries="@array/doc_types"
-        android:entryValues="@array/doc_types"
-        android:key="@string/pref_key_doc_types"
-        android:negativeButtonText="@android:string/cancel"
-        android:positiveButtonText="@android:string/ok"
-        android:title="@string/pref_title_doc_type" />
-    
+
     <Preference
-        android:title="@string/pref_title_vote">
-        <intent android:action="android.intent.action.VIEW"
-            android:data="market://details?id=com.wkswind.codereader"/>
-    </Preference>
-    
-    <Preference android:title="@string/pref_title_mail">
-        <intent
-            android:action="android.intent.action.VIEW" 
-            android:data="mailto:wkswind@gmail.com"/>
-    </Preference>      
+        android:title="@string/pref_title_vote"
+        android:key="@string/pref_key_comment"/>
+    <!--<intent android:action="android.intent.action.VIEW"-->
+        <!--android:data="market://details?id=com.wkswind.codereader"/>-->
+    <Preference android:title="@string/pref_title_mail"
+        android:key="@string/pref_key_email"/>
+    <!--<intent-->
+        <!--android:action="android.intent.action.VIEW"-->
+        <!--android:data="mailto:wkswind@gmail.com"/>-->
     <Preference android:key="@string/pref_key_version_code"
         android:title="@string/pref_title_version"/>
+    <Preference
+        android:key="@string/pref_key_libraries"
+        android:title="@string/pref_title_libraries"/>
 </PreferenceScreen>

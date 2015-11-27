@@ -6,7 +6,25 @@
     -->
     <!--<style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
     </style>-->
-
+    <style name="BaseTheme" parent="@style/MaterialDrawerTheme.Light.DarkToolbar">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!-- statusBar颜色 -->
+        <!--<item name="actionBarStyle">@style/MyActionBar</item>-->
+        <item name="colorPrimaryDark">#1A237E</item>
+        <!-- actionbar颜色 colorAccent 9FA8DA-->
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorAccent">#3F51B5</item>
+    </style>
+    <!--<style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">-->
+        <!--<item name="titleTextStyle">@style/MyTitleTextStyle</item>-->
+    <!--</style>-->
+    <!--<style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">-->
+        <!--<item name="android:textColor">@color/md_white_1000</item>-->
+    <!--</style>-->
+    <style name="BaseTheme.ActionBar" parent="@style/BaseTheme">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
     <style name="AppBaseTheme" parent="@style/MaterialDrawerTheme.Light.TranslucentStatus">
     </style>
     <style name="AppBaseThemeNoActionBar" parent="AppBaseTheme">

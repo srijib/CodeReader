@@ -12,7 +12,7 @@ import de.greenrobot.daogenerator.Schema;
  */
 public class DatabaseGenerator {
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(12,"com.wkswind.codereader.database");
+        Schema schema = new Schema(15,"com.wkswind.codereader.database");
         Entity docType = addDocType(schema);
         assert docType != null;
         Entity result = addResult(docType, schema);

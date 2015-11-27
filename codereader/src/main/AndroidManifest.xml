@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DocTypeActivity"
+            android:theme="@style/BaseTheme"
+            android:label="@string/title_activity_doctype"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".SettingsActivity"
+            android:theme="@style/BaseTheme.ActionBar"
+            android:label="@string/title_activity_settings"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>

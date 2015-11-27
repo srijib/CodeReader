@@ -1,5 +1,6 @@
 package com.wkswind.codereader;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
@@ -18,12 +19,12 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Action1;
 
 /**
+ * 首页
  * Created by Administrator on 2015-11-17.
  */
-public class HomeActivity extends ToolbarActivity {
+public class HomeActivity extends ToolbarActivity implements Drawer.OnDrawerItemClickListener {
     private DrawerBuilder drawerBuilder;
     private Toolbar toolbar;
     private Observable<List<DocType>> observable;
@@ -38,6 +39,7 @@ public class HomeActivity extends ToolbarActivity {
         ViewCompat.setTranslationZ(toolbar,getResources().getDimensionPixelOffset(R.dimen.headerbar_elevation));
         drawerBuilder = new DrawerBuilder(this).withDelayOnDrawerClose(-1);
         drawerBuilder.addDrawerItems(starredDrawerItem()).addDrawerItems(historyDrawerItem()).addDrawerItems(drawerDivider());
+        drawerBuilder.withOnDrawerItemClickListener(this);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,9 +69,17 @@ public class HomeActivity extends ToolbarActivity {
                 }
             }
         });
-        observable.subscribe(new Action1<List<DocType>>() {
+
+        observable.subscribe(new Subscriber<List<DocType>>() {
             @Override
-            public void call(List<DocType> docTypes) {
+            public void onCompleted() {
+                drawerBuilder.addStickyDrawerItems(configureDocTypeDrawerItem(),feedbackDrawerItem(),settingsDrawerItem());
+                drawer = drawerBuilder.build();
+            }
+            @Override
+            public void onError(Throwable e) {}
+            @Override
+            public void onNext(List<DocType> docTypes) {
                 if(docTypes != null && !docTypes.isEmpty()){
                     for(int i=0,j=docTypes.size();i<j;i++){
                         DocType type = docTypes.get(i);
@@ -77,10 +87,7 @@ public class HomeActivity extends ToolbarActivity {
                         formatDrawerColor(item);
                         drawerBuilder.addDrawerItems(item);
                     }
-
                 }
-                drawerBuilder.addStickyDrawerItems(configureDocTypeDrawerItem(),feedbackDrawerItem(),settingsDrawerItem());
-                drawer = drawerBuilder.build();
             }
         });
     }
@@ -113,13 +120,15 @@ public class HomeActivity extends ToolbarActivity {
         PrimaryDrawerItem item = new PrimaryDrawerItem();
         item.withName(R.string.action_configure_doctype).withIcon(R.drawable.ic_configure_24dp).withIdentifier(R.id.configure_drawer);
         formatDrawerColor(item);
+        item.withSelectable(false);
         return item;
     }
 
     private PrimaryDrawerItem settingsDrawerItem(){
         PrimaryDrawerItem item = new PrimaryDrawerItem();
-        item.withName(R.string.action_settings).withIcon(R.drawable.ic_settings_24dp).withIdentifier(R.id.action_settings).withSelectable(false);
+        item.withName(R.string.action_settings).withIcon(R.drawable.ic_settings_24dp).withIdentifier(R.id.setting_drawer).withSelectable(false);
         formatDrawerColor(item);
+        item.withSelectable(false);
         return item;
     }
 
@@ -127,6 +136,7 @@ public class HomeActivity extends ToolbarActivity {
         PrimaryDrawerItem item = new PrimaryDrawerItem();
         item.withName(R.string.action_feedback).withIcon(R.drawable.ic_help_24dp).withIdentifier(R.id.feedback_drawer).withSelectable(false);
         formatDrawerColor(item);
+        item.withSelectable(false);
         return item;
     }
 
@@ -155,5 +165,27 @@ public class HomeActivity extends ToolbarActivity {
 //        item.withSelectedColorRes(android.R.color.white);
         item.withIconTintingEnabled(true);
 //        item.with
+    }
+
+    @Override
+    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+        switch (drawerItem.getIdentifier()){
+            case R.id.action_starred:
+                break;
+            case R.id.history_drawer:
+                break;
+            case R.id.configure_drawer:
+                startActivity(new Intent(this, DocTypeActivity.class));
+                break;
+            case R.id.feedback_drawer:
+                break;
+            case R.id.setting_drawer:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+        return false;
     }
 }

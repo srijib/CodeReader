@@ -4,4 +4,5 @@
     <item name="starred_drawer" type="id" />
     <item name="feedback_drawer" type="id" />
     <item name="configure_drawer" type="id" />
+    <item name="setting_drawer" type="id" />
 </resources>
