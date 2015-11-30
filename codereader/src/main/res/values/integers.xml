@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 128 * 1024 -->
+    <item name="max_file_size_bytes" type="integer">131072</item>
+</resources>
