@@ -9,10 +9,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.wkswind.codereader.adapter.DocAdapter;
 import com.wkswind.codereader.base.ToolbarActivity;
+import com.wkswind.codereader.database.DocType;
+import com.wkswind.codereader.database.DatabaseUtils;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2015-11-24.
@@ -23,6 +32,7 @@ public class DocTypeActivity extends ToolbarActivity {
     Toolbar toolbar;
     @Bind(R.id.add)
     FloatingActionButton btnAdd;
+    DocAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +56,17 @@ public class DocTypeActivity extends ToolbarActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         content.setLayoutManager(manager);
         content.setItemAnimator(new DefaultItemAnimator());
+        Observable<List<DocType>> observable = DatabaseUtils.getAllDocTypes(getApplication());
+        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<DocType>>() {
+            @Override
+            public void call(List<DocType> docTypes) {
+//                adapter = new DocAdapter(DocTypeActivity.this, docTypes);
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+
+            }
+        });
     }
 }

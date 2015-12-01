@@ -11,14 +11,15 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.wkswind.codereader.base.CodeReaderApplication;
 import com.wkswind.codereader.base.ToolbarActivity;
 import com.wkswind.codereader.database.DocType;
+import com.wkswind.codereader.database.DatabaseUtils;
 
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 
 /**
  * 首页
@@ -29,6 +30,7 @@ public class HomeActivity extends ToolbarActivity implements Drawer.OnDrawerItem
     private Toolbar toolbar;
     private Observable<List<DocType>> observable;
     private Drawer drawer;
+    private Subscription subscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,24 +55,9 @@ public class HomeActivity extends ToolbarActivity implements Drawer.OnDrawerItem
             }
         });
 
-        observable = Observable.create(new Observable.OnSubscribe<List<DocType>>() {
-            @Override
-            public void call(Subscriber<? super List<DocType>> subscriber) {
-                try {
-                    List<DocType> result = queryDocType();
-                    if (!subscriber.isUnsubscribed()) {
-                        subscriber.onNext(result);
-                    }
-                    if (!subscriber.isUnsubscribed()) {
-                        subscriber.onCompleted();
-                    }
-                } catch (Throwable e) {
-                    subscriber.onError(e);
-                }
-            }
-        });
+        observable = DatabaseUtils.getAllDocTypes(getApplication());
 
-        observable.subscribe(new Subscriber<List<DocType>>() {
+        subscription = observable.subscribe(new Subscriber<List<DocType>>() {
             @Override
             public void onCompleted() {
                 drawerBuilder.addStickyDrawerItems(configureDocTypeDrawerItem(),feedbackDrawerItem(),settingsDrawerItem());
@@ -92,18 +79,19 @@ public class HomeActivity extends ToolbarActivity implements Drawer.OnDrawerItem
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        if(!subscription.isUnsubscribed()){
+            subscription.unsubscribe();
+        }
+        super.onDestroy();
+    }
+
     private PrimaryDrawerItem docTypeDrawerItem(DocType type){
         PrimaryDrawerItem item = new PrimaryDrawerItem();
         item.withName(type.getName()).withIcon(R.drawable.ic_description_24dp);
         return item;
     }
-
-    private List<DocType> queryDocType(){
-        List<DocType> result = CodeReaderApplication.getSession().getDocTypeDao().queryBuilder().list();
-        return result;
-    }
-
-
 
     /**
      * 收藏
