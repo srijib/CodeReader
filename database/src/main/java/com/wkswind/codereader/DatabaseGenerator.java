@@ -1,5 +1,7 @@
 package com.wkswind.codereader;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 
 import de.greenrobot.daogenerator.DaoGenerator;
@@ -12,16 +14,33 @@ import de.greenrobot.daogenerator.Schema;
  */
 public class DatabaseGenerator {
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(15,"com.wkswind.codereader.database");
+        Schema schema = new Schema(17,"com.wkswind.codereader.database");
         Entity docType = addDocType(schema);
         assert docType != null;
         Entity result = addResult(docType, schema);
         assert result != null;
         addHistory(schema, result);
-        String path = "database/src/main/java/output";
+        addStars(schema, result);
+        String path = "database/output";
         File file = new File(path);
+        if(file.exists()){
+            FileUtils.cleanDirectory(file);
+        }else{
+            file.mkdir();
+        }
+//        FileUtils.cleanDirectory(file);
 //        System.out.println(file.getAbsolutePath());
         new DaoGenerator().generateAll(schema, file.getAbsolutePath());
+    }
+
+    private static Entity addStars(Schema schema, Entity result){
+        Entity stars = schema.addEntity("Star");
+        stars.addBooleanProperty("star");
+        stars.addDateProperty("lastAccessTime");
+        Property property = stars.addLongProperty("resultId").getProperty();
+        stars.addToOne(result,property);
+        addCommonColumns(stars);
+        return stars;
     }
 
     private static Entity addHistory(Schema schema, Entity result) {
