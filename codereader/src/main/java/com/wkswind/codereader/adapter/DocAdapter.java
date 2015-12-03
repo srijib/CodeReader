@@ -2,6 +2,7 @@ package com.wkswind.codereader.adapter;
 
 import android.app.Activity;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.util.SortedListAdapterCallback;
@@ -28,15 +29,14 @@ import java.util.Locale;
  *
  * Created by Administrator on 2015-11-27.
  */
-public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder> {
-    private OnRecyclerViewItemClickListener onItemClickListener;
+public class DocAdapter extends BaseAdapter<DocAdapter.DocViewHolder> {
     private Activity activity;
     private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("MM-dd", Locale.getDefault());
     private static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("hh:mm", Locale.getDefault());
     private SortedList<Result> sortedList;
     private LayoutInflater inflater;
 
-    public DocAdapter(Activity activity, List<Result> datas){
+    public DocAdapter(@NonNull Activity activity,@NonNull List<Result> datas){
         super();
         this.activity = activity;
 
@@ -65,11 +65,12 @@ public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder> {
     @Override
     public DocViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.item_doc_list, parent, false);
-        return new DocViewHolder(view, activity, onItemClickListener);
+        return new DocViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(DocViewHolder holder, int position) {
+        super.onBindViewHolder(holder,position);
         Result result = sortedList.get(position);
         File item = new File(result.getAbsolutePath());
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN){
@@ -100,37 +101,17 @@ public class DocAdapter extends RecyclerView.Adapter<DocAdapter.DocViewHolder> {
     }
 
     public static final class DocViewHolder extends RecyclerView.ViewHolder {
-        private Activity activity;
         ImageView iconMime;
         TextView title, date, size;
         private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
-        public DocViewHolder(View itemView, Activity activity, OnRecyclerViewItemClickListener onItemClickListener) {
+        public DocViewHolder(View itemView) {
             super(itemView);
-            this.activity = activity;
             iconMime = (ImageView) itemView.findViewById(R.id.icon_mime);
             title = (TextView) itemView
                     .findViewById(android.R.id.title);
             date = (TextView) itemView.findViewById(R.id.date);
             size = (TextView) itemView.findViewById(R.id.size);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(onRecyclerViewItemClickListener != null){
-                        onRecyclerViewItemClickListener.onItemClick(v,getAdapterPosition(),getLayoutPosition());
-                    }
-                }
-            });
         }
-    }
-
-    public static interface OnRecyclerViewItemClickListener {
-        /**
-         *
-         * @param view
-         * @param adapterPosition adapter中的位置
-         * @param layoutPosition layout中的位置
-         */
-        public void onItemClick(View view,int adapterPosition, int layoutPosition);
     }
 
 }

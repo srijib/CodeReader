@@ -6,6 +6,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.jakewharton.rxbinding.support.v7.widget.RxToolbar;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -13,13 +14,14 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.wkswind.codereader.base.ToolbarActivity;
 import com.wkswind.codereader.database.DocType;
-import com.wkswind.codereader.database.DatabaseUtils;
+import com.wkswind.codereader.database.DataUtils;
 
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * 首页
@@ -42,9 +44,9 @@ public class HomeActivity extends ToolbarActivity implements Drawer.OnDrawerItem
         drawerBuilder = new DrawerBuilder(this).withDelayOnDrawerClose(-1);
         drawerBuilder.addDrawerItems(starredDrawerItem()).addDrawerItems(historyDrawerItem()).addDrawerItems(drawerDivider());
         drawerBuilder.withOnDrawerItemClickListener(this);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        RxToolbar.navigationClicks(toolbar).subscribe(new Action1<Void>() {
             @Override
-            public void onClick(View v) {
+            public void call(Void aVoid) {
                 if(drawer != null){
                     if(drawer.isDrawerOpen()){
                         drawer.closeDrawer();
@@ -55,7 +57,7 @@ public class HomeActivity extends ToolbarActivity implements Drawer.OnDrawerItem
             }
         });
 
-        observable = DatabaseUtils.getAllDocTypes(getApplication());
+        observable = DataUtils.getAllDocTypes(getApplication());
 
         subscription = observable.subscribe(new Subscriber<List<DocType>>() {
             @Override

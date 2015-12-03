@@ -11,5 +11,5 @@
     <color name="navdrawer_icon_tint">#888</color>
     <color name="navdrawer_icon_tint_selected">@color/theme_primary</color>
 
-    <color name="ripple_default">#f3dbdbdb</color>
+    <color name="ripple_default">@color/ripple_material_dark</color>
 </resources>

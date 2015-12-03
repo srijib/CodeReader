@@ -36,7 +36,6 @@ public class DirectoryAdapter extends BaseAdapter {
 			
 			@Override
 			public boolean accept(File pathname) {
-				// TODO Auto-generated method stub
 				return !pathname.getName().startsWith(".")&&!pathname.isFile();
 			}
 		}));
@@ -44,19 +43,16 @@ public class DirectoryAdapter extends BaseAdapter {
 	}
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return files == null ? 0 : files.size();
 	}
 
 	@Override
 	public File getItem(int position) {
-		// TODO Auto-generated method stub
 		return files == null ? null : files.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return position;
 	}
 
@@ -64,7 +60,6 @@ public class DirectoryAdapter extends BaseAdapter {
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
 		ViewHolder holder = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.item_doc_list, parent,

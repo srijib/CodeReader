@@ -17,9 +17,11 @@ import rx.Observable;
 import rx.Subscriber;
 
 /**
+ * basic data operations
  * Created by Administrator on 2015-12-1.
  */
-public class DatabaseUtils {
+public final class DataUtils {
+    private DataUtils(){}
     public static final Observable<List<DocType>> getAllDocTypes(Context context){
         return Observable.create(new Observable.OnSubscribe<List<DocType>>() {
             @Override
@@ -28,40 +30,53 @@ public class DatabaseUtils {
                     List<DocType> result = CodeReaderApplication.getSession().getDocTypeDao().queryBuilder().list();
                     if (!subscriber.isUnsubscribed()) {
                         subscriber.onNext(result);
-                    }
-                    if (!subscriber.isUnsubscribed()) {
                         subscriber.onCompleted();
                     }
                 } catch (Throwable e) {
-                    subscriber.onError(e);
+                    if(!subscriber.isUnsubscribed()){
+                        subscriber.onError(e);
+                    }
                 }
             }
         });
     }
 
     /**
-     * 根据文件类型查询，优先查数据库缓存，接着遍历文件并更新缓存记录
-     * @param context
+     * search {@link Result} from local database
      * @param docType
      * @return
      */
-    public static final Observable<List<Result>> getResultsByType(Context context,final DocType docType){
+    public static final Observable<List<Result>> getResultsByTypeFromDatabase(final DocType docType){
         final long typeId = docType.getId();
-
         return Observable.create(new Observable.OnSubscribe<List<Result>>() {
             @Override
             public void call(Subscriber<? super List<Result>> subscriber) {
                 try {
-                    /**
-                     * 先查询数据库缓存
-                     */
                     List<Result> cache = CodeReaderApplication.getSession().getResultDao().queryBuilder().where(ResultDao.Properties.DocTypeId.eq(typeId)).list();
                     if(!subscriber.isUnsubscribed()){
                         subscriber.onNext(cache);
+                        subscriber.onCompleted();
                     }
-                    /**
-                     * 查询ScanRoot下对应的文件，并保存至数据库
-                     */
+                } catch (Throwable e) {
+                    if(!subscriber.isUnsubscribed()){
+                        subscriber.onError(e);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * search {@link Result} from disk and save the results to database
+     * @param docType
+     * @return
+     */
+    public static Observable<List<Result>> getResultsByTypeFromDisk(final DocType docType){
+        final long typeId = docType.getId();
+        return Observable.create(new Observable.OnSubscribe<List<Result>>() {
+            @Override
+            public void call(Subscriber<? super List<Result>> subscriber) {
+                try {
                     final File directory = new File(docType.getScanRoot());
                     Collection<File> files = FileUtils.listFiles(directory, docType.getExtensions().split(","), true);
                     ArrayList<Result> result = null;
@@ -81,18 +96,17 @@ public class DatabaseUtils {
                         subscriber.onNext(result) ;
                         subscriber.onCompleted();
                     }
-                }catch(Throwable e) {
+                } catch (Throwable e) {
                     if(!subscriber.isUnsubscribed()){
                         subscriber.onError(e);
                     }
                 }
-
             }
         });
     }
 
     /**
-     * 查询
+     * search the browse history from database
      * @param context
      * @return
      */
@@ -117,13 +131,12 @@ public class DatabaseUtils {
     }
 
     /**
-     * 保存浏览记录
+     * save the browse history to database
      * @param context
      * @param resultId
      * @return
      */
     public static void saveHistory(Context context, long resultId){
-
         History history = CodeReaderApplication.getSession().getHistoryDao().queryBuilder().where(HistoryDao.Properties.ResultId.eq(resultId)).unique();
         if(history != null){
             history.setLastReadTime(new Date());
