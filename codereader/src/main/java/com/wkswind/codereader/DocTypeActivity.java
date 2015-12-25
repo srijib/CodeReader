@@ -15,6 +15,7 @@ import com.wkswind.codereader.base.ToolbarActivity;
 import com.wkswind.codereader.database.DataUtils;
 import com.wkswind.codereader.database.DocType;
 import com.wkswind.codereader.utils.Constants;
+import com.wkswind.codereader.utils.SimpleListDividerDecorator;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -84,7 +85,7 @@ public class DocTypeActivity extends ToolbarActivity {
         itemTouchHelper.attachToRecyclerView(content);
         content.setLayoutManager(manager);
         content.setItemAnimator(new DefaultItemAnimator());
-        content.addItemDecoration(new Divider);
+        content.addItemDecoration(new SimpleListDividerDecorator(getResources().getDrawable(R.drawable.list_divider),false));
 
         Observable<List<DocType>> observable = DataUtils.getAllDocTypes(getApplication());
         observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<DocType>>() {
